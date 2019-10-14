@@ -1,5 +1,5 @@
 <?php
-require 'vendor/autoload.php';
+//require 'vendor/autoload.php';
 require_once(FUEL_PATH.'/libraries/Fuel_base_controller.php');
 ini_set('memory_limit', '-1');
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
@@ -80,9 +80,9 @@ class inward extends Fuel_base_controller {
 		
 	function savedetails() {
 		if (!empty($_POST)){
-    		$this->load->module_model(INWARD_FOLDER, 'inward_model');
-			$arr = $this->inward_model->saveinwardentry($_POST['pid'],$_POST['pname'], $_POST['date3'],$_POST['lno'],$_POST['icno'],$_POST['date4'], $_POST['coil'],$_POST['fWidth'], $_POST['fThickness'],$_POST['fLength'],$_POST['fQuantity'],$_POST['status'],$_POST['hno'],$_POST['pna'],$_POST['ppartyid'],$_POST['parentBundleNumber'],$_POST['grade'],$_POST['cast']);
-			if(empty($arr)) echo 'Success'; else echo 'Unable to save';
+		    $this->load->module_model(INWARD_FOLDER, 'inward_model');
+			$arr = $this->inward_model->saveinwardentry($_POST['pid'],$_POST['pname'], $_POST['date3'],$_POST['lno'],$_POST['icno'],$_POST['date4'], $_POST['coil'],$_POST['fWidth'], $_POST['fThickness'],$_POST['fLength'],$_POST['fQuantity'],$_POST['status'],$_POST['hno'],$_POST['pna'],$_POST['ppartyid'],$_POST['parentBundleNumber'],$_POST['grade'],$_POST['cast'],$_POST['remark']);
+			if(empty($arr)) echo 'Success'; else echo 'Unable to save';	
 	
 		}
 		else{

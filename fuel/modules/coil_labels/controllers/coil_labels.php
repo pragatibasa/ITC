@@ -12,6 +12,8 @@ class coil_labels extends Fuel_base_controller {
 		$this->load->language('coil_labels');
 		$this->coil_labels = $this->config->item('coil_labels');
 		$this->load->module_model(COIL_LABELS_FOLDER, 'coil_labels_model');
+		$CI =& get_instance();
+		$this->companyData = $CI->fuel_auth->company_data();
 	}
 	
 	function index() {
@@ -122,8 +124,8 @@ class coil_labels extends Fuel_base_controller {
 		}
 		$barcodeData = (isset($coilNumbers) && count($coilNumbers) == 2) ? '!105'.$coilNumbers[0].'!100.!099'.$coilNumbers[1] : '!104'.$coilDetails['vIRnumber'];
 
-		$content .= 'TEXT 556,584,"0",180,12,12,"ASPEN STEEL PVT LTD"'."\n";
-		$content .= 'TEXT 724,541,"0",180,10,10,"Plot no 16E, Phase 2 Sector 1, Bidadi, Ramnagar: 562109"'."\n";
+		$content .= 'TEXT 556,584,"0",180,12,12,"'.$this->companyData->company_name.'"'."\n";
+		$content .= 'TEXT 724,541,"0",180,10,10,"'.$this->companyData->head_address.''."\n";
 		$content .= 'BARCODE 645,503,"128M",27,0,180,2,4,"'.$barcodeData.'"'."\n";
 		$content .= 'TEXT 580,471,"0",180,8,8,"'.$coilDetails['vIRnumber'].'"'."\n";
 		$content .= 'TEXT 760,489,"0",180,10,10,"Tag No:"'."\n";

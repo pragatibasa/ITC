@@ -81,9 +81,9 @@ class stock_report_model extends Base_module_model {
 		$html = '
 				
 				<div align="center">
-					<h1>ASPEN STEEL (PVT) LTD</h1>
-		<h3>Decoilers of:GP,CP,HRPO,HR Coils. Coil upto 20mm thick</h3>
-		 <h4>54, MEDAHALLI, OLD MADRAS ROAD, Bangalore - 560049, Karnataka, India</h4>	
+					<h1>'.$this->companyData->company_name.'</h1>
+		<h3>'.$this->companyData->head_address.'</h3>
+		 <h4>'.$this->companyData->branch_adress.'</h4>	
 				</div>
 				&nbsp;
 				&nbsp;

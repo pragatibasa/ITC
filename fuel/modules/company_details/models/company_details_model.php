@@ -22,14 +22,22 @@ class Company_details_model extends Base_module_model {
 		identifier_payable = '".$inputArr['ide_payable']."',
 		head_address = '".$inputArr['headOffice']."',
 		branch_address = '".$inputArr['branchOffice']."',
-		contact = '".$inputArr['contact']."',
+		contact = '".$inputArr['contact_number']."',
 		email = '".$inputArr['email']."',
-		gst_no = '".$inputArr['gstNumber']."',
-		tin_no = '".$inputArr['tinNumber']."'
+        gst_no = '".$inputArr['gstNumber']."',
+        pan = '".$inputArr['pan_number']."',
+        branch = '".$inputArr['branchname']."',
+        bank = '".$inputArr['bankname']."',
+        ifsc = '".$inputArr['ifsccode']."',
+        account = '".$inputArr['accountno']."'
+       
         where company_id = 1";
 
         $query = $this->db->query($sql);
+        
+        
     }
+
 
     function form_fields() {
         $CI =& get_instance();

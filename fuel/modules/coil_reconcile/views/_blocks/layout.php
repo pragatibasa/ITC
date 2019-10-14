@@ -269,7 +269,7 @@
         tab_text = tab_text + '<x:WorksheetOptions><x:Panes></x:Panes></x:WorksheetOptions></x:ExcelWorksheet>';
         tab_text = tab_text + '</x:ExcelWorksheets></x:ExcelWorkbook></xml></head><body>';
 
-        tab_text = tab_text + '<table><tr><td colspan="5" style="font-size:60px; font-style:italic; font-family: fantasy;"><h1>ASPEN STEEL PVT LTD</h1><h4>Branch At: Plot no 16E, Bidadi Industrial Area, Phase 2 Sector 1, Bidadi, Ramnagara-562105, Email: aspensteel_unit2@yahoo.com Head Office At: 54/1, Medahalli, Old Madras Road, Bangalore-560049</h4></td></tr></table>';
+        tab_text = tab_text + '<table><tr><td colspan="5" style="font-size:60px; font-style:italic; font-family: fantasy;"><h1>'.$companyData->company_name.'</h1><h4>Head Office At:'.$companyData->head_address.','$companyData->branch_address' Email:'.$companyData->email.'</h4></td></tr></table>';
         tab_text = tab_text + '<table><tr><td colspan="5"><h2>Coil Reconciliation Report</h2></td></tr>' +
             '<tr><td><b>Party name: </b></td><td align="right"><b>'+partyname+'</b></td></tr>' +
             '<tr><td><b>Coil Number: </b></td><td align="right"><b>'+$('#coilNumber').val()+'</b></td></tr> ' +

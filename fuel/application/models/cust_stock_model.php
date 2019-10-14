@@ -10,7 +10,9 @@ class cust_stock_model extends Base_module_model {
 	
     function __construct()
     {
-        parent::__construct('aspen_tblinwardentry');
+		parent::__construct('aspen_tblinwardentry');
+		$CI =& get_instance();
+		$this->companyData = $CI->fuel_auth->company_data();
     }
 		
 	function form_fields($values = array())
@@ -49,10 +51,10 @@ class cust_stock_model extends Base_module_model {
 		
 		$pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 		$pdfname= 'Partyslip'.$partyid.'.pdf';
-		$pdf->SetAuthor('ASPEN');
+		$pdf->SetAuthor('ITC');
 		$pdf->SetTitle('Invoice');
 		$pdf->SetSubject('Invoice');
-		$pdf->SetKeywords('Aspen, bill, invoice');
+		$pdf->SetKeywords('ITC, bill, invoice');
 		$pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
 		$pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
 		$pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
@@ -67,9 +69,9 @@ class cust_stock_model extends Base_module_model {
 		$html = '
 				
 				<div align="center">
-					<h1>ASPEN STEEL (PVT) LTD</h1>
-		<h3>Decoilers of:GP,CP,HRPO,HR Coils. Coil upto 20mm thick</h3>
-		 <h4>54, MEDAHALLI, OLD MADRAS ROAD, Bangalore - 560049, Karnataka, India</h4>	
+					<h1>$companyData->'.$this->companyData->company_name.'</h1>
+		<h3>'.$this->companyData->head_address.'</h3>
+		 <h4>'.$this->companyData->branch_address.'</h4>	
 				</div>
 				&nbsp;
 				&nbsp;
@@ -149,7 +151,7 @@ class cust_stock_model extends Base_module_model {
 				<td align="right">&nbsp;</td>
 			</tr>
 			<tr>
-				<td colspan="2" align="center">ASPEN BANGALORE</td>
+				<td colspan="2" align="center">INTERNATINAL STEEL PROCESSORS</td>
 			</tr>
 		</table>';
 

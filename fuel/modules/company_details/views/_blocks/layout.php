@@ -12,7 +12,7 @@
                             <label>The name of the company<span class="required">*</span></label>
                         </td>
                         <td>
-                            <input id="cname" type="text" name="cname" value="<?=$data[0]->company_name?>"/>
+                            <input id="cname" type="text" name="cname" value=""/>
                         </td>
                     </tr>
                     <tr>
@@ -21,7 +21,7 @@
                                         class="required">*</span></label>
                         </td>
                         <td>
-                            <input id="ide_receive" name="ide_receive" type="text" value="<?=$data[0]->identifier_receivable?>"/>
+                            <input id="ide_receive" name="ide_receive" type="text" value=""/>
                         </td>
                     </tr>
                     <tr>
@@ -38,14 +38,14 @@
                         <td>
                             <label>Head office address<span class="required">*</span></label>
                         </td>
-                        <td><textarea id="addr1" name="headOffice" type="text"><?=$data[0]->head_address?></textarea>&nbsp;&nbsp;<span>Info : Please enter the exact head office address to be displayed on the bills</span>
+                        <td><textarea id="addr1" name="headOffice" type="text"></textarea>&nbsp;&nbsp;<span>Info : Please enter the exact head office address to be displayed on the bills</span>
                         </td>
                     </tr>
                     <tr>
                         <td>
                             <label>Branch office address<span class="required">*</span></label>
                         </td>
-                        <td><textarea id="addr2" name="branchOffice" type="text"><?=$data[0]->branch_address?></textarea>&nbsp;&nbsp;<span>Info : Please enter the exact branch office address to be displayed on the bills</span>
+                        <td><textarea id="addr2" name="branchOffice" type="text"></textarea>&nbsp;&nbsp;<span>Info : Please enter the exact branch office address to be displayed on the bills</span>
                         </td>
                     </tr>
                     <tr>
@@ -53,15 +53,63 @@
                             <label>Enter the general company contact number</label>
                         </td>
                         <td>
-                            <input id="email" name="contact" type="text" value="<?=$data[0]->contact?>"/>
+                            <input id="contact_no" name="contact_number" type="text" value=""/>
                         </td>
                     </tr>
+
+                    <tr>
+                        <td>
+                            <label>PAN NO:</label>
+                        </td>
+                        <td>
+                            <input id="pan_no" name="pan_number" type="text" value=""/>
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <td>
+                            <label>Bank Name:</label>
+                        </td>
+                        <td>
+                            <input id="bank_name" name="bankname" type="text" value=""/>
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <td>
+                            <label>Branch Name:</label>
+                        </td>
+                        <td>
+                            <input id="branch_name" name="branchname" type="text" value=""/>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <label>IFSC Code:</label>
+                        </td>
+                        <td>
+                            <input id="ifsc_code" name="ifsccode" type="text" value=""/>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <label>A/C No:</label>
+                        </td>
+                        <td>
+                            <input id="account_no" name="accountno" type="text" value=""/>
+                        </td>
+                    </tr>
+
                     <tr>
                         <td>
                             <label>Enter the general company email address</label>
                         </td>
                         <td>
-                            <input id="email" name="email" type="text" value="<?=$data[0]->email?>"/>
+                            <input id="email" name="email" type="text" value=""/>
                         </td>
                     </tr>
                     <tr>
@@ -69,7 +117,7 @@
                             <label>Enter GST registration number</label>
                         </td>
                         <td>
-                            <input id="duty_no" name="gstNumber" type="text" value="<?=$data[0]->gst_no?>"/>
+                            <input id="duty_no" name="gstNumber" type="text" value=""/>
                         </td>
                     </tr>
                     <tr>
@@ -77,7 +125,7 @@
                             <label>Enter TIN number</label>
                         </td>
                         <td>
-                            <input id="tin_no" name="tinNumber" type="text" value="<?=$data[0]->tin_no?>"/>
+                            <input id="tin_no" name="tinNumber" type="text" value=""/>
                         </td>
                     </tr>
                 </table>
@@ -115,3 +163,4 @@
 
     }
 </script>
+

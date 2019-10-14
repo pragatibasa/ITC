@@ -330,7 +330,7 @@ where aspen_tblinwardentry.vStatus = 'Work In Progress' or aspen_tblslittinginst
 				<td align="right">&nbsp;</td>
 			</tr>
 			<tr>
-				<td colspan="2" align="center" style="font-size:45px; font-style:italic; font-family: fantasy;"><b>**ASPEN BANGALORE**</b></td>
+				<td colspan="2" align="center" style="font-size:45px; font-style:italic; font-family: fantasy;"><b>**'.$this->companyData->company_name.'**</b></td>
 			</tr>
 		</table>';
 
@@ -472,7 +472,7 @@ where aspen_tblinwardentry.vStatus = 'Work In Progress' or aspen_tblslittinginst
 				<td align="right">&nbsp;</td>
 			</tr>
 			<tr>
-				<td colspan="2" align="center" style="font-size:45px; font-style:italic; font-family: fantasy;"><b>**ASPEN BANGALORE**</b></td>
+				<td colspan="2" align="center" style="font-size:45px; font-style:italic; font-family: fantasy;"><b>**'.$this->companyData->company_name.'**</b></td>
 			</tr>
 		</table>';
 
@@ -636,7 +636,7 @@ where aspen_tblinwardentry.vStatus = 'Work In Progress' or aspen_tblslittinginst
 				<td align="right">&nbsp;</td>
 			</tr>
 			<tr>
-				<td colspan="2" align="center" style="font-size:45px; font-style:italic; font-family: fantasy;"><b>**ASPEN BANGALORE**</b></td>
+				<td colspan="2" align="center" style="font-size:45px; font-style:italic; font-family: fantasy;"><b>**'.$this->companyData->company_name.'**</b></td>
 			</tr>
 		</table>';
 

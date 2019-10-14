@@ -10,7 +10,10 @@ class stock_report_model extends Base_module_model {
 
     function __construct()
     {
-        parent::__construct('aspen_tblowner');
+		parent::__construct('aspen_tblowner');
+		$CI =& get_instance();
+		$this->companyData = $CI->fuel_auth->company_data();
+
     }
 	
 
@@ -91,9 +94,12 @@ class stock_report_model extends Base_module_model {
 		$html = '
 				
 				<div align="center">
-					<h1>ASPEN STEEL (PVT) LTD</h1>
-		<h3>Decoilers of:GP,CP,HRPO,HR Coils. Coil upto 20mm thick</h3>
-		 <h4>54, MEDAHALLI, OLD MADRAS ROAD, Bangalore - 560049, Karnataka, India</h4>	
+					<h1>
+					'.$this->companyData->company_name.'</h1>
+		<h3>
+		'.$this->companyData->head_address.'</h3>
+		 <h4>
+		 '.$this->companyData->branch_address.'</h4>	
 				</div>
 				&nbsp;
 				&nbsp;
@@ -173,7 +179,8 @@ class stock_report_model extends Base_module_model {
 				<td align="right">&nbsp;</td>
 			</tr>
 			<tr>
-				<td colspan="2" align="center">ASPEN BANGALORE</td>
+				<td colspan="2" align="center">
+				'.$this->companyData->company_name.'</td>
 			</tr>
 		</table>';
 

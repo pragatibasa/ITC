@@ -11,7 +11,9 @@ class customer_inward_model extends Base_module_model {
 	
     function __construct()
     {
-        parent::__construct('aspen_hist_tblinwardentry');
+		parent::__construct('aspen_hist_tblinwardentry');
+		$CI =& get_instance();
+		$this->companyData = $CI->fuel_auth->company_data();
     }
 		
 	function form_fields($values = array())
@@ -91,14 +93,12 @@ class customer_inward_model extends Base_module_model {
 		$html = '
 				<table width="100%"  cellspacing="0" cellpadding="5" border="0">
 					<tr>
-						<td width="100%"align="center" style="font-size:60px; font-style:italic; font-family: fantasy;"><h1>ASPEN STEEL PVT LTD</h1></td>
+						<td width="100%"align="center" style="font-size:60px; font-style:italic; font-family: fantasy;"><h1>'.$this->companyData->company_name.'</h1></td>
 					</tr>
 					<tr>
-						<td align="center" width="100%"><h4>Branch At: Plot no 16E, Bidadi Industrial Area, Phase 2 Sector 1, Bidadi, Ramnagara-562105, <b>Email: aspensteel_unit2@yahoo.com </b></h4></td>
+						<td align="center" width="100%"><h4>Head Office At:'.$this->companyData->head_address.','.$this->companyData->branch_address.' <b>Email: '.$this->companyData->email.' </b></h4></td>
 					</tr>
-					<tr>
-						<td align="center" width="100%"><h4>Head Office At: 54/1, Medahalli, Old Madras Road, Bangalore-560049</h4></td>
-					</tr>
+					
 				</table>
 				<div align="center"><h2>CUSTOMERS MATERIAL INWARD REPORT BETWEEN DATES </h2></div>
 				<table width="100%" cellspacing="0" cellpadding="5" border="0">

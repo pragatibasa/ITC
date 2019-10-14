@@ -8,7 +8,10 @@ require_once(APPPATH.'helpers/tcpdf/tcpdf.php');
 class Billing_model extends Base_module_model {
     function __construct()
     {
-        parent::__construct('aspen_tblbilldetails');// table name
+		parent::__construct('aspen_tblbilldetails');// table name
+		$CI =& get_instance();
+		$this->companyData = $CI->fuel_auth->company_data();
+		print_r($this->companyData);exit;
     }
 	
 	function example(){
@@ -2054,13 +2057,12 @@ $sql66="UPDATE aspen_tblinwardentry
 		<table width="100%"  cellspacing="0" cellpadding="0" border="0">
 	
 			<tr>
-				<td width="16%" align:"left"><h4>TIN:29730066589</h4></td>
-				<td width="70%"align="center" style="font-size:60px; font-style:italic; font-family: fantasy;"><h1>ASPEN STEEL PVT LTD</h1></td>
-				<td width="25%" align:"right"><h4>Service Tax Regn. No: (BAS)/AABCA4807HST001</h4></td>
+				<td width="70%"align="center" style="font-size:60px; font-style:italic; font-family: fantasy;"><h1>'.$this->companyData->company_name.'</h1></td>
+				<td width="25%" align:"right"><h4>Service Tax Regn. No: '.$servicetax.'</h4></td>
 		</tr>
 		
 		<tr>
-				<td align="center" width="100%"><h4>54/1, 17/18th Km. MEDAHALLI, OLD MADRAS ROAD, Bangalore - 560049, <b> Ph: 6590 4772 / 3200 3260 Email: aspensteel@yahoo.in </b></h4></td>
+				<td align="center" width="100%"><h4>'.$this->companyData->head_address.'<br>'.$this->companyData->branch_address.'<b> Ph: '.$this->companyData->contact.' Email: '.$this->companyData->email.' </b></h4></td>
 				
 		</tr>
 		
@@ -2240,7 +2242,7 @@ $sql66="UPDATE aspen_tblinwardentry
 			<td width="70%">
 				<h3><b>Received the above goods in good condition.</b></h3>
 				</td> 
-				<td width="30%"><h3> For ASPEN STEEL (P) LTD.</h3></td>
+				<td width="30%"><h3> For '.$companyData->company_name.'</h3></td>
 		</tr>
 		<tr>
 			<td>
@@ -3354,13 +3356,13 @@ $html = '
 		<table width="100%"  cellspacing="0" cellpadding="0" border="0">
 	
 			<tr>
-				<td width="16%" align:"left"><h4>TIN:29730066589</h4></td>
-				<td width="70%"align="center" style="font-size:60px; font-style:italic; font-family: fantasy;"><h1>ASPEN STEEL PVT LTD</h1></td>
-				<td width="25%" align:"right"><h4>Service Tax Regn. No: (BAS)/AABCA4807HST001</h4></td>
+				<td width="70%"align="center" style="font-size:60px; font-style:italic; font-family: fantasy;"><h1>'.$this->companyData->company_name.'</h1></td>
+				<td width="25%" align:"right"><h4>Service Tax Regn. No: '.$servicetax.'</h4></td>
 		</tr>
 		
 		<tr>
-				<td align="center" width="100%"><h4>54/1, 17/18th Km. MEDAHALLI, OLD MADRAS ROAD, Bangalore - 560049, <b> Ph: 6590 4772 / 3200 3260 Email: aspensteel@yahoo.in </b></h4></td>
+				<td align="center" width="100%"><h4>'.$this->companyData->head_address.'<br>
+				'.$this->companyData->branch_address.' <b> Ph: '.$companyData->contact.' Email:'.$this->companyData->email.' </b></h4></td>
 				
 		</tr>
 		
@@ -3533,7 +3535,7 @@ $html = '
 			<td width="70%">
 				<h3><b>Received the above goods in good condition.</b></h3>
 				</td> 
-				<td width="30%"><h3> For ASPEN STEEL (P) LTD.</h3></td>
+				<td width="30%"><h3> For '.$this->companyData->company_name.'</h3></td>
 		</tr>
 		<tr>
 			<td>
@@ -3878,13 +3880,13 @@ $html = '
 		<table width="100%"  cellspacing="0" cellpadding="0" border="0">
 	
 			<tr>
-				<td width="16%" align:"left"><h4>TIN:29730066589</h4></td>
-				<td width="70%"align="center" style="font-size:60px; font-style:italic; font-family: fantasy;"><h1>ASPEN STEEL PVT LTD</h1></td>
-				<td width="25%" align:"right"><h4>Service Tax Regn. No: (BAS)/AABCA4807HST001</h4></td>
+				
+				<td width="70%"align="center" style="font-size:60px; font-style:italic; font-family: fantasy;"><h1>'.$this->companyData->company_name.'</h1></td>
+				<td width="25%" align:"right"><h4>Service Tax Regn. No: '.$servicetax.'</h4></td>
 		</tr>
 		
 		<tr>
-				<td align="center" width="100%"><h4>54/1, 17/18th Km. MEDAHALLI, OLD MADRAS ROAD, Bangalore - 560049, <b> Ph: 6590 4772 / 3200 3260 Email: aspensteel@yahoo.in </b></h4></td>
+				<td align="center" width="100%"><h4>'.$this->companyData->head_address.' <br> '.$this->companyData->branch_address.'<b> Ph:'.$this->companyData->contact.' Email: '.$this->companyData->email.'</b></h4></td>
 				
 		</tr>
 		
@@ -4057,7 +4059,7 @@ $html = '
 			<td width="70%">
 				<h3><b>Received the above goods in good condition.</b></h3>
 				</td> 
-				<td width="30%"><h3> For ASPEN STEEL (P) LTD.</h3></td>
+				<td width="30%"><h3> For '.$this->companyData->company_name.'.</h3></td>
 		</tr>
 		<tr>
 			<td>

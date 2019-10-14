@@ -18,13 +18,13 @@ class Company_details_model extends Base_module_model {
 				
 	function savecompany($cname, $ide_receive,$ide_payable,$addr1,$addr2,$city,$state, 
 							$zipcode,$country,$update_state,$ctno,$toll_no,$fax, 
-							$email,$web,$tax_id,$vat,$cst_no,$service_tax,$duty_no)
+							$email,$web,$tax_id,$vat,$cst_no,$service_tax,$duty_no,$bank_name,$branch_name,$account_no,$ifsc_code)
 	{
 	$sql = "Insert into aspen_company_details  (
-		company_name,identifier_receivable,identifier_payable,addr1,addr2,city,state,zipcode,country,update_company,tele_no,
+		company_name,identifier_receivable,identifier_payable,addr1,addr2,city,state,zipcode,country,update_company,tele_no,bank_name,branch_name,account_no,ifsc_code,
 		sec_tel_no,company_fax,email,website,tax_id,vat_tin,cst_no,service_tax,duty_no) 
 		
-		VALUES( '". $cname. "','". $ide_receive. "','". $ide_payable. "','". $addr1. "','". $addr2. "', '". $city. "','". $state. "','". $zipcode. "','". $country. "','". $update_state. "','". $ctno. "','". $toll_no. "','". $fax. "','". $email. "','". $web. "','". $tax_id. "','". $vat. "','". $cst_no. "','". $service_tax. "','". $duty_no. "' )";
+		VALUES( '". $cname. "','". $ide_receive. "','". $ide_payable. "','". $addr1. "','". $addr2. "', '". $city. "','". $state. "','". $zipcode. "','". $country. "','". $update_state. "','". $ctno. "','". $toll_no. "','". $fax. "','". $email. "','". $web. "','". $tax_id. "','". $vat. "','". $cst_no. "','". $service_tax. "','". $duty_no. "','". $bank_name. "','". $branch_name. "','". $account_no. "','". $ifsc_code. "' )";
 		
 		$query = $this->db->query($sql);
 		

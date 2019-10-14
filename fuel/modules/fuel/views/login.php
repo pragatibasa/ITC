@@ -20,7 +20,7 @@
 </head>
 <body>
 		<div id="header_login">
-		<center><img src="<?=img_path('aspen-logo1.png')?>" width="430" height="100" alt="FUEL CMS" border="0" id="login_logo" /></center>
+		<center><img src="<?=img_path('ISP LOGO.jpg')?>" width="100" height="100" alt="FUEL CMS" border="0" id="login_logo" /></center>
 		</div>
 <div id="login">
 	<div id="login_inner">
@@ -47,7 +47,7 @@
 		</div>
 	</div>
 	<div id="login_footer">
-		<div align="center">Copyright &copy; 2016 <a href="http://www.aspensteel.in" target="_blank">Aspen Steel</a>. All Rights Reserved.</div>
+		<div align="center">Copyright &copy; 2016 <a href="" target="_blank">INTERNATIONAL STEEL PROCESSORS</a>. All Rights Reserved.</div>
 	</div>
 </div>
 </body>

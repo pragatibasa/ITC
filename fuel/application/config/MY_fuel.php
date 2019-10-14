@@ -75,7 +75,7 @@ $config['modules_allowed'] = array(
     'vehicle_despatch',
 );
 //Configuration ASPEN PANEL
-$config['nav']['Aspen Steel']=array(
+$config['nav']['ITC']=array(
 	//'inward_entry/create' => 'Create Inward Entry',
 //	'inward_entry' => lang('module_inward_entry'),
 //	'workin_progress' => lang('workin_progress'),
@@ -85,7 +85,7 @@ $config['nav']['Aspen Steel']=array(
 $config['nav']['modules'] = array();
 
 
-$config['nav']['Aspen_Steel'] = array('inward_entry' => 'Inward Register',
+$config['nav']['ITC_Steel'] = array('inward_entry' => 'Inward Register',
 										'inward' => 'Inward',
 										'partywise_register' => 'Partywise Register',
 										'workin_progress' => 'Workin Progress',
@@ -131,7 +131,7 @@ $config['nav']['Reports'] = array('stock_report' => 'Customer Stock Report ',
 
 //'support'
 $config['apps_view'] = array('site', 'apps', 'Accounts', 'Amazon',);
-$config['settings_view'] = array('tools', 'manage', 'Aspen_Steel',  'Master',  'Reports');
+$config['settings_view'] = array('tools', 'manage', 'ITC_Steel',  'Master',  'Reports');
 
 
 

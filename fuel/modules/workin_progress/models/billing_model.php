@@ -2866,7 +2866,7 @@ EOD;
 
 		$pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 		$pdfname= 'cuttingslip_'.$partyid.'.pdf';
-		$pdf->SetAuthor('ASPEN');
+		$pdf->SetAuthor('ITC');
 		$pdf->SetTitle('Invoice');
 		$pdf->SetSubject('Invoice');
 		$pdf->SetKeywords('Aspen, bill, invoice');
@@ -3315,7 +3315,7 @@ EOD;
 		$pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 		$pdfname= 'loadingslip_'.$pname.'.pdf';
 		$resolution= array(72, 150);
-		$pdf->SetAuthor('ASPEN');
+		$pdf->SetAuthor('ITC');
 		$pdf->SetTitle('Invoice');
 		$pdf->SetSubject('Invoice');
 		$pdf->SetKeywords('Aspen, bill, invoice');

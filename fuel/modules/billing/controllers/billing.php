@@ -986,7 +986,7 @@ class Billing extends Fuel_base_controller {
 	
 	function directbillingbill() {
 		if (!empty($_POST)){
-			$directbill = $this->billing_model->directbillingbill($_POST['billid'],$_POST['partyid'],$_POST['pname'],$_POST['cust_add'],$_POST['cust_rm'],$_POST['mat_desc'],$_POST['thic'],$_POST['wid'],$_POST['len'],$_POST['wei'],$_POST['inv_no'],$_POST['totalweight_check'],$_POST['totalrate'],$_POST['totalamt'],$_POST['txthandling'],$_POST['txtadditional_type'],$_POST['txtamount_mt'],$_POST['txtoutward_num'],$_POST['txtscrap'],$_POST['txtservicetax'],$_POST['txteductax'],$_POST['txtsecedutax'],$_POST['txtgrandtotal'],$_POST['container'],$_POST['driverContact']);
+			$directbill = $this->billing_model->directbillingbill($_POST['billid'],$_POST['partyid'],$_POST['pname'],$_POST['cust_add'],$_POST['cust_rm'],$_POST['mat_desc'],$_POST['thic'],$_POST['wid'],$_POST['len'],$_POST['wei'],$_POST['inv_no'],$_POST['rate'],$_POST['invoicedate'],$_POST['billdate'],$_POST['totalweight_check'],$_POST['totalrate'],$_POST['totalamt'],$_POST['txthandling'],$_POST['txtadditional_type'],$_POST['txtamount_mt'],$_POST['txtoutward_num'],$_POST['txtscrap'],$_POST['txtservicetax'],$_POST['txteductax'],$_POST['txtsecedutax'],$_POST['txtgrandtotal'],$_POST['container'],$_POST['driverContact']);
 			if(empty($arr)) echo 'Success'; else echo 'Unable to save';
 		} else{
 			//redirect(fuel_uri('#'));
