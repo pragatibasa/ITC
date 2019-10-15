@@ -1,5 +1,3 @@
-
-
 <script type="text/javascript">
 	
 function pullFolders(selectedItem) {
@@ -12,9 +10,7 @@ function pullFolders(selectedItem) {
 		}  
 	);
 }
-
-
- </script> 
+</script> 
 
  
  <script type="text/javascript">
@@ -38,16 +34,6 @@ $(document).ready(function() {
     load_party_account();
 });
 </script> 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
 
 <div id="main_top_panel">
 	<h2 class=" ico ico_rate_details_width"><?=lang('module_rate_details_width')?></h2>

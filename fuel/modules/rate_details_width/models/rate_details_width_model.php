@@ -22,6 +22,7 @@ class Rate_details_width_model extends Base_module_model {
    $arr[] =$row;
    }
    } 
+   
    return $arr;
   } 
   

@@ -588,7 +588,7 @@ left join aspen_tblbillingstatus on aspen_tblinwardentry.vIRnumber=aspen_tblbill
 left join aspen_tblmatdescription on aspen_tblmatdescription.nMatId=aspen_tbl_directbill.nMatId
 left join aspen_tblinwardentry on aspen_tblinwardentry.nMatId=aspen_tblmatdescription.nMatId
 left join aspen_tblbillingstatus on aspen_tblinwardentry.vIRnumber=aspen_tblbillingstatus.vIRnumber
- where aspen_tblmatdescription.vDescription= '".$mat_desc."' and aspen_tblinwardentry.vIRnumber='".$partyid."' order by aspen_tblbillingstatus.nActualNo asc";
+ where aspen_tblmatdescription.vDescription= '".$mat_desc."' and aspen_tblinwardentry.vIRnumber='".$partyid."' order by aspen_tblbillingstatus.nActualNo asc"; 
 }
 else if($cust_rm!=0){
 	$sql = "select ('".$txthandling."'+ '".$cust_rm."') as rate,
