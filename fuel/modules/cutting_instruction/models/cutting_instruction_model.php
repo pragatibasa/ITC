@@ -117,11 +117,10 @@ class Cutting_instruction_model extends Base_module_model {
                             </tr>
                           </table>';
 
-         $strEmailHtml .= '<p>For Aspen Steel Pvt ltd</p>
+         $strEmailHtml .= '<p>For INTERNATIONAL STEEL PROCESSORS</p>
                           <p>Please contact our unit coordinator for any clarification.</p>
                           <p>Customer Service team<br/>
-                          Unit 2 (Bidadi)<br/>
-                          8217766390/7008898426</p>';
+                          9176620066/9445008881</p>';
 
          $strEmailHtml .= '<p style="color:#999999;">This is a system generated mail. Please reply to aspen.bidadi@gmail.com for more details.</p>';
 

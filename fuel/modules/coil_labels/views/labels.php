@@ -20,7 +20,9 @@
                     echo "<h3 class='panel-title'>Bundle No: ".$bundle['nSno']."</h3></div>";
                     echo "<div class='panel-body'>";
                     echo "<table border='2' width='100%'>";
-                    echo "<tr><td align='center' style='padding:15px;' colspan='2'><b>ASPEN STEEL PVT LTD <br>Plot no 16E, Phase 2 sector 1, Bidadi, Ramnagar: 562109</b></td></tr>";
+                    echo "<tr><td align='center' style='padding:15px;' colspan='2'>
+                    <b>INTERNATIONAL STEEL PROCESSORS<br>NO.43,KANNIAMMANPET VILLAGE, SURVEY NO145/6C ANDRAKUPPAM POST, KADAPAKKAM, CHENNAI-600 103
+                    State  Name: Tamil Nadu, Code:33</b></td></tr>";
                     echo "<tr><td style='padding:10px;border: 2px solid black;'>Tag No: <img src= ".img_path('Code128Barcode.jpg','coil_labels')."><span style='display: block;font-size: 11px;margin-left: 101px;line-height: 0px;'>".$coilDetails['vIRnumber']."</span></td><td style='padding:10px;border: 2px solid black;'>Customer: <span class='labelcustomer'>".$coilDetails['nPartyName']."</span></td></tr>";
                     echo "<tr><td style='padding:10px;border: 2px solid black;'>A Coil No.: ".$coilDetails['vIRnumber']."</td><td style='padding:10px;border: 2px solid black;'>Spec: ".$coilDetails['vDescription']."</td></tr>";
                     echo "<tr><td style='padding:10px;border: 2px solid black;'>Parent Coil No.:</td><td style='padding:10px;border: 2px solid black;'>Process Name: ".$coilDetails['vprocess']."</td></tr>";

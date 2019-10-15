@@ -5,11 +5,11 @@
 | General
 |--------------------------------------------------------------------------
 */
-$lang['fuel_page_title'] = 'Aspen Steel Pvt Ltd';
+$lang['fuel_page_title'] = 'INTERNATIONAL STEEL PROCESSORS';
 $lang['logged_in_as'] = 'Welcome';
 $lang['logout'] = 'Logout';
 $lang['fuel_developed_by'] = '<a href="http://www.hooduku.com">Hooduku Inc</a>';
-$lang['fuel_copyright'] = 'Copyright &copy; %1s Aspen Steel Pvt Ltd. All Rights Reserved.';
+$lang['fuel_copyright'] = 'Copyright &copy; %1s INTERNATIONAL STEEL PROCESSORS. All Rights Reserved.';
 
 
 /*

@@ -1,10 +1,10 @@
 /* Login CSS created by Gaurav @start */
 *{
-	margin:0;
-	padding:0;
+	margin-bottom:0;
+	padding-bottom:0;
 }
 html, body{
-	font:normal 14px Calibri, Arial, sans-serif;
+	font:normal 13px Calibri, Arial, sans-serif;
 	color:#414141;
 	background: url(../images/imgs/login_bg.jpg) no-repeat top center fixed;	
 	-webkit-background-size: cover;

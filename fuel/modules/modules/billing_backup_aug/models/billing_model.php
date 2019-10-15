@@ -8,7 +8,9 @@ require_once(APPPATH.'helpers/tcpdf/tcpdf.php');
 class Billing_model extends Base_module_model {
     function __construct()
     {
-        parent::__construct('aspen_tblbilldetails');// table name
+		parent::__construct('aspen_tblbilldetails');// table name
+		$CI =& get_instance();
+		$this->companyData = $CI->fuel_auth->company_data();
     }
 	
 	function example(){
@@ -2050,217 +2052,300 @@ $sql66="UPDATE aspen_tblinwardentry
 		$pdf->AddPage();		
 		
 		
-				$html = '
-		<table width="100%"  cellspacing="0" cellpadding="0" border="0">
 	
-			<tr>
-				<td width="16%" align:"left"><h4>TIN:29730066589</h4></td>
-				<td width="70%"align="center" style="font-size:60px; font-style:italic; font-family: fantasy;"><h1>ASPEN STEEL PVT LTD</h1></td>
-				<td width="25%" align:"right"><h4>Service Tax Regn. No: (BAS)/AABCA4807HST001</h4></td>
-		</tr>
-		
-		<tr>
-				<td align="center" width="100%"><h4>54/1, 17/18th Km. MEDAHALLI, OLD MADRAS ROAD, Bangalore - 560049, <b> Ph: 6590 4772 / 3200 3260 Email: aspensteel@yahoo.in </b></h4></td>
-				
-		</tr>
-		
-		<tr>
-				<td align="center" width="100%"><hr color=#00CC33 size=5 width=100></td>
-				
-		</tr>
-		
-	
-		<tr>
-				<td width="100%"></td>
-		</tr>
-		<tr>
-				<td width="30%" align:"left"><h3>Billnumber : '.$billnumber.'</h3></td>
-				<td width="40%" align="center"><h3>Coilnumber : '.$invoice.'</h3></td>
-				<td width="33.33%" align:"right"><h3>Billdate : '.$billdate.'</h3></td>
-				
-			</tr>
-			
-		</table>
-		<table width="100%" cellspacing="0" cellpadding="0" >
-			<tr>
-				<td align="left"></td>
-				<td></td>
-				<td></td>				
-			</tr>
-			<tr>
-				<td width="30%" align:"left">
-					<h3>To M/s., &nbsp; '.$party_name.' , '.$address_one.' &nbsp;'.$address_two.',&nbsp;'.$city.'</h3>
-				</td>
-				<td width="40%" align="center"><h3> Desp. By Lorry No. : '.$trucknumber.'</h3> </td>
-				
-				<td width="33.33%" align:"right"><h3>Delivery: Full &nbsp; Part-1&nbsp; Part-2</h3></td>
-				
-			</tr>
-			<tr>
-				<td align="left"></td>
-				<td></td>
-				<td></td>				
-			</tr>
-			<tr>
-				<td width="30%" align:"left">
-					<h3>Tin Number : '.$tin_number.'</h3>
-				</td>
-				<td width="40%" align="center"><h3> Inward Date : 	<b> '.$invoicedate.'</b></h3> </td>
-				<td width="33.33%" align:"right"><h3>Inward Challan No.:'.$invoiceno.'</h3></td>
-			</tr>
-			<tr>
-				<td align="left"></td>
-				<td></td>
-				<td></td>				
-			</tr>
-		</table>';
+$html = companyHeader().'<table>
+<tr>
+	<td align="center" width="100%" border="0px"><hr color=#00CC33 size=5 width=100></td>
+</tr>
 
-		$html .= '
-		<table cellspacing="0" cellpadding="5" border="0px" width="100%">
-		<tr>
-				<td align="center" width="100%"><hr color=#00CC33 size=5 width=100></td>
-				
-		</tr>
-		<tr>
-				<th style="font-weight:bold;" width="13%"><h3>Sl. No.</h3></th>
-				<th style="font-weight:bold"  width="22%"><h3>DESCRIPTION</h3></th>
-				<th style="font-weight:bold"  width="16.6%"><h3>No. Of Pcs</h3></th> 
-				<th style="font-weight:bold" width="16.6%"><h3>Qty. In M/T</h3></th> 
-				<th style="font-weight:bold"  width="16.6%"><h3>Rate per M/T</h3></th>
-				<th style="font-weight:bold"  width="15.6%"><h3>Amount</h3></th>
-				
-			</tr>
-		<tr>
-				<td align="center" width="100%"><hr color=#00CC33 size=5 width=100></td>
-				
-		</tr>	
-		<tr>
-		<td width="100px" align="left"><h3>'.$material_descriptio.'</h3></td>
-		<td width="40px" align="left"><h3>'.$thickness.'</h3></td>		
-		<td width="20px" align="right">*</td>	
-		<td width="70px" align="right"><h3>'.$width.'</h3></td>		
-		<td width="240px" align="right"><h3>'.$weihtamount.'</h3></td>
-		</tr>	
-			
-			';
-		if ($queryitem->num_rows() > 0)
-		{
-			foreach($queryitem->result() as $rowitem)
-			{
-		$html .= '
-			<tr>
-				<td style="font-weight:bold;" width="13%"><h2>'.$rowitem->bundlenumber.'</h2></td>
-				<td style="font-weight:bold" width="25%"><h2>LENGTH&nbsp;&nbsp;&nbsp;'.$rowitem->length.'</h2></td> 
-				<td style="font-weight:bold" width="16.6%"><h2>'.$rowitem->noofpcs.'</h2></td> 
-				<td style="font-weight:bold" width="33%"><h2>'.$rowitem->weight.'</h2></td>
-				<td style="font-weight:bold" width="15.6%"><h2></h2></td>
-				
-			</tr>';
-			}
-		}
-		
-		
-		$html .= '
-			
-		</table>';	
-		
-		$html .= '
-		<table width="100%" cellspacing="5" cellpadding="5" border="0">
-			<tr>
-				<td align="center" width="100%"><hr color=#00CC33 size=5 width=100></td>
-				
-		</tr>	
-			<tr>
-				<td style="font-weight:bold;" width="13%"><h3>Total</h3></td>
-				<td style="font-weight:bold"  width="23%"></td>
-				<td style="font-weight:bold"  width="16.6%"><h3>'.$totalpcs.'</h3></td> 
-				<td style="font-weight:bold" width="33%"><h3>'.$totalweight.'</h3></td> 
-				<td style="font-weight:bold"  width="15.6%"><h3>'.$totalamount.'</h3></td>
-				
-				
-			</tr>
-			
-		<tr>
-		<td width="89%">
-					<h3><b>Strapping Charge:&nbsp;'.$additionalchargetype.'</b></h3>
-				</td> <td><h3>'.$amount.'</h3></td>
-		</tr>
-		
-		<tr>
-		<td width="89%">
-					<h3><b>For weight</b></h3>
-				</td> <td><h3>'.$wtamount.'</h3></td>
-		</tr>
-		<tr>
-		<td width="89%">
-					<h3><b>For width</b></h3>
-				</td> <td><h3>'.$widthamount.'</h3></td>
-		</tr>
-		<tr>
-		<td width="89%">
-					<h3><b>For length </b></h3>
-				</td> <td><h3>'.$lengthamount.'</h3></td>
-		</tr>
-		<tr>
-		<td width="89%">
-					<h3><b>SUBTOTAL</b></h3>
-				</td> <td><h3>'.$subtotal.'</h3></td>
-		</tr>
-		<tr>
-		<td width="89%">
-					<h3><b>Service Tax @ 12%</b></h3>
-				</td> <td><h3>'.$servicetax.'</h3></td>
-		</tr>
-		<tr>
-		<td width="89%">
-					<h3><b>Edn. Cess @ 2% on Service Tax</b></h3>
-				</td> <td><h3>'.$edutax.'</h3></td>
-		</tr>
-		<tr>
-		<td width="89%">
-					<h3><b>S. & H. Edn. Cess @ 1% on Service Tax</b></h3>
-				</td> <td><h3>'.$shedutax.'</h3></td>
-		</tr>
-		<tr>
-				<td align="center" width="100%"><hr color=#00CC33 size=5 width=100></td>
-				
-		</tr>
-		<tr>
-		<td width="89%">
-					<h3><b>Grand Total</b></h3>
-				</td> <td><h3>'.$grandtotal.'</h3></td>
-		</tr>
-		<tr>
-		<td width="25%">
-					<h3>Grand Total in Words :</h3>
-				</td> 	<td width="75%"><h3>'.$container.'</h3></td>
-		</tr>
-		
-		<tr>
-			<td width="70%">
-				<h3><b>Received the above goods in good condition.</b></h3>
-				</td> 
-				<td width="30%"><h3> For ASPEN STEEL (P) LTD.</h3></td>
-		</tr>
-		<tr>
-			<td>
-				
-				</td> 
-		</tr>
-		
-		<tr>
-			<td width="70%">
-				<h3><b>Receivers Signature</b></h3>
-				</td> 
-				<td width="30%"><h3> Manager/Director</h3></td>
-		</tr>
-		
-		</table>';
-		$pdf->writeHTML($html, true, 0, true, true);
-		$pdf->Ln();
-		$pdf->lastPage();
-		$pdf->Output($pdfname, 'I');
+<tr>
+	<td width="50%" align:"left"><b>Billed To :</b><br>To M/s., &nbsp; '.$party_name.' , '.$address_one.' &nbsp;'.$address_two.',&nbsp;'.$city.'<br><br>CGST Number:'.$cgstNumber.'
+	 </td>
+
+	<td width="50%" align:"right"><b>Shipped To :</b><br>
+		To M/s., &nbsp; '.$party_name.' , '.$address_one.' &nbsp;'.$address_two.',&nbsp;'.$city.'
+	</td>
+	</tr>
+
+	<tr>
+	<td align="center" width="100%"><hr color=#00CC33 size=5 width=100></td>
+</tr>
+<tr>
+<td width="40%" align:"right"><h3>Invoice No: '.$invoiceno.'</h3></td>
+<td width="30%" align:"center"><h3>Dated: '.$billdate.'</h3></td>
+<td width="30%" align:"left"><h3>EWAYBILL No: '.$invoicedate.'</h3></td>
+	</tr>
+</table>';
+
+$html .= '<table cellspacing="0" cellpadding="2" border="0px" width="100%">
+<tr>
+	<td align="center" width="100%"><hr color=#00CC33 size=5 width=100></td>
+</tr>
+<tr>
+	
+	<th style="font-weight:bold"  width="25%"><h4>Description of goods
+	</h4></th>
+	<th style="font-weight:bold"  width="7.96%"><h4>Su DC No</h4></th>
+	<th style="font-weight:bold"  width="7.96%"><h4>Su DC Date</h4></th>
+	<th style="font-weight:bold"  width="7.96%"><h4>Coil ID</h4></th>
+	<th style="font-weight:bold"  width="7.96%"><h4>Our DC No</h4></th>
+	<th style="font-weight:bold"  width="7.96%"><h4>Our DC Date</h4></th>
+	<th style="font-weight:bold"  width="7.96%"><h4>Vehicle</h4></th>
+	<th style="font-weight:bold"  width="8.60%"><h4>Quantity</h4></th>
+	<th style="font-weight:bold"  width="8.60%"><h4>Rate</h4></th>
+	<th style="font-weight:bold"  width="10%"><h4>Amount</h4></th>
+</tr>
+
+<tr>
+	<td align="center" width="100%"><hr color=#00CC33 size=5 width=100></td>
+</tr>';
+
+if($queryBundleDetails->num_rows() > 0) {
+	foreach($queryBundleDetails->result() as $rowitem) {
+		$html .= '<tr>
+					<td width="25%">'.$rowitem->description.'</td>
+					<td width="7.96%">'.$rowitem->rate.'</td>
+					<td width="7.96%">'.$rowitem->rate.'</td>
+					<td width="7.96%">'.$rowitem->rate.'</td>
+					<td width="7.96%">'.$rowitem->rate.'</td>
+					<td width="7.96%">'.$rowitem->rate.'</td>
+					<td width="7.96%">'.$rowitem->rate.'</td>
+					<td width="8.60%">'.$rowitem->rate.'</td>
+					<td width="8.60%">'.$rowitem->rate.'</td>
+					<td width="10%">'.ceil($rowitem->amount).'</td>
+					</tr>';
 	}
+}
+$html .= '</table>';
+$html .= '<table width="100%" cellspacing="0" cellpadding="2" border="0">
+<tr>
+<td width="25%"></td>
+<td width="7.96%"></td>
+<td width="7.96%"></td>
+<td width="7.96%"></td>
+<td width="7.96%"></td>
+<td width="7.96%"></td>
+<td width="7.96%"></td>
+<td width="8.60%"></td>
+<td width="8.60%"></td>
+<td width="10%"></td>
+</tr>
+
+
+<tr>
+<td width="25%"></td>
+<td width="7.96%"></td>
+<td width="7.96%"></td>
+<td width="7.96%"></td>
+<td width="7.96%"></td>
+<td width="7.96%"></td>
+<td width="7.96%"></td>
+<td width="8.60%"></td>
+<td width="8.60%"></td>
+<td width="10%"></td>
+</tr>
+
+
+<tr>
+<td width="25%"></td>
+<td width="7.96%"></td>
+<td width="7.96%"></td>
+<td width="7.96%"></td>
+<td width="7.96%"></td>
+<td width="7.96%"></td>
+<td width="7.96%"></td>
+<td width="8.60%"></td>
+<td width="8.60%"></td>
+<td width="10%"></td>
+</tr>
+
+<tr>
+<td width="25%"></td>
+<td width="7.96%"></td>
+<td width="7.96%"></td>
+<td width="7.96%"></td>
+<td width="7.96%"></td>
+<td width="7.96%"></td>
+<td width="7.96%"></td>
+<td width="8.60%"></td>
+<td width="8.60%"></td>
+<td width="10%"></td>
+</tr>
+
+<tr>
+<td width="25%"></td>
+<td width="7.96%"></td>
+<td width="7.96%"></td>
+<td width="7.96%"></td>
+<td width="7.96%"></td>
+<td width="7.96%"></td>
+<td width="7.96%"></td>
+<td width="8.60%">'.$weihtamount.'</td>
+<td width="8.60%"></td>
+<td width="10%"></td>
+</tr>
+
+<tr>
+<td align="center" width="100%"><hr color=#00CC33 size=5 width=100></td>
+</tr>';
+
+$html .= '<table width="100%" cellspacing="0" cellpadding="5" border="0">
+
+<tr>
+<td width="50%" align="center"><b>Bank Details:</b></td>
+<td width="25%" align="right"><b>Sub Total:</b></td>
+<td width="25%" align="right">'.$weihtamount.'</td>
+</tr>
+
+<tr>
+<td width="50%" align="left">Bank Name  : '.$this->companyData->bank.'</td>
+<td width="25%" align="right">CGST @ 9%</td>
+<td width="25%" align="right">'.($servicetax/2).'</td>
+</tr>
+
+<tr>
+<td width="50%" align="left">Branch Name : '.$this->companyData->branch.'</td>
+<td width="25%" align="right">SGST @ 9%</td>
+<td width="25%" align="right">'.($servicetax/2).'</td>
+</tr>
+
+<tr>
+<td width="50%" align="left">A/C No : '.$this->companyData->account.'</td>
+<td width="25%" align="right"></td>
+<td width="25%" align="right">'.$weihtamount.'</td>
+</tr>
+
+<tr>
+<td width="50%" align="left">IFSC Code   : '.$this->companyData->ifsc.'</td>
+<td width="25%" align="right">Total</td>
+<td width="25%" align="right">'.$grandtotal.'</td>
+</tr>
+
+</table>
+<tr>
+<td align="center" width="100%"><hr color=#00CC33 size=5 width=100></td>
+</tr>';
+
+$html .= '<table width="100%" cellspacing="0" cellpadding="5" border="0">
+
+<tr>
+<td width="20%"  align="left"><b>Rupees:</b></td>
+<td width="80%"  align="right"><b>'.$container.'</b>&nbsp;</td>
+</tr>
+</table>';
+
+$html .= '<table cellspacing="0" cellpadding="2" border="0px" width="100%">
+<tr>
+	<td align="center" width="100%"><hr color=#00CC33 size=5 width=100></td>
+</tr>
+<tr>
+	
+	<th style="font-weight:bold"  width="40%" align="centre"><h4>HSN/SAC
+	</h4></th>
+	<th style="font-weight:bold"  width="15%" align="centre"><h4>Taxable<br/>Value</h4></th>
+	<th style="font-weight:bold"  width="15%" align="centre"><h4>Central Tax</h4></th>
+	<th style="font-weight:bold"  width="15%" align="centre"><h4>State Tax</h4></th>
+	<th style="font-weight:bold"  width="15%" align="centre"><h4>Total
+	<br/>Tax Amount
+	</h4></th>
+</tr>	
+
+<tr>
+	<td align="center" width="100%"><hr color=#00CC33 size=5 width=100>
+	</td>
+</tr>';		
+
+if($queryBundleDetails->num_rows() > 0) {
+	foreach($queryBundleDetails->result() as $rowitem) {
+		$html .= '<tr>
+					<td width="40%" align="left">998898</td>
+					<td width="15%">'.$rowitem->rate.'</td>
+					<td width="15%">'.$rowitem->rate.'</td>
+					<td width="15%">'.$rowitem->rate.'</td>
+					<td width="15%">'.$rowitem->rate.'</td>				
+					</tr>
+
+					<tr>
+					<td width="40%" align="right">TOTAL</td>
+					<td width="15%">'.$rowitem->rate.'</td>
+					<td width="15%">'.$rowitem->rate.'</td>
+					<td width="15%">'.$rowitem->rate.'</td>
+					<td width="15%">'.$rowitem->rate.'</td>				
+					</tr>
+
+<tr>
+	<td align="center" width="100%"><hr color=#00CC33 size=5 width=100>
+	</td>
+</tr>';	
+	}
+}
+$html .= '</table>';
+
+
+$html .= '<table width="100%" cellspacing="0" cellpadding="2" border="0">
+
+<tr>
+<td width="20%"  align="left"><b>Rupees:</b></td>
+<td width="80%"  align="right"><b>'.$container.'</b>&nbsp;</td>
+</tr>
+
+<tr>
+	<td align="center" width="100%"><hr color=#00CC33 size=5 width=100>
+	</td>
+</tr>
+</table>';
+
+$html .= '<table width="100%" cellspacing="0" cellpadding="2" border="0">
+
+<tr>
+<td width="100%"  align="center"><h3>NOT FOR SALE. JOB WORK ONLY</h3>
+</td>
+</tr>
+
+<tr>
+<td width="100%"  align="left"><b>Notes:</b><br/>BEING CUTTING CHARGES FOR YOUR HR COILS/BUMDELS</td>
+</tr>
+</table>
+
+<tr>
+<td align="center" width="100%"><hr color=#00CC33 size=5 width=100>
+</td>
+</tr>';
+
+$html .= '<table width="100%" cellspacing="0" cellpadding="2" border="0">
+
+<tr>
+<td width="20%"  align="left"><b>Prepared By</b></td>
+<td width="20%"  align="center"><b>Checked By</b></td>
+<td width="60%" align="right"><b>For '.$this->companyData->company_name.'.</b></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+
+<tr>
+<td width="100%" align="right"><b>Authorised Signature</b></td>
+</tr>
+
+</table>';
+
+$pdf->writeHTML($html, true, 0, true, true);
+$pdf->Ln();
+$pdf->lastPage();
+if($returnPdf) {
+$pdf->Output($pdfname, 'F');
+return $pdfname;
+} else
+$pdf->Output($pdfname, 'I');
+}
 
 	
 

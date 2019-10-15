@@ -123,7 +123,7 @@ class Quality_reports_model extends Base_module_model {
       $pdf->SetSubject('Quality Report');
       $pdf->SetKeywords('Aspen, quality, report, slitting');
       // set default header data
-      $pdf->SetHeaderData('', '', 'Slitting Inspection Report', 'Prepared on : '.date('d-m-Y',strtotime($vars['slit_coil_details']->created_on)).' by ASPEN STEEL PVT LTD');
+      $pdf->SetHeaderData('', '', 'Slitting Inspection Report', 'Prepared on : '.date('d-m-Y',strtotime($vars['slit_coil_details']->created_on)).' by INTERNATIONAL STEEL PROCESSORS');
       $pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
       $pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
       $pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
