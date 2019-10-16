@@ -5,21 +5,33 @@ class Billing extends Fuel_base_controller {
 
 	public $nav_selected =  'billing';
 	public $view_location = 'billing';
+	private $billing;
 	private $data;
+	private $sdata;
+	private $sltdata;
+	private $dirdata;
+	private $semidata;
+	private $recdata;
 	private $partyname;
 	private $partyid;
 	private $nsno;
 	private $processchk;
 	private $totalweight;
-
+	private $qdata;
+	private $updata;
+	private $adata;
+	private $ldata;
+	private $widata;
+	private $vdata; 
+	private $hdata;
+	private $finalbillgenerateb;
+	
 	function __construct()
 	{
 		parent::__construct();
 		$this->config->load('billing');
 		$this->load->language('billing');
-        $this->load->library('session');
-
-        $this->billing_instruction = $this->config->item('billing');
+		$this->billing_instruction = $this->config->item('billing');
 		$this->load->module_model(BILLING_FOLDER, 'billing_model');
 		$this->data = $this->billing_model->example();
 		if(isset($this->data)) {
@@ -47,7 +59,7 @@ class Billing extends Fuel_base_controller {
 			$vars['nsno']= $this->nsno;
 			$vars['slno']= $this->slno;
 			$vars['recno']= $this->recno;
-			$vars['weight']= round($this->weight);
+			$vars['weight']= $this->weight;
 			$vars['processchk']= $this->processchk;
 			$vars['servicetaxpercent'] = $this->billing_model->getServiceTaxPercent();
 
@@ -567,7 +579,7 @@ class Billing extends Fuel_base_controller {
 		if (!empty($_POST)){
 			$this->load->module_model(BILLING_FOLDER, 'billing_model');
 
-			$savebilldata = $this->billing_model->savebilldetails_model($_POST['billid'],$_POST['partyid'],$_POST['txtamount'],$_POST['txttotalweight'],$_POST['txtscrap'],$_POST['txtoutward_num'],$_POST['txttotalpcs'],$_POST['mat_desc'],$_POST['thic'],$_POST['actualnumberbundle'],$_POST['pname'],$_POST['wid'],$_POST['len'],$_POST['wei'],$_POST['txttotallength'],$_POST['txtweighttotal'],$_POST['txtwidthtotal'],$_POST['txtadditional_type'],$_POST['txtamount_mt'],$_POST['txtnsubtotal'],$_POST['txtservicetax'],$_POST['txteductax'],$_POST['txtsecedutax'],$_POST['txtRateTotal'],$_POST['txtgrandtotal'],$_POST['container'],$_POST['driverContact']);
+			$savebilldata = $this->billing_model->savebilldetails_model($_POST['billid'],$_POST['billdate'],$_POST['partyid'],$_POST['txtamount'],$_POST['txttotalweight'],$_POST['txtscrap'],$_POST['txtoutward_num'],$_POST['txttotalpcs'],$_POST['mat_desc'],$_POST['thic'],$_POST['actualnumberbundle'],$_POST['pname'],$_POST['wid'],$_POST['len'],$_POST['wei'],$_POST['txttotallength'],$_POST['txtweighttotal'],$_POST['txtwidthtotal'],$_POST['txtadditional_type'],$_POST['txtamount_mt'],$_POST['txtnsubtotal'],$_POST['txtservicetax'],$_POST['txteductax'],$_POST['txtsecedutax'],$_POST['txtRateTotal'],$_POST['txtgrandtotal'],$_POST['container'],$_POST['driverContact']);
 			if(empty($arr)) echo 'Success'; else echo 'Unable to save';
 		} else{
 			//redirect(fuel_uri('#'));
@@ -671,7 +683,7 @@ class Billing extends Fuel_base_controller {
 			$cust_rm = $_POST['cust_rm'];
 	   }
 	  $this->load->module_model(BILLING_FOLDER, 'billing_model');
-	  $coillists = $this->billing_model->finalbillingmodel($partyid,$mat_desc,$thic,$actualnumberbundle,$cust_add,$cust_rm);
+	  $coillists = $this->billing_model->finalbillingmodel($partyid,$mat_desc,$thic,$_POST['actualnumberbundle'],$cust_add,$cust_rm);
 	   
 	   if(!empty($coillists)){
 			$files = array();
@@ -679,8 +691,6 @@ class Billing extends Fuel_base_controller {
 				$obj = new stdClass();
 				$obj->noofpcs = $cl->noofpcs;
 				$obj->weight = $cl->weight;
-				$obj->rate = $cl->rate;
-				$obj->amount = $cl->amount;
 				$files[] = $obj;
 			}
 			echo json_encode($files);exit;
@@ -873,15 +883,39 @@ class Billing extends Fuel_base_controller {
 	}
 	
  
-	function billing_direct(){
-	    $queryStr = $_SERVER['QUERY_STRING'];
-	    parse_str($queryStr, $args);
-	    $billid = $args["billid"];
-	    $partyid = $args["partyid"];
-	    $gstType = $args["gstType"];
+		function billing_direct(){
+		//print_r($_POST); die();
+	 $queryStr = $_SERVER['QUERY_STRING'];
+        parse_str($queryStr, $args);
+        $billid = $args["billid"];
+		$partyid = $args["partyid"];
+		$pname = $args["pname"];
+		$cust_add = $args["cust_add"];
+		$cust_rm = $args["cust_rm"];
+		$mat_desc = $args["mat_desc"];
+		$thic = $args["thic"];
+		$wid = $args["wid"];
+		$len = $args["len"];
+		$wei = $args["wei"];
+		$inv_no = $args["inv_no"];
+		$totalweight_check = $args["totalweight_check"];
+		$totalrate = $args["totalrate"];
+		$totalamt = $args["totalamt"];
+		$txthandling = $args["txthandling"];
+		$txtadditional_type = $args["txtadditional_type"];
+		$txtamount_mt = $args["txtamount_mt"];
+		$txtoutward_num = $args["txtoutward_num"];
+		$txtscrap = $args["txtscrap"];
+		$txtservicetax = $args["txtservicetax"];
+		$txteductax = $args["txteductax"];
+		$txtsecedutax = $args["txtsecedutax"];
+		$txtgrandtotal = $args["txtgrandtotal"];
+		$container = $args["container"];
+		$gstType = $args["gstType"];
 
-	    $this->load->module_model(BILLING_FOLDER, 'billing_model');
-	    $billing_direct = $this->billing_model->billing_direct($billid,$partyid,$gstType);
+	$this->load->module_model(BILLING_FOLDER, 'billing_model');
+	$billing_direct = $this->billing_model->billing_direct($billid,$partyid,$pname,$cust_add,$cust_rm,$mat_desc,$thic,$wid,$len,$wei,$inv_no,$totalweight_check,$totalrate,$totalamt,$txthandling,$txtadditional_type,$txtamount_mt,$txtoutward_num,$txtscrap,$txtservicetax,$txteductax,$txtsecedutax,$txtgrandtotal,$container,$gstType);
+	
 	}
 	
 	
@@ -986,7 +1020,7 @@ class Billing extends Fuel_base_controller {
 	
 	function directbillingbill() {
 		if (!empty($_POST)){
-			$directbill = $this->billing_model->directbillingbill($_POST['billid'],$_POST['partyid'],$_POST['pname'],$_POST['cust_add'],$_POST['cust_rm'],$_POST['mat_desc'],$_POST['thic'],$_POST['wid'],$_POST['len'],$_POST['wei'],$_POST['inv_no'],$_POST['rate'],$_POST['invoicedate'],$_POST['billdate'],$_POST['totalweight_check'],$_POST['totalrate'],$_POST['totalamt'],$_POST['txthandling'],$_POST['txtadditional_type'],$_POST['txtamount_mt'],$_POST['txtoutward_num'],$_POST['txtscrap'],$_POST['txtservicetax'],$_POST['txteductax'],$_POST['txtsecedutax'],$_POST['txtgrandtotal'],$_POST['container'],$_POST['driverContact']);
+			$directbill = $this->billing_model->directbillingbill($_POST['billid'],$_POST['partyid'],$_POST['pname'],$_POST['cust_add'],$_POST['cust_rm'],$_POST['mat_desc'],$_POST['thic'],$_POST['wid'],$_POST['len'],$_POST['wei'],$_POST['inv_no'],$_POST['totalweight_check'],$_POST['totalrate'],$_POST['totalamt'],$_POST['txthandling'],$_POST['txtadditional_type'],$_POST['txtamount_mt'],$_POST['txtoutward_num'],$_POST['txtscrap'],$_POST['txtservicetax'],$_POST['txteductax'],$_POST['txtsecedutax'],$_POST['txtgrandtotal'],$_POST['container'],$_POST['driverContact']);
 			if(empty($arr)) echo 'Success'; else echo 'Unable to save';
 		} else{
 			//redirect(fuel_uri('#'));

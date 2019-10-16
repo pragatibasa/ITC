@@ -40,8 +40,8 @@ class customer_inward_model extends Base_module_model {
   LEFT JOIN aspen_tblmatdescription  ON aspen_tblmatdescription.nMatId=aspen_tblinwardentry.nMatId 
 		LEFT JOIN aspen_tblpartydetails ON aspen_tblpartydetails .nPartyId=aspen_tblinwardentry.nPartyId 
 		where
-    aspen_tblpartydetails.nPartyName='".$partyname."' and aspen_tblinwardentry.dReceivedDate BETWEEN '".$frmdate."' AND '".$todate."' order by aspen_tblinwardentry.vIRnumber asc";
-		
+    aspen_tblpartydetails.nPartyName='".$partyname."' and aspen_tblinwardentry.dReceivedDate BETWEEN '".$frmdate."' AND '".$todate."' order by aspen_tblinwardentry.vIRnumber desc, aspen_tblinwardentry.dReceivedDate desc";
+	
 		$query = $this->db->query($sql);
 		
 		//echo $sql;
@@ -65,7 +65,7 @@ class customer_inward_model extends Base_module_model {
   LEFT JOIN aspen_tblmatdescription  ON aspen_tblmatdescription.nMatId=aspen_tblinwardentry.nMatId 
 		LEFT JOIN aspen_tblpartydetails ON aspen_tblpartydetails .nPartyId=aspen_tblinwardentry.nPartyId 
 		where
-    aspen_tblpartydetails.nPartyName='".$partyname."' and aspen_tblinwardentry	.dReceivedDate BETWEEN '".$frmdate."' AND '".$todate."' order by aspen_tblinwardentry.vIRnumber asc";
+    aspen_tblpartydetails.nPartyName='".$partyname."' and aspen_tblinwardentry	.dReceivedDate BETWEEN '".$frmdate."' AND '".$todate."' order by aspen_tblinwardentry.vIRnumber desc, aspen_tblinwardentry.dReceivedDate desc";
 		
     	$sqlTotalWeight =  "SELECT SUM( fQuantity ) as weight FROM aspen_tblinwardentry LEFT JOIN aspen_tblpartydetails ON aspen_tblpartydetails.nPartyId = aspen_tblinwardentry.nPartyId where aspen_tblpartydetails.nPartyName = '".$partyname."' and aspen_tblinwardentry.dReceivedDate BETWEEN '".$frmdate."' AND '".$todate."'";
 		
@@ -93,12 +93,14 @@ class customer_inward_model extends Base_module_model {
 		$html = '
 				<table width="100%"  cellspacing="0" cellpadding="5" border="0">
 					<tr>
-						<td width="100%"align="center" style="font-size:60px; font-style:italic; font-family: fantasy;"><h1>'.$this->companyData->company_name.'</h1></td>
+						<td width="100%"align="center" style="font-size:60px; font-style:italic; font-family: fantasy;"><h1>SHAROFF STEEL TRADERS</h1></td>
 					</tr>
 					<tr>
-						<td align="center" width="100%"><h4>Head Office At:'.$this->companyData->head_address.','.$this->companyData->branch_address.' <b>Email: '.$this->companyData->email.' </b></h4></td>
+						<td align="center" width="100%"><h4>Branch At: Plot No 29-A, Bidadi Industrial Area Abbanakuppe, Bidadi Hobli, Ramanagar Dist-562109<b>Email: sharoffsteel@gmail.com</b></h4></td>
 					</tr>
-					
+					<tr>
+						<td align="center" width="100%"><h4>Head Office At: #67/B, Timber Yard Lay Out, Mysore Road Bangalore – 560026</h4></td>
+					</tr>
 				</table>
 				<div align="center"><h2>CUSTOMERS MATERIAL INWARD REPORT BETWEEN DATES </h2></div>
 				<table width="100%" cellspacing="0" cellpadding="5" border="0">
@@ -139,7 +141,7 @@ class customer_inward_model extends Base_module_model {
 				<td align="center" >'.$rowitem->materialdescription.'</td>
 				<td align="right">'.$rowitem->Thickness.'</td>
 				<td align="right">'.$rowitem->Width.'</td>
-				<td align="right">'.$rowitem->Weight.'</td>
+				<td align="right">'.number_format((float)$rowitem->Weight,3).'</td>
 				<td align="right">'.$rowitem->Status.'</td>
 			</tr>';
 			}
@@ -160,7 +162,7 @@ class customer_inward_model extends Base_module_model {
 		$html .= '<table cellspacing="0" cellpadding="5" border="0.5">
 					<tr>
 						<td><h3>Total Weight</h3></td>
-						<td><h3>'.$queryTotalWeight->result()[0]->weight.' (in Kgs)</h3></td>
+						<td><h3>'.number_format((float)$queryTotalWeight->result()[0]->weight,3).' (in Tons)</h3></td>
 					</tr>
 				</table>';
 		
@@ -207,7 +209,7 @@ class customer_inward_model extends Base_module_model {
 
 	
 	function list_partyname($partyname = '') {	
-		$sql ="SELECT DATE_FORMAT(aspen_tblinwardentry.dReceivedDate, '%d-%m-%Y') as receiveddate, aspen_tblmatdescription.vDescription as description, aspen_tblinwardentry.fThickness as thickness, aspen_tblinwardentry.fWidth as width, aspen_tblinwardentry.fQuantity as weight, aspen_tblinwardentry.vStatus as status , aspen_tblinwardentry.vIRnumber as coilnumber,aspen_tblinwardentry.vprocess as process FROM aspen_tblinwardentry LEFT JOIN aspen_tblmatdescription ON aspen_tblmatdescription.nMatId = aspen_tblinwardentry.nMatId LEFT JOIN aspen_tblpartydetails ON aspen_tblpartydetails.nPartyId = aspen_tblinwardentry.nPartyId LEFT JOIN aspen_tblcuttinginstruction ON aspen_tblcuttinginstruction.vIRnumber = aspen_tblinwardentry.vIRnumber WHERE aspen_tblpartydetails.nPartyName='".$partyname."' group by aspen_tblinwardentry.vIRnumber order by aspen_tblinwardentry.dReceivedDate desc";
+		$sql ="SELECT DATE_FORMAT(aspen_tblinwardentry.dReceivedDate, '%d-%m-%Y') as receiveddate, aspen_tblmatdescription.vDescription as description, aspen_tblinwardentry.fThickness as thickness, aspen_tblinwardentry.fWidth as width, aspen_tblinwardentry.fQuantity as weight, aspen_tblinwardentry.vStatus as status , aspen_tblinwardentry.vIRnumber as coilnumber,aspen_tblinwardentry.vprocess as process FROM aspen_tblinwardentry LEFT JOIN aspen_tblmatdescription ON aspen_tblmatdescription.nMatId = aspen_tblinwardentry.nMatId LEFT JOIN aspen_tblpartydetails ON aspen_tblpartydetails.nPartyId = aspen_tblinwardentry.nPartyId LEFT JOIN aspen_tblcuttinginstruction ON aspen_tblcuttinginstruction.vIRnumber = aspen_tblinwardentry.vIRnumber WHERE aspen_tblmatdescription.vDescription='" . $description . "' group by aspen_tblinwardentry.vIRnumber order by aspen_tblinwardentry.dReceivedDate desc";
 		$query = $this->db->query($sql);
 		$arr='';
 		if ($query->num_rows() > 0)

@@ -137,21 +137,6 @@
 
 </fieldset>
 </form>
-
-
-
-<fieldset>
-<legend>Aditional Charges:</legend> 
-	<div class="pad-10">
-		<input type="text" id="txtadditional_type" name="txtadditional_type" value="" placeholder="New Additional Charge Type"/> 
-		&nbsp; 
-		<input type="text" id="txtamount_mt" name="txtamount_mt" value="0"/>
-    <br>
-    <input type="text" id="txtadditional_type1" name="txtadditional_type1" value="" placeholder="New Additional Charge Type"/> 
-    &nbsp; 
-    <input type="text" id="txtamount_mt1" name="txtamount_mt1" value="0"/> 
-	</div>
-</fieldset>
 <table cellpadding="0" cellspacing="0" border="0" width="100%">
 <tr>
 <td> 
@@ -182,7 +167,7 @@
 			</div>
 		
 <div class="pad-10">
-	Total: <input type="text" style="width:250px;" id="totalweight_checks" DISABLED /> &nbsp;&nbsp;&nbsp;<input type="text" style="width:250px;" id="totalrates" DISABLED/>&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" style="width:250px;" id="totalamtsslit"  DISABLED/>&nbsp;&nbsp;
+	Total: <input type="text" style="width:250px;" id="totalweight_checks" DISABLED /> &nbsp;&nbsp;&nbsp;
 </div>
 </fieldset>
 </form>
@@ -201,11 +186,11 @@
 	<script type="text/javascript">
   var doubleServiceTax = "<?php echo $servicetaxpercent;?>";
 function update(){
-    var bigNumArry = new Array('', ' Thousand', ' million', ' billion', ' trillion', ' quadrillion', ' quintillion');
+    var bigNumArry = ['', ' Thousand', ' million', ' billion', ' trillion', ' quadrillion', ' quintillion'];
 
     var output = '';
     var numString =   document.getElementById('txtgrandtotal').value;
-    var finlOutPut = new Array();
+    var finlOutPut = [];
 
     if (numString == '0') {
         document.getElementById('container').value = 'Zero';
@@ -271,8 +256,8 @@ function update(){
 
 //simple function to convert from numbers to words from 1 to 999
 function triConvert(num){
-    var Ones = new Array('', ' One', ' Two', ' Three', ' Four', ' Five', ' Six', ' Seven', ' Eight', ' Nine', ' Ten', ' eleven', ' twelve', ' thirteen', ' fourteen', ' fifteen', ' sixteen', ' seventeen', ' eighteen', ' nineteen');
-    var tens = new Array('', '', ' twenty', ' thirty', ' forty', ' fifty', ' sixty', ' seventy', ' eighty', ' ninety');
+    var Ones = ['', ' One', ' Two', ' Three', ' Four', ' Five', ' Six', ' Seven', ' Eight', ' Nine', ' Ten', ' eleven', ' twelve', ' thirteen', ' fourteen', ' fifteen', ' sixteen', ' seventeen', ' eighteen', ' nineteen'];
+    var tens = ['', '', ' twenty', ' thirty', ' forty', ' fifty', ' sixty', ' seventy', ' eighty', ' ninety'];
     var hundred = ' hundred';
     var output = '';
     var numString = num.toString();
@@ -303,12 +288,12 @@ function triConvert(num){
 
             <input type="hidden" size="80" id="container" DISABLED/>
 </div>
-<div align="left">
-  <!--<input class="btn btn-danger"  style="cursor: pointer;" id="txtcancelbill" type="button" value="Cancel Bill" onclick="cancelbill();" />-->
+<!-- <div align="left">
+  <input class="btn btn-danger"  style="cursor: pointer;" id="txtcancelbill" type="button" value="Cancel Bill" onclick="cancelbill();" />
   Select type of GST tax to be applied  <br>
   <input style="margin: 10px;" type="radio" class="gstType" name="gstType" value="Within">&nbsp; Within State</br>
   <input style="margin: 10px;" type="radio" class="gstType" name="gstType" value="Inter">&nbsp; Inter State
-</div>
+</div> -->
 
 <div align="right">
 	<input class="btn btn-success" style="cursor: pointer;" id="txtbillpreview" type="button" value="Save and Print Bill" onclick="functionpdfslitprint();" />
@@ -327,25 +312,25 @@ $(document).ready(function() {
 function numbertowords() {
  var junkVal=document.getElementById('txtgrandtotal').value;
  junkVal=Math.floor(junkVal);
- var obStr=new String(junkVal);
+ var obStr=String(junkVal);
  numReversed=obStr.split("");
  actnumber=numReversed.reverse();
 
- if(Number(junkVal) >=0){
-  //do nothing
- }
- else{
-  alert('wrong Number cannot be converted');
-  return false;
- }
- if(Number(junkVal)==0){
-  document.getElementById('container').value=obStr+''+'Rupees Zero Only';
-  return false;
- }
- if(actnumber.length>9){
-  alert('Oops!!!! the Number is too big to covertes');
-  return false;
- }
+//  if(Number(junkVal) >=0){
+//   //do nothing
+//  }
+//  else{
+//   alert('wrong Number cannot be converted');
+//   return false;
+//  }
+//  if(Number(junkVal)==0){
+//   document.getElementById('container').value=obStr+''+'Rupees Zero Only';
+//   return false;
+//  }
+//  if(actnumber.length>9){
+//   alert('Oops!!!! the Number is too big to covertes');
+//   return false;
+//  }
 
  var iWords=["Zero", " One", " Two", " Three", " Four", " Five", " Six", " Seven", " Eight", " Nine"];
  var ePlace=['Ten', ' Eleven', ' Twelve', ' Thirteen', ' Fourteen', ' Fifteen', ' Sixteen', ' Seventeen', ' Eighteen', ' Nineteen'];
@@ -353,7 +338,7 @@ function numbertowords() {
 
  var iWordsLength=numReversed.length;
  var totalWords="";
- var inWords=new Array();
+ var inWords=[];
  var finalWord="";
  j=0;
  for(i=0; i<iWordsLength; i++){
@@ -450,8 +435,8 @@ function numbertowords() {
 
 //simple function to convert from numbers to words from 1 to 999
 function triConvert(num){
-    var Ones = new Array('', ' One', ' Two', ' Three', ' Four', ' Five', ' Six', ' Seven', ' Eight', ' Nine', ' Ten', ' eleven', ' twelve', ' thirteen', ' fourteen', ' fifteen', ' sixteen', ' seventeen', ' eighteen', ' nineteen');
-    var tens = new Array('', '', ' twenty', ' thirty', ' forty', ' fifty', ' sixty', ' seventy', ' eighty', ' ninety');
+    var Ones = ['', ' One', ' Two', ' Three', ' Four', ' Five', ' Six', ' Seven', ' Eight', ' Nine', ' Ten', ' eleven', ' twelve', ' thirteen', ' fourteen', ' fifteen', ' sixteen', ' seventeen', ' eighteen', ' nineteen'];
+    var tens = ['', '', ' twenty', ' thirty', ' forty', ' fifty', ' sixty', ' seventy', ' eighty', ' ninety'];
     var hundred = ' hundred';
     var output = '';
     var numString = num.toString();
@@ -481,7 +466,7 @@ function triConvert(num){
 
  function cancelbill(){
 var partyid = $('#pid').val();
-var dataString =  'partyid='+partyid
+var dataString =  'partyid='+partyid;
 $.ajax({  
 	   type: "POST",  
 	   url : "<?php echo fuel_url('billing/slittingcancel');?>/",  
@@ -558,7 +543,7 @@ function functionpdfslitprint(){
 	var bundlenumbers = $('#txtbundleids').val();
   	var gstType = $('input[name=gstType]:checked').val();
 
-	var dataString = 'billid='+billid+'&partyid='+partyid+'&pname='+pname+'&cust_add='+cust_add+'&cust_rm='+cust_rm+'&mat_desc='+mat_desc+'&thic='+thic+'&wid='+wid+'&len='+len+'&wei='+wei+'&inv_no='+inv_no+'&totalweight_check='+totalweight_check+'&totalrate='+totalrate+'&totalamt='+totalamt+'&txthandling='+txthandling+'&txtadditional_type='+txtadditional_type+'&txtamount_mt='+txtamount_mt+'&txtoutward_num='+txtoutward_num+'&driverContact='+driverContact+'&txtscrap='+txtscrap+'&txtservicetax='+txtservicetax+'&txteductax='+txteductax+'&txtsecedutax='+txtsecedutax+'&txtgrandtotal='+txtgrandtotal+'&container='+container+'&txtslitsubtotal='+txtslitsubtotal+'&bundleNumbers='+bundlenumbers+'&txtadditional_type1='+txtadditional_type1+'&txtamount_mt1='+txtamount_mt1+'&gstType='+gstType;
+	var dataString = 'billid='+billid+'&partyid='+partyid+'&pname='+pname+'&cust_add='+cust_add+'&cust_rm='+cust_rm+'&mat_desc='+mat_desc+'&thic='+thic+'&wid='+wid+'&len='+len+'&wei='+wei+'&inv_no='+inv_no+'&totalweight_check='+totalweight_check+'&totalrate='+totalrate+'&totalamt='+totalamt+'&txthandling='+txthandling+'&txtadditional_type='+txtadditional_type+'&txtamount_mt='+txtamount_mt+'&txtoutward_num='+txtoutward_num+'&driverContact='+driverContact+'&txtscrap='+txtscrap+'&txtservicetax='+txtservicetax+'&txteductax='+txteductax+'&txtsecedutax='+txtsecedutax+'&txtgrandtotal='+txtgrandtotal+'&container='+container+'&txtslitsubtotal='+txtslitsubtotal+'&bundleNumbers='+bundlenumbers+'&txtadditional_type1='+txtadditional_type1+'&txtamount_mt1='+txtamount_mt1;
 	
 	$.ajax({  
 	   type: "POST",  
@@ -621,7 +606,7 @@ function totalamts(){
 	var mat_desc=$('#mat_desc').val();
 	var wei = $('#wei').val();
 	 var dataString = 'partyid='+partyid+'&cust_add='+cust_add+'&cust_rm='+cust_rm+'&txthandling='+txthandling+'&mat_desc='+mat_desc+'&wei='+wei;
-    $.ajax({
+$.ajax({  
 	   type: "POST",  
 	   url : "<?php echo fuel_url('billing/totalamts');?>/",  
 		data: dataString,
@@ -835,8 +820,8 @@ totalamtslit();
             var item = msg[i];
             var thisdata = {};
             thisdata["weight(in M/T)"] = item.weight;
-            thisdata["Rate(in M/T)"] = item.rate;
-            thisdata["Amount"] = item.amount;
+            // thisdata["Rate(in M/T)"] = item.rate;
+            // thisdata["Amount"] = item.amount;
            /* var edit = '<a class="ico_coil_edit" title="Edit" href="#" onClick=functionedit('+item.bundlenumber+','+item.notobebilled+')><img src="<?php echo img_path('iconset/ico_edit.png'); ?>" /></a>';
             thisdata["action"] =  edit;*/
 			//thisdata["action"] = '';

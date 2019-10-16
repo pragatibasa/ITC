@@ -15,7 +15,6 @@ class Partywise_register extends Fuel_base_controller {
 	function __construct()
 	{
 		parent::__construct();
-		
 		$this->config->load('partywise_register');
 		$this->load->language('partywise_register');
 		$this->Partywise_register = $this->config->item('Partywise_register');
@@ -24,11 +23,11 @@ class Partywise_register extends Fuel_base_controller {
 		$this->load->model('party_details_model');
 		$this->data = $this->Partywise_register_model->getPartyDetailsCredentials();
 		if(isset($this->data)) {
-			if(isset($this->data[0]))  {
-		}
-	}
+		    if(isset($this->data[0]))  {
+		    }
+	    }
 		
-}
+    }
 	
 	function index()
 	{
@@ -60,7 +59,7 @@ class Partywise_register extends Fuel_base_controller {
 		return $chkuser;
 	}
 	
-	function list_party($partyname = '') {	
+	function list_party($partyname = '') {
 		if(empty($partyname)) { 
 			$partyname = $_POST['party_account_name'];
 		}
@@ -70,12 +69,13 @@ class Partywise_register extends Fuel_base_controller {
 		foreach($containers as $container) {
 			$obj = new stdClass();
 			$obj->coilnumber = $container->coilnumber;
-			$obj->receiveddate = $container->receiveddate;
+		    $obj->receiveddate = $container->receiveddate;
 			$obj->description = $container->description;
+			$obj->grade = $container->grade;
 			$obj->thickness = $container->thickness;
 			$obj->width = $container->width;
-			$obj->weight = $container->weight;
-			$obj->pweight = round( $container->pweight );
+			$obj->weight = number_format((float) ($container->weight),3);
+			$obj->pweight = number_format((float) ($container->pweight),3);
 			$obj->status = $container->status;
 			$obj->process = $container->process;
 			$obj->ci = site_url('fuel/cutting_instruction').'/?partyid='.$container->coilnumber.'&partyname='.$partyname;
@@ -94,34 +94,6 @@ class Partywise_register extends Fuel_base_controller {
 		}
 	}
 	
-	function list_consolidated_party($partyname = '') {
-		if(empty($partyname)) { 
-			$partyname = $_POST['party_account_name'];
-		}
-		$this->load->model('coil_details_model');
-		$containers = $this->coil_details_model->list_consolidated_party($partyname);
-		if(!empty($containers)) {
-			foreach($containers as $container) {
-				$obj = new stdClass();
-				$obj->coilnumber = $container->coilnumber;
-				$obj->receiveddate = $container->receiveddate;
-				$obj->description = $container->description;
-				$obj->thickness = $container->thickness;
-				$obj->width = $container->width;
-				$obj->weight = $container->weight;
-				$obj->pweight = round( $container->pweight );
-				$obj->status = $container->status;
-				$obj->process = $container->process;
-				$obj->bi = site_url('fuel/consolidated_billing_instruction').'/?partyid='.$container->coilnumber.'&partyname='.$partyname.'&process='.$container->process;
-				$folders[] = $obj;
-			}
-			echo json_encode($folders);
-		} else {
-			$status = array("status"=>"No Results!");
-            echo json_encode($status);
-		}
-	}
-
 	function list_individualparty($partyname = '') {	
 		if(empty($partyname)) { 
 			$partyname = $_POST['party_individualaccount_name'];
@@ -136,8 +108,8 @@ class Partywise_register extends Fuel_base_controller {
 			$obj->description = $container->description;
 			$obj->thickness = $container->thickness;
 			$obj->width = $container->width;
-			$obj->weight = $container->weight;
-			$obj->pweight = $container->pweight;
+			$obj->weight = number_format((float) ($container->weight),3);
+			$obj->pweight = number_format((float) ($container->pweight),3);
 			$obj->status = $container->status;
 			$obj->process = $container->process;
 			$obj->ci = site_url('fuel/cutting_instruction').'/?partyid='.$container->coilnumber.'&partyname='.$partyname;
@@ -196,10 +168,10 @@ class Partywise_register extends Fuel_base_controller {
 					$obj->length = $child->length;
 					$obj->bundlenumber = $child->bundlenumber;
 					$obj->bundles = $child->bundles;
-					$obj->weight = $child->weight;
+					$obj->weight = number_format((float) ($child->weight),3);
 					$obj->status = $child->status;
-					$obj->balance = $child->balance;
-					$obj->balanceWeight = $child->balanceWeight;
+					$obj->balance = number_format((float) ($child->balance),3);
+					$obj->balanceWeight = number_format((float) ($child->balanceWeight),3);
 					$obj->process = $child->process;
 				} else if($child->process=='Recoiling'){
 					$obj->recoilnumber = $child->recoilnumber;
@@ -213,7 +185,7 @@ class Partywise_register extends Fuel_base_controller {
 					$obj->date = $child->date;
 					$obj->width = $child->width;
 					$obj->length = $child->length;
-					$obj->weight = $child->weight;
+					$obj->weight = number_format((float) ($child->weight),3);
 					$obj->status = $child->status;
 					$obj->process = $child->process;
 				}

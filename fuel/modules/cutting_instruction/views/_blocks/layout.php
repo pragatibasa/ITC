@@ -39,6 +39,7 @@
 				</td> 
 				<td>
 					<input id="wid" name="fWidth" type="text" DISABLED/> (in mm)
+					
 				</td>
 				<td>
 					<label><?=lang('length_txt')?></label>
@@ -57,8 +58,9 @@
 				<td>
 					<label><?=lang('weight_txt')?></label>
 				</td>
+				
 				<td> 
-					<input id="wei" name="fQuantity" type="text" DISABLED/> (in Kgs)
+					<input id="wei" name="fQuantity" type="text" DISABLED/> (in tons)				
 				</td>
 			</tr>
 		</table>
@@ -80,7 +82,11 @@
 		<div class="pad-10">
 			<div id="date_text_label"> Date </div>
 			<input type="text" id="date1" value="<?php echo date("Y-m-d"); ?>" />
-		</div>								
+		</div>	
+		<div class="pad-10">
+			<div id="cutting_reference_no_text_label"> Cutting Reference No </div>
+			<input id= "cuttingreferenceno" type="text"  name="cuttingreferenceno" /> 
+		</div>							
 		<div class="pad-10">
 			<div id="length_text_label"> Length </div>
 			<input id= "length" type="text"  name="Length" /> (in mm)
@@ -93,8 +99,9 @@
 			<input id= "rate" type="text"  name="Rate" onkeyup="doweight();" />
 		</div>
 		<div class="pad-10">
+		
 			<div id="bundle_weight_text_label"> Weight  </div>
-			<input id="bundleweight" type="text" name="bundle_weight" DISABLED />(in Kgs)
+			<input id="bundleweight" type="text" name="bundle_weight" DISABLED />(in tons)
 	<!--	<input type="button" value="Approximate Weight" id="weight_id" onclick="doweight();" />-->
 		</div>
 		<div class="pad-10">
@@ -122,7 +129,7 @@
 <td align="right">
 
 		<label>Total Weight</label>
-		<input id="totalweight_calcualation" type="text" DISABLED/>(in Kgs)  
+		<input id="totalweight_calcualation" type="text" DISABLED/>(in tons)  
 		&nbsp; &nbsp; &nbsp;
 		<input class="btn btn-danger" id="cancelcoil" type="button" value="Cancel" onClick="cancelcoil();"/> 
 		&nbsp; &nbsp; &nbsp;
@@ -151,7 +158,7 @@ $.ajax({
 		var msg3=eval(msg);
 		$.each(msg3, function(i, j){
 			 var weight = j.weight;
-			document.getElementById("totalweight_calcualation").value = weight;});
+			document.getElementById("totalweight_calcualation").value = parseFloat(weight).toFixed(3);});
 	   }  
 	}); 
 }
@@ -185,7 +192,7 @@ function loadfolderlist(account, accname) {
 			thisdata["processdate"] = item.processdate;
             thisdata["length(in mm)"] = item.length;
             thisdata["No of sheets"] = item.noofsheets;
-            thisdata["weight(in Kgs)"] = item.weight;
+            thisdata["weight(in Tons)"] = parseFloat(item.weight).toFixed(3);
             
             if( item.status !== 'Billed' && item.status !== 'Ready To Bill') {
 				var dl = '<a class="ico_coil_delete" title="Delete" href="'+item.dl+'" onClick=deleteItem('+item.bundlenumber+')><img src="<?php echo img_path('iconset/ico_cancel.png'); ?>" /></a>';
@@ -258,13 +265,6 @@ function deleteItem(pd){
     }
   }
 
-
-
-
-
-
-
-
 function radioload(b, p, l,bn)
 {
 	$("#edit").show();
@@ -308,7 +308,6 @@ function dobalanceradio()
 	var bundleweight = $('#bundleweight').val();
 	//var result= weight-(0.00785 *width*thickness*length)
 	//var resultbundle= (0.00000785 *width*thickness*length);
-
 	
 	var dataString = 'pid='+pid+'&bundlenumber='+bundlenumber+'&date1='+date1+'&length='+length+'&bundleweight='+bundleweight+'&rate='+rate;
 $.ajax({  
@@ -352,6 +351,8 @@ function doweight() {
 	var length = $('#length').val();
 	var rate = $('#rate').val();
 	var weight = $('#wei').val();
+	
+
 	//alert(width + ' - ' + thickness + ' - ' + length + ' - ' + rate + ' - ' + weight);
 	if(width == '' || thickness == '' || length == '' ){
 		$('#width').val('');
@@ -360,9 +361,9 @@ function doweight() {
 		alert("All fields are mandatory");
 	}
 	else{
-	var result= weight-(0.00000785 *width*thickness*length*rate)
-	var resultbundle= (0.00000785 *width*thickness*length*rate);
-	var resultbundle = Math.round(resultbundle).toFixed(3);
+	var result= weight-(0.00000000785*width*thickness*length*rate);
+	var resultbundle= (0.00000000785*width*thickness*length*rate);
+	var resultbundle = resultbundle.toFixed(3);
 	document.getElementById('bundleweight').value = resultbundle;
 	}
 }
@@ -378,30 +379,30 @@ function balance(){
 	var length = $('#length').val();
 	//var resultbundle= (0.00000785 *width*thickness*length*rate);
 	
-if(bal_radio.checked) {
+    if(bal_radio.checked) {
        // document.getElementById('rate').value = 'rate';
 		//document.getElementById('length').value='';
     }
 	var dataString = 'weight='+weight+'&pid='+pid;
-	
 	$.ajax({
-                type: 'POST',
-                url: "<?php echo fuel_url('cutting_instruction/weightcheck');?>",
-				data: dataString,
-				success: function(msg){  
-				var rate = (msg)/(0.00000785 *width*thickness*length);
-				var rate = Math.floor(rate);
-				document.getElementById('bundleweight').value=msg;
-				document.getElementById('rate').value=rate;
-				}
-            });
-	}
+        type: 'POST',
+        url: "<?php echo fuel_url('cutting_instruction/weightcheck');?>",
+        data: dataString,
+        success: function(msg){
+        var rate = Math.floor(parseFloat(msg)/(0.00000000785 *width*thickness*length));
+        document.getElementById('bundleweight').value = parseFloat(msg).toFixed(3);
+        document.getElementById('rate').value=rate;
+        }
+    });
+}
+
 function functionedit(){
 	var pid   =	$('#pid').val();
 	var bundlenumber = $('#bundlenumber').val();
 	var length = $('#length').val();
-	var rate = $('#rate').val();
-	var bundleweight = $('#bundleweight').val();
+	var rate = parseFloat($('#rate').val()).toFixed(3);
+	var bundleweight = parseFloat($('#bundleweight').val()).toFixed(3);
+
 	totalweight_check();	
 	if(bundlenumber == '' || length =='' || rate =='')
 	{

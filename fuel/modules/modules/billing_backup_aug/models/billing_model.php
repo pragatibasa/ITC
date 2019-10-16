@@ -2303,7 +2303,7 @@ $html .= '<table width="100%" cellspacing="0" cellpadding="2" border="0">
 </tr>
 
 <tr>
-<td width="100%"  align="left"><b>Notes:</b><br/>BEING CUTTING CHARGES FOR YOUR HR COILS/BUMDELS</td>
+<td width="100%"  align="left"><b>Notes:</b><br/>BEING CUTTING CHARGES FOR YOUR HR COILS/BUNDELS</td>
 </tr>
 </table>
 

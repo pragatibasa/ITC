@@ -1550,7 +1550,7 @@ function billgeneratemodelslit($coilno='',$partyname='',$description='',$lorryno
 		return $arr;
 	}*/
 
-	function savebilldetails_model($billid,$partyid,$txtamount,$txttotalweight,$txtscrap,$txtoutward_num,$txttotalpcs,$mat_desc,$thic,$actualnumberbundle,$pname,$wid,$len,$wei,$txttotallength,$txtweighttotal,$txtwidthtotal,$txtadditional_type,$txtamount_mt,$txtnsubtotal,$txtservicetax,$txteductax,$txtsecedutax,$txtRateTotal,$txtgrandtotal,$container,$driverContact) {
+	function savebilldetails_model($billid,$billdate, $partyid,$txtamount,$txttotalweight,$txtscrap,$txtoutward_num,$txttotalpcs,$mat_desc,$thic,$actualnumberbundle,$pname,$wid,$len,$wei,$txttotallength,$txtweighttotal,$txtwidthtotal,$txtadditional_type,$txtamount_mt,$txtnsubtotal,$txtservicetax,$txteductax,$txtsecedutax,$txtRateTotal,$txtgrandtotal,$container,$driverContact) {
 
 		$sqlServiceTaxNAddressDetails = "select nPercentage from aspen_tbltaxdetails where vTypeOfTax = 'SERVICE TAX'
 											union
@@ -1558,6 +1558,7 @@ function billgeneratemodelslit($coilno='',$partyname='',$description='',$lorryno
 										right join aspen_tblinwardentry on aspen_tblinwardentry.nPartyId = aspen_tblpartydetails.nPartyId
 										where  aspen_tblinwardentry.vIRnumber='$partyid'";
 
+	
 		$resObjServiceTaxDetails = $this->db->query($sqlServiceTaxNAddressDetails);
 		$serviceTaxPercent = $resObjServiceTaxDetails->result()[0]->nPercentage;
 		$strBillingAddress = $resObjServiceTaxDetails->result()[1]->nPercentage;
@@ -1568,7 +1569,7 @@ function billgeneratemodelslit($coilno='',$partyname='',$description='',$lorryno
 		left join aspen_tblmatdescription on aspen_tblmatdescription.nMatId=aspen_tblpricetype1.nMatId
 		left join aspen_tblinwardentry on aspen_tblinwardentry.nMatId=aspen_tblmatdescription.nMatId
 		left join aspen_tblbillingstatus on aspen_tblinwardentry.vIRnumber=aspen_tblbillingstatus.vIRnumber
-		where '".$thic."' between nMinThickness and nMaxThickness and aspen_tblmatdescription.vDescription= '".$mat_desc."' and aspen_tblinwardentry.vIRnumber='".$partyid."' and aspen_tblbillingstatus.nSno IN( ".$actualnumberbundle.") order by aspen_tblbillingstatus.nActualNo asc),'". $txtservicetax. "','". $txteductax. "','". $txtsecedutax. "','". $txtgrandtotal. "','". $txtscrap. "','". $txtoutward_num. "',(SELECT aspen_tblpartydetails.nPartyId  FROM aspen_tblpartydetails where aspen_tblpartydetails.nPartyName = '". $pname. "'),'Cutting','Billing','".$txttotalpcs."' ,'".$txtamount."','". $txtweighttotal. "','". $txtwidthtotal. "','". $txttotallength. "','". $txtadditional_type. "','". $txtamount_mt. "','". $txtnsubtotal. "','". $container. "',".$serviceTaxPercent.",'".$strBillingAddress."',".$txtRateTotal.",'".$driverContact."')";
+		where '".$thic."' between nMinThickness and nMaxThickness and aspen_tblmatdescription.vDescription= '".$mat_desc."' and aspen_tblinwardentry.vIRnumber='".$partyid."' and aspen_tblbillingstatus.nSno IN( ".$actualnumberbundle.") order by aspen_tblbillingstatus.nActualNo asc),'". $txtservicetax. "','". $txteductax. "','". $txtsecedutax. "','". $txtgrandtotal. "','". $txtscrap. "','". $txtoutward_num. "',(SELECT aspen_tblpartydetails.nPartyId  FROM aspen_tblpartydetails where aspen_tblpartydetails.nPartyName = '". $pname. "'),'Cutting','Billing','".$txttotalpcs."' ,'".$txtamount."','". $txtweighttotal. "','". $txtwidthtotal. "','". $txttotallength. "','". $txtadditional_type. "','". $txtamount_mt. "','". $txtnsubtotal. "','". $container. "',".$serviceTaxPercent.",'".$strBillingAddress."','".$txtRateTotal."','".$driverContact."')";
 
 		$sql54 = "Insert into aspen_hist_tbl_billdetails (
 		 nBillNo,dBillDate, vIRnumber, fTotalWeight, fWeightAmount, fServiceTax, fEduTax, fSHEduTax, fGrantTotal, nScrapSent, vOutLorryNo, nPartyId, vBillType, BillStatus, ntotalpcs, ntotalamount, ocwtamount, ocwidthamount, oclengthamount,vAdditionalChargeType,fAmount,nsubtotal,grandtot_words,fStatus)
@@ -2206,7 +2207,7 @@ function billgeneratemodelslit($coilno='',$partyname='',$description='',$lorryno
 
 		$sql = "Insert into aspen_tblbilldetails (
 		   nBillNo,dBillDate, vIRnumber, fTotalWeight, fWeightAmount, fServiceTax, fEduTax, fSHEduTax, fGrantTotal, nScrapSent, vOutLorryNo, nPartyId, vBillType, BillStatus, ntotalpcs, ntotalamount, ocwtamount, ocwidthamount, oclengthamount,vAdditionalChargeType,fAmount,nsubtotal,grandtot_words,dFinalRate, nServiceTaxPercent,tBillingAddress,vAdditionalChargeType1,fAmount1)
-		  VALUES('". $billid. "',now(),'". $partyid. "','". $totalweight_check. "','". $totalrate. "','". $txtservicetax. "','". $txteductax. "','". $txtsecedutax. "','". $txtgrandtotal. "','". $txtscrap. "','". $txtoutward_num. "',(SELECT aspen_tblpartydetails.nPartyId  FROM aspen_tblpartydetails where aspen_tblpartydetails.nPartyName = '". $pname. "'),'Slitting','Billing',0,$totalamt,'0','0','0','". $txtadditional_type. "','". $txtamount_mt. "','". $txtslitsubtotal. "','". $container. "','".$totalrate."',$serviceTaxPercent,'".$strBillingAddress."','".$txtadditional_type1."','".$txtamount_mt1."')";
+		  VALUES('". $billid. "',now(),'". $partyid. "','". $totalweight_check. "','". $totalrate. "','". $txtservicetax. "','". $txteductax. "','". $txtsecedutax. "','". $txtgrandtotal. "','". $txtscrap. "','". $txtoutward_num. "',(SELECT aspen_tblpartydetails.nPartyId  FROM aspen_tblpartydetails where aspen_tblpartydetails.nPartyName = '". $pname. "'),'Slitting','Billing',0,'$totalamt','0','0','0','". $txtadditional_type. "','". $txtamount_mt. "','". $txtslitsubtotal. "','". $container. "','".$totalrate."',$serviceTaxPercent,'".$strBillingAddress."','".$txtadditional_type1."','".$txtamount_mt1."')";
 
 		$sql12="UPDATE aspen_tblbillingstatus SET vBillingStatus='Billed' WHERE vIRnumber='".$partyid."' and nSno IN ( $bundleIds )";
 
@@ -2685,7 +2686,7 @@ function finalbillgeneratemodel($partyid='',$actualnumberbundle='',$cust_add='',
 			</tr>
 
 		<tr>
-			<td width="100%"  align="left"><b>Notes:</b><br/>BEING CUTTING CHARGES FOR YOUR HR COILS/BUMDELS</td>
+			<td width="100%"  align="left"><b>Notes:</b><br/>BEING CUTTING CHARGES FOR YOUR HR COILS/BUNDELS</td>
         </tr>
 			</table>
 
@@ -3194,7 +3195,7 @@ $html .= '<table width="100%" cellspacing="0" cellpadding="2" border="0">
 </tr>
 
 <tr>
-<td width="100%"  align="left"><b>Notes:</b><br/>BEING CUTTING CHARGES FOR YOUR HR COILS/BUMDELS</td>
+<td width="100%"  align="left"><b>Notes:</b><br/>BEING CUTTING CHARGES FOR YOUR HR COILS/BUNDELS</td>
 </tr>
 </table>
 
@@ -4641,7 +4642,7 @@ $html .= '<table width="100%" cellspacing="0" cellpadding="2" border="0">
 </tr>
 
 <tr>
-<td width="100%"  align="left"><b>Notes:</b><br/>BEING CUTTING CHARGES FOR YOUR HR COILS/BUMDELS</td>
+<td width="100%"  align="left"><b>Notes:</b><br/>BEING CUTTING CHARGES FOR YOUR HR COILS/BUNDELS</td>
 </tr>
 </table>
 

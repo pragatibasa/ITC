@@ -65,7 +65,7 @@
 			</tr>	
 			<tr>
 				<td>
-					<label><?=lang('weight_txt')?> (in Kgs)</label>
+					<label><?=lang('weight_txt')?> (in tons)</label>
 				</td>
 				<td> 
 					<input id="wei" name="fQuantity" type="text" DISABLED/>
@@ -87,7 +87,7 @@
 <td width="40%" align="left" valign="top">	
 <form id="cisave" method="post" action="" class="cutting hide">
 	<div class="pad-10">
-			<div id="bundlenumber"> Bundlenumber </div>
+			<div id="bundlenumber"> Bundle Number </div>
 			<input id= "txtbundlenumber" type="text"  name="bundlenumber" />
 		
 	</div>
@@ -97,7 +97,7 @@
 		<input id="coilname" type="hidden" value="" name="coilname" />
 	</div>
 	<div class="pad-10">
-		<div id="weight"> Weight  (in Kgs)</div>
+		<div id="weight"> Weight  (in Tons)</div>
 		<input id= "txtweight" type="text" />
 	</div>
 	<div class="pad-10">
@@ -128,7 +128,7 @@
 		<input id= "txtWidth" type="text"/> 
 	</div>
 	<div class="pad-10">
-		<div id="weight"> Weight (in Kgs)</div>
+		<div id="weight"> Weight (in tons)</div>
 		<input id= "txtSlittingWeight" type="text" />
 	</div>
 	<div class="pad-10">
@@ -158,7 +158,7 @@
 <tr>
 <td align="left" colspan="2">
 	<div class="pad-10">
-		<label>Total Weight in Kg</label>
+		<label>Total Weight in Tons</label>
 		<input id="txtboxweight" type="text"  /> &nbsp; &nbsp; &nbsp;
 	<!--	<label>Scrap</label>
 		<input id="txtboxscrap" type="text" />(No of pcs) &nbsp; &nbsp; &nbsp;
@@ -234,7 +234,7 @@ function loadfolderlist(account, accname) {
 	            thisdata["date"] = item.date;
 	            thisdata["length(in mm)"] = item.length;
 	            thisdata["actualnumber"] = item.actualnumber;
-	            thisdata["bundleweight(in Kgs)"] = item.bundleweight;
+	            thisdata["bundleweight(in Tons)"] = item.bundleweight;
 	            thisdata["status"] = item.status;
 	            var edit = '<a class="ico_coil_edit" title="Edit" href="#" onClick=radioload('+item.bundlenumber+','+item.actualnumber+','+item.weight+')><img src="<?php echo img_path('iconset/ico_edit.png'); ?>" /></a>';
 	            thisdata["action"] =  edit;
@@ -405,7 +405,7 @@ function radioslitt(s,r,w){
 	$("#finishre").hide();}
 }
 
-var json =<?php echo($adata); ?>;
+var json =<?php echo ($adata); ?>;
 for(key in json){
 	if(json.hasOwnProperty(key))
     $('input[name='+key+']').val(json[key]);
@@ -513,12 +513,14 @@ function functionfinish() {
  var pname = $('#pname').val();
  var txtboxweight = $('#txtboxweight').val();
  var wei = $('#wei').val();
+ console.log(txtboxweight);
+ console.log(wei);
  if(!$("input[name='list']:checked").val())
  {
   alert('Please select the Radio button');
   return false;
  }
- else if(parseInt(txtboxweight) > parseInt(wei) ){
+ else if(parseFloat(txtboxweight) > parseFloat(wei) ){
 		alert('Sorry the Total weight of bundle is more then weight of coil pleae edit the weight to progress!!');
 	}
  else

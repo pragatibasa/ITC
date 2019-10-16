@@ -60,19 +60,26 @@ class inward_model extends Base_module_model {
 		return $checkquery->result()[0];
 	}
 
-	function inwardbillgeneratemodel($pname='',$pid='') {   
-	$sqlinward = "select aspen_tblpartydetails.nPartyName as partyname ,aspen_tblinwardentry.vIRnumber as coilnumber, DATE_FORMAT(dReceivedDate, '%d-%m-%Y')  as receiveddate ,aspen_tblmatdescription.vDescription as matdescription, aspen_tblinwardentry.fThickness as thickness, aspen_tblinwardentry.fWidth as width,aspen_tblinwardentry.fQuantity as Weight, aspen_tblinwardentry.vLorryNo AS Lorryno,aspen_tblinwardentry.vInvoiceNo as invoiceno, DATE_FORMAT(dInvoiceDate, '%d-%m-%Y') as invoicedate,aspen_tblinwardentry.vStatus as status, aspen_tblinwardentry.vRemark as remark from aspen_tblinwardentry left join aspen_tblpartydetails on aspen_tblpartydetails.nPartyId = aspen_tblinwardentry.nPartyId left join aspen_tblmatdescription on aspen_tblmatdescription.nMatId = aspen_tblinwardentry.nMatId  where aspen_tblinwardentry.vIRnumber ='".$pid."'";
-
+	function inwardbillgeneratemodel($pname='',$pid='') {
+	$sqlinward = "select aspen_tblpartydetails.nPartyName as partyname ,aspen_tblinwardentry.vIRnumber as coilnumber, DATE_FORMAT(dReceivedDate, '%d-%m-%Y')  as receiveddate ,aspen_tblinwardentry.jid as jid,aspen_tblinwardentry.ssid as ssid,aspen_tblinwardentry.fLength  as length,aspen_tblinwardentry.vStatus as status,aspen_tblinwardentry.vGrade as grade,aspen_tblinwardentry.vHeatnumber as heatnumber,aspen_tblmatdescription.vDescription as matdescription, aspen_tblinwardentry.fThickness as thickness, aspen_tblinwardentry.fWidth as width,aspen_tblinwardentry.fQuantity as Weight,aspen_tblinwardentry.vPhysicalWeight as PhysicalWeight,aspen_tblinwardentry.vDifferenceweight as DifferenceWeight, aspen_tblinwardentry.vLorryNo AS Lorryno,aspen_tblinwardentry.vInvoiceNo as invoiceno, DATE_FORMAT(dInvoiceDate, '%d-%m-%Y') as invoicedate,aspen_tblinwardentry.vStatus as status,aspen_tblinwardentry.vRemark as remark from aspen_tblinwardentry left join aspen_tblpartydetails on aspen_tblpartydetails.nPartyId = aspen_tblinwardentry.nPartyId left join aspen_tblmatdescription on aspen_tblmatdescription.nMatId = aspen_tblinwardentry.nMatId  where aspen_tblinwardentry.vIRnumber ='".$pid."'";
 		$querymain = $this->db->query($sqlinward);
 
 		//$invoice = 'CoilNumber_'.$pid;
 		$party_name = $querymain->row(0)->partyname;
 		$coil_number = $querymain->row(0)->coilnumber;
 		$received_date = $querymain->row(0)->receiveddate;
+		$jid= $querymain->row(0)->jid;
+		$ssid = $querymain->row(0)->ssid;
 		$mat_description = $querymain->row(0)->matdescription;
 		$thickness = $querymain->row(0)->thickness;
+		$length = $querymain->row(0)->length;
 		$width = $querymain->row(0)->width;
 		$Weight = $querymain->row(0)->Weight;
+		$PhysicalWeight = $querymain->row(0)->PhysicalWeight;
+		$DifferenceWeight = $querymain->row(0)->DifferenceWeight;
+		$status = $querymain->row(0)->status;
+		$grade = $querymain->row(0)->grade;
+		$heatnumber = $querymain->row(0)->heatnumber;
 		$remark = $querymain->row(0)->remark;
 		$Lorryno = $querymain->row(0)->Lorryno;
 		$invoicedate = $querymain->row(0)->invoicedate;
@@ -97,72 +104,100 @@ class inward_model extends Base_module_model {
 				<td align="center">
 					<h1><b>INWARD SLIP</b></h1>
 				</td>
-			</tr>	
-				<tr>
-				<td ></td>
+			</tr>
 				
-		</tr>
 			<tr>
 				<td align="left">
 				<h2><b>Party Name: </b> '.$party_name.'</h2></td>
-				
-			</tr><tr><td></td></tr>
+
+			</tr>
 			<tr>
 				<td align="left">
 				<h2><b>Coil Number: </b> '.$coil_number.'</h2></td>
-			</tr>			
-			<tr><td></td></tr>
+			</tr>
+			
 			<tr>
 				<td align="left">
-				<h2><b>Received Date: </b> '.$received_date.'</h2></td>
-			</tr><tr><td></td></tr>
+				<h2><b>Inward Date: </b> '.$received_date.'</h2></td>
+			</tr>
 			<tr>
 				<td align="left">
-				<h2><b>Invoice Number: </b> '.$invoiceno.'</h2></td>
-			</tr><tr><td></td></tr>
+				<h2><b>Jsw Coil id: </b> '.$jid.'</h2></td>
+			</tr>
 			<tr>
 				<td align="left">
-				<h2><b>Invoice Date: </b> '.$invoicedate.'</h2></td>
-			</tr><tr><td></td></tr>
+				<h2><b>SST Coil id: </b> '.$ssid.'</h2></td>
+			</tr>
+			<tr>
+				<td align="left">
+					<h2><b>Vehicle Number: </b> '.$Lorryno.'</h2></td>
+			</tr>
+			<tr>
+				<td align="left">
+				<h2><b>Invoice/Challan Number: </b> '.$invoiceno.'</h2></td>
+			</tr>
+			<tr>
+				<td align="left">
+				<h2><b>Invoice/Challan Date: </b> '.$invoicedate.'</h2></td>
+			</tr>
 			<tr>
 				<td align="left">
 					<h2><b>Material Description: </b> '.$mat_description.'</h2></td>
-			</tr><tr><td></td></tr>
-			<tr>
-				<td align="left">
-					<h2><b>Lorry Number: </b> '.$Lorryno.'</h2></td>
 			</tr>
-<tr><td></td></tr>
 			<tr>
 				<td align="left">
-					<h2><b>Thickness(mm) :</b> '.$thickness.'</h2></td>
-			</tr><tr><td></td></tr>
+					<h2><b>Width in mm :</b> '.$width.'</h2></td>
+			</tr>
 			<tr>
 				<td align="left">
-					<h2><b>Width(mm) :</b> '.$width.'</h2></td>
-			</tr><tr><td></td></tr>	
+					<h2><b>Thickness in mm :</b> '.$thickness.'</h2></td>
+			</tr>
 			<tr>
 				<td align="left">
-					<h2><b>Weight(Kgs) :</b> '.$Weight.'</h2></td>
-			</tr>	
+					<h2><b>Length in mm :</b> '.$length.'</h2></td>
+			</tr>
+			
+			
+			<tr>
+				<td align="left">
+					<h2><b>Weight in M/T :</b> '.number_format((float) $Weight, 3).'</h2></td>
+			</tr>
+			<tr>
+			<td align="left">
+				<h2><b>Physical Weight :</b> '.number_format((float) $PhysicalWeight, 3).'</h2></td>
+		   </tr>
+			<tr>
+			<td align="left">
+				<h2><b>Difference Weight :</b> '.number_format((float) $DifferenceWeight, 3).'</h2></td>
+		   </tr>
+		   <tr>
+			<td align="left">
+				<h2><b>Status :</b> '.$status.'</h2></td>
+		   </tr>
+		   <tr>
+			<td align="left">
+				<h2><b>Grade :</b> '.$grade.'</h2></td>
+		   </tr>
+		   <tr>
+			<td align="left">
+				<h2><b>Heat Number :</b> '.$heatnumber.'</h2></td>
+		   </tr>
+			<tr>
+			<td align="left">
+				<h2><b>Remark :</b> '.$remark.'</h2></td>
+		</tr>	
 
-			<tr>
-				<td align="left">
-					<h2><b>Remark :</b> '.$remark.'</h2></td>
-			</tr>	
 		</table>';
 		$pdf->writeHTML($html, true, 0, true, true);
 		$pdf->Ln();
 		$pdf->lastPage();
 		$pdf->Output($pdfname, 'I');
 	}
-	
-		
-	function saveinwardentry($pid,$pname, $date3,$lno,$icno,$date4,$coil,$fWidth, 
-							$fThickness,$fLength,$fQuantity,$status,$hno,$pna,$ppartyId,$parentBundleNumber,$grade,$cast,$remark)
+
+
+		function saveinwardentry($pid,$pname, $date3,$lno,$icno,$date4,$coil,$fWidth,
+							$fThickness,$fLength,$fQuantity,$pwid,$did,$status,$hno,$pna,$ppartyId,$parentBundleNumber,$grade,$cast,$date5,$jid,$ssid,$remark)
 	{
-
-
 		$updateSql = '';
 		if(!empty($ppartyId)) {
 			$ppartyId = $ppartyId;
@@ -177,13 +212,13 @@ class inward_model extends Base_module_model {
 		}
 
 		$sql = "Insert into aspen_tblinwardentry (
-		nPartyId,vIRnumber,dReceivedDate,dBillDate,vLorryNo,vInvoiceNo,dInvoiceDate,nMatId,fWidth,fThickness,fLength,fQuantity,vStatus,
-		vHeatnumber,vPlantname,fpresent,billedweight,dSysDate,vprocess,vParentIRNumber,vParentBundleNumber,vGrade,vCast,vRemark) 
-		VALUES((SELECT aspen_tblpartydetails.nPartyId FROM aspen_tblpartydetails where aspen_tblpartydetails.nPartyName = '". $pname. "'),  '". $pid. "','". $date3. "', CURDATE(),'". $lno. "','". $icno. "','". $date4. "',(SELECT aspen_tblmatdescription.nMatId  FROM aspen_tblmatdescription where aspen_tblmatdescription.vDescription = '". $coil. "'),'". $fWidth. "','". $fThickness. "','". $fLength. "','". $fQuantity. "','". $status. "','". $hno. "','". $pna. "','". $fQuantity. "',0,now(),'','".$ppartyId."','".$parentBundleNumber."','".$grade."','".$cast."','".$remark."' )";
-		
+		nPartyId,vIRnumber,dReceivedDate,dBillDate,vLorryNo,vInvoiceNo,dInvoiceDate,nMatId,fWidth,fThickness,fLength,fQuantity,vPhysicalWeight,vDifferenceweight, vStatus,
+		vHeatnumber,vPlantname,fpresent,billedweight,dSysDate,vprocess,vParentIRNumber,vParentBundleNumber,vGrade,vCast,jid,ssid,vRemark)
+		VALUES((SELECT aspen_tblpartydetails.nPartyId FROM aspen_tblpartydetails where aspen_tblpartydetails.nPartyName = '". $pname. "'),  '". $pid. "','". $date3. "', CURDATE(),'". $lno. "','". $icno. "','". $date5. "',(SELECT aspen_tblmatdescription.nMatId  FROM aspen_tblmatdescription where aspen_tblmatdescription.vDescription = '". $coil. "'),'". $fWidth. "','". $fThickness. "','". $fLength. "','". $fQuantity. "','". $pwid. "','". $did. "','". $status. "','". $hno. "','". $pna. "','". $fQuantity. "',0,now(),'','".$ppartyId."','".$parentBundleNumber."','".$grade."','".$cast."', '". $jid. "', '". $ssid. "','".$remark."' )";
+
 		$sql1 = "Insert into aspen_hist_tblinwardentry (
 		nPartyId,vIRnumber,dReceivedDate,dBillDate,vLorryNo,vInvoiceNo,dInvoiceDate,nMatId,fWidth,fThickness,fLength,fQuantity,vStatus,
-		vHeatnumber,vPlantname,fpresent,billedweight,dSysDate) 
+		vHeatnumber,vPlantname,fpresent,billedweight,dSysDate)
 		VALUES((SELECT aspen_tblpartydetails.nPartyId  FROM aspen_tblpartydetails where aspen_tblpartydetails.nPartyName = '". $pname. "'),  '". $pid. "','". $date3. "', CURDATE(),'". $lno. "','". $icno. "','". $date4. "',(SELECT aspen_tblmatdescription.nMatId  FROM aspen_tblmatdescription where aspen_tblmatdescription.vDescription = '". $coil. "'),'". $fWidth. "','". $fThickness. "','". $fLength. "','". $fQuantity. "','". $status. "','". $hno. "','". $pna. "','". $fQuantity. "',0,now())";
 
 		$query = $this->db->query($sql);
@@ -192,10 +227,10 @@ class inward_model extends Base_module_model {
 		$strSql = "select * from aspen_tblpartydetails where nPartyName = '". $pname. "'";
 		$query = $this->db->query($strSql);
 
-		if($query->result()[0]->nInwardUpdates) {
-			sendSMS($query->result()[0]->nInwardUpdates,'Received Coil No '.$pid.'%n'.$coil.' '.$fThickness.'mm x '.$fWidth.'mm '.$fQuantity.'kgs%nOn '.date('d/m/Y').'%nVehicle no '.$lno.'%nRef:'.$icno);
+        if($query->result()[0]->nInwardUpdates) {
+            sendSMS($query->result()[0]->nInwardUpdates,'Received Coil No '.$pid."\n".$coil.' '.$fThickness.'mm x '.$fWidth.'mm '.$fQuantity.'M/T'."\n".'On '.date('d/m/Y')."\n".'Vehicle no '.$lno."\n".'Ref:'.$icno);
 		}
-        if($query->result()[0]->vemailaddress) {
+		if($query->result()[0]->vemailaddress) {
             $strEmailHtml = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
                             <html xmlns="http://www.w3.org/1999/xhtml">
                             <head>
@@ -267,7 +302,6 @@ class inward_model extends Base_module_model {
 		return $arr;
 	}
 
-
 	function party() {
 		$sql = "select nPartyName from aspen_tblpartydetails";
 		$query = $this->db->query($sql);
@@ -296,9 +330,14 @@ class inward_model extends Base_module_model {
                             LEFT JOIN
                         aspen_tblpartydetails ap ON ap.nPartyId = ai.nPartyId
                             LEFT JOIN
-                        aspen_tblmatdescription am ON am.nMatId = ai.nMatId";
-
+                        aspen_tblmatdescription am ON am.nMatId = ai.nMatId
+                       order by ai.vIRnumber desc, ai.dReceivedDate desc";
         return $this->db->query($strSql);
+    }
+
+    function getTotalInwardWeight() {
+        $query = $this->db->query('select sum(fQuantity) as total_weight from aspen_tblinwardentry');
+        return $query->result()[0]->total_weight;
     }
 }
 

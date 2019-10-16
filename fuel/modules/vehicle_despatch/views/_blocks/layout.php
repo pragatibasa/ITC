@@ -76,7 +76,7 @@ $(function() {
     onSelect: function(datetext, inst) {
       $.ajax({
           type: "POST",
-          url: "<?php echo fuel_url('vehicle_inward/getOutwardVehiclesWithDate');?>",
+          url: "<?php echo fuel_url('vehicle_despatch/getOutwardVehiclesWithDate');?>",
           data: "date="+datetext,
           dataType: "json"
           }).done(function( msg ) {
@@ -97,7 +97,7 @@ $(function() {
     if(vehicleNumber) {
         $.ajax({
             type: "POST",
-            url: "<?php echo fuel_url('vehicle_inward/fetchWeighmentsWithDateAndVehicleNumber');?>",
+            url: "<?php echo fuel_url('vehicle_despatch/fetchWeighmentsWithDateAndVehicleNumber');?>",
             data: "vehicleNumber="+vehicleNumber+"&date="+$('#date').val(),
             dataType: "json"
         }).done(function( msg ) {
@@ -132,7 +132,7 @@ function displayWeighments() {
     $('#contentprocess').html(loading);
     $.ajax({
         type: "POST",
-        url: "<?php echo fuel_url('vehicle_inward/displayWeightmentDetails');?>",
+        url: "<?php echo fuel_url('vehicle_despatch/displayWeightmentDetails');?>",
         data: "date="+date+"&vehiclenumber="+vehiclenumber+"&weight="+weight,
         dataType: "json"
         }).done(function( msg ) {
@@ -184,7 +184,7 @@ function displayWeighments() {
 
     $.ajax({
         type: "POST",
-        url: "<?php echo fuel_url('vehicle_inward/getWeighmentDetails');?>",
+        url: "<?php echo fuel_url('vehicle_despatch/getWeighmentDetails');?>",
         data: "date="+$('#date').val()+"&vehiclenumber="+$('.vehiclenumber').val()+"&weight="+$('.weighmentWeight').val(),
         dataType: "json"
     }).done(function( msg ) {

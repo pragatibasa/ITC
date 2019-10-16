@@ -41,6 +41,7 @@ class customer_outward_model extends Base_module_model {
 			aspen_tblbilldetails.fTotalWeight as bweight, 
 			aspen_tblinwardentry.vIRnumber as coilnumber,
 			aspen_tblinwardentry.fThickness as thickness, 
+			aspen_tblinwardentry.vGrade as grade, 
 			aspen_tblinwardentry.fWidth as width, 
 			aspen_tblbilldetails.vOutLorryNo as vehicleno,
 			aspen_tblbilldetails.dBillDate  as billdate,

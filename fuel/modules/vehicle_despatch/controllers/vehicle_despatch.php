@@ -8,7 +8,7 @@ class vehicle_despatch extends Fuel_base_controller {
 
 	function __construct() {
 		parent::__construct();
-		$this->load->module_model(VEHICLE_DESPATCH_FOLDER, 'vehicle_inward_model');
+		$this->load->module_model(VEHICLE_DESPATCH_FOLDER, 'vehicle_despatch_model');
 	}
 
 	function index() {

@@ -38,7 +38,7 @@
 				<label><?=lang('weight')?></label>
 				</td> 
 				<td>
-				<input id="wei" name="wei" type="text"  value="<?php echo $weight; ?>"DISABLED />(in Kgs)
+				<input id="wei" name="fQuantity" type="text" DISABLED />(in tons)
 				</td>
 			</tr>
 			<tr>
@@ -68,6 +68,7 @@
 <script>
 
 var json =<?php echo($semidata); ?>;
+
 for(key in json){
 	if(json.hasOwnProperty(key))
     $('input[name='+key+']').val(json[key]);
@@ -89,7 +90,7 @@ function billingbuttondirect(){
 	var dataString = 'partyid='+partyid+'&partyname='+partyname+'&processchk=sf'+'&weight='+weight;
     $.ajax({
         type: 'POST',
-        success: function(){  alert('Preview Selected')
+        success: function(){  alert('Preview Selected');
 		setTimeout("location.href='<?= site_url('fuel/billing'); ?>/?"+ dataString+"'", 1000);
 		}
     });

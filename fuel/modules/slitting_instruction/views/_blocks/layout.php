@@ -52,7 +52,7 @@
 					<label><?=lang('weight_txt')?></label>
 				</td>
 				<td> 
-					<input id="wei" name="fQuantity" type="text" DISABLED/> (in Kgs)
+					<input id="wei" name="fQuantity" type="text" DISABLED/> (in tons)
 				</td>
 			</tr>
 		</table>
@@ -122,7 +122,7 @@
 </td>
 <td align="right">
 	<label>Total Weight</label>
-		<input id="txttotalwidth" type="text" DISABLED/> (in kgs)  
+		<input id="txttotalwidth" type="text" DISABLED/> (in tons)  
 		<input id="txtHiddentotalwidth" type="hidden" /> 
 		&nbsp; &nbsp; &nbsp;
 		<input type="button" onclick="cancelcoil();" value="Cancel" id="cancelcoil" class="btn btn-danger">
@@ -159,8 +159,8 @@ $(document).on( 'click', '.__fuel_edit_marker_new__',function() {
 	$(this).prev('span').remove();
 	var kgs = '';
 	if($(this).prev('.weight').val() !== '')
-		kgs = 'Kgs';
-	$(this).after('<span class="measure">'+kgs+'</span><span title="Delete" class="ico_delete" style="margin-top: 10px; height: 8px; margin-left: 5px; padding: 5px; position: absolute; width: 7px;cursor:pointer;"></span><input type="text" class="width" style="width:130px; margin-right: 4px;" name="width" id="width_v"><input class="count" style="width:60px;" type="text" name="count" value="1"/><input class="weight" type="text" name="weight" disabled style="width:130px;margin-left:4px;"/> <span class="measure"></span><span title="Click to add new width" style="position: absolute; padding: 8px; margin-left: 5px; margin-top: 7px;cursor: pointer;" class="__fuel_edit_marker_new__"></span>');
+		kgs = 'Tons';
+	$(this).after('<span class="measure">'+Tons+'</span><span title="Delete" class="ico_delete" style="margin-top: 10px; height: 8px; margin-left: 5px; padding: 5px; position: absolute; width: 7px;cursor:pointer;"></span><input type="text" class="width" style="width:130px; margin-right: 4px;" name="width" id="width_v"><input class="count" style="width:60px;" type="text" name="count" value="1"/><input class="weight" type="text" name="weight" disabled style="width:130px;margin-left:4px;"/> <span class="measure"></span><span title="Click to add new width" style="position: absolute; padding: 8px; margin-left: 5px; margin-top: 7px;cursor: pointer;" class="__fuel_edit_marker_new__"></span>');
 	$(this).next('.ico_delete').css('margin-left','4px');
 	$(this).remove();
 });
@@ -209,7 +209,7 @@ $(document).on( 'blur', '.width',function(event) {
 		$(this).next().next('.weight').val('0');
 		return false;
 	} else {
-		$(this).next().next('.weight').val(weight).next('.measure').text(' Kgs');
+		$(this).next().next('.weight').val(weight).next('.measure').text('Tons');
 	}
 });
 
@@ -224,7 +224,7 @@ $(document).on( 'blur', '.count',function(event) {
 		$(this).next('.weight').val('0');
 		return false;
 	} else {
-		$(this).next('.weight').val(weight).next('.measure').text(' Kgs');
+		$(this).next('.weight').val(weight).next('.measure').text(' Tons');
 	}
 });
 
@@ -244,7 +244,7 @@ function calculateWeights( currentWidth, currentCount ) {
 		return false;
 	}
 
-	var totalWeight	= Math.round(0.00000785*(currentWidth*currentCount)*thickness*parseFloat(length));
+	var totalWeight	= parseFloat(0.00000785*(currentWidth*currentCount)*thickness*parseFloat(length)).toFixed(3);
 	return totalWeight;
 }
 
@@ -308,7 +308,7 @@ function loadfolderlist(account, accname) {
             thisdata["Slitting date"] = item.Slittingdate;
             thisdata["length"] = item.length;
             thisdata["width"] = item.width;
-            thisdata["weight"] = item.weight;
+            thisdata["weight"] = parseFloat(item.weight).toFixed(3);
 
 			totalWeight += Number(item.weight);
 			totalwidth += Number(item.width);
@@ -317,7 +317,7 @@ function loadfolderlist(account, accname) {
 			var dl = '<a class="ico_coil_delete" title="Delete" href="#" onClick=deleteItem('+item.Sno+')><img src="<?php echo img_path('iconset/ico_cancel.png'); ?>" /></a>';
             thisdata["action"] = edit+' '+dl;
 			partydata.push(thisdata);
-			$('#txttotalwidth').val(Math.round(totalWeight));
+			$('#txttotalwidth').val(parseFloat(totalWeight).toFixed(3));
 			$('#txtHiddentotalwidth').val(totalwidth);
 			}
 			if (partydata.length) {

@@ -14,7 +14,7 @@
         $(".tabLinkpr").removeClass("activeLinkpr");
         $(this).addClass("activeLinkpr");
         $(".tabcontentpr").addClass("hidepr");
-        $("#"+tabeId+"-1").removeClass("hidepr")   
+        $("#"+tabeId+"-1").removeClass("hidepr");
         return false;	  
       });
     });  
@@ -23,9 +23,9 @@
 <div id="main_content" style="overflow:hidden;"> 
 <div class="tab-boxpr"> 
 	<div style="width:640px;">
-    <a href="javascript:;"><div class="tabLinkpr activeL inkpr" id="contpr-1" style="float:left;"><h1>Main CoilDetails</h1></div></a> 
-    <a href="javascript:;"><div class="tabLinkpr " id="contpr-2" style="float:left;"><h1>ProcessedDetail</h1></div></a>
-		<a href="javascript:;"><div class="tabLinkpr " id="contpr-3" style="float:left;"><h1>Consolidated Bill</h1></div></a>
+    <a href="javascript:"><div class="tabLinkpr activeL inkpr" id="contpr-1" style="float:left;"><h1>Main CoilDetails</h1></div></a>
+    <a href="javascript:"><div class="tabLinkpr " id="contpr-2" style="float:left;"><h1>ProcessedDetail</h1></div></a>
+	<a href="javascript:"><div class="tabLinkpr " id="contpr-3" style="float:left;"><h1>Consolidated Bill</h1></div></a>
 	</div>
 </div>
  
@@ -83,12 +83,13 @@
 	</div>
 </div>
 
+
 <?php //echo $totalweight; ?>
 <input id="partnamecheck" type="hidden" value="" name="partnamecheck" />
 	
 <div align="right">
 <label>Total Weight</label>
-		<input id="totalweight_calcualation" type="text" DISABLED/>(in Kgs)  
+       <input id="totalweight_calcualation" type="text" DISABLED/>(in tons)  
 		&nbsp; &nbsp; &nbsp;
 </div>
 <script language="javascript" type="text/javascript">
@@ -104,7 +105,8 @@ $.ajax({
 		var msg3=eval(msg);
 		$.each(msg3, function(i, j){
 			 var weight = j.weight;
-			document.getElementById("totalweight_calcualation").value = weight;});
+
+			 document.getElementById("totalweight_calcualation").value = parseFloat(weight).toFixed(3);});
 	   }  
 	}); 
 }
@@ -128,17 +130,18 @@ $.ajax({
 			mediaClass += '<table id="myTabels" class="tablesorter tablesorter-blue">';
 			mediaClass +='<thead>';
 			mediaClass +='<tr>';
-			mediaClass += '  <th>Select</th>';
-			mediaClass += '  <th>Coilnumber</th>';
-			mediaClass += '  <th>Received Date</th>';
-			mediaClass += '  <th>Description</th>';
-			mediaClass += '  <th>Thickness</th>';
-			mediaClass += '  <th>Width</th>';
-			mediaClass += '  <th>Weight</th>';
-			mediaClass += '  <th>Present Weight</th>';
-			mediaClass += '  <th>Status</th>';
-			mediaClass += '  <th>Process</th>';
-			mediaClass += '  <th>Action</th>';
+			mediaClass += '<th>Select</th>';
+			mediaClass += '<th>Coil Number</th>';
+			mediaClass += '<th>Inward Date</th>';
+			mediaClass += '<th>Material Description</th>';
+			mediaClass += '<th>Grade</th>';
+			mediaClass += '<th>Thickness</th>';
+			mediaClass += '<th>Width</th>';
+			mediaClass += '<th>Weight</th>';
+			mediaClass += '<th>Present Weight</th>';
+			mediaClass += '<th>Status</th>';
+			mediaClass += '<th>Process</th>';
+			mediaClass += '<th>Action</th>';
 			mediaClass +='</tr>';
 			mediaClass +='</thead>';
 			
@@ -151,10 +154,11 @@ $.ajax({
 				mediaClass += '<td>' + item.coilnumber + '</td>';
 				mediaClass += '<td>' + item.receiveddate + '</td>';
 				mediaClass += '<td>' + item.description + '</td>';
+				mediaClass += '<td>' + item.grade + '</td>';
 				mediaClass += '<td>' + item.thickness + '</td>';
 				mediaClass += '<td>' + item.width + '</td>';
-				mediaClass += '<td>' + item.weight + '</td>';
-				mediaClass += '<td>' + item.pweight + '</td>';
+				mediaClass += '<td>' + parseFloat(item.weight).toFixed(3) + '</td>';
+				mediaClass += '<td>' + parseFloat(item.pweight).toFixed(3) + '</td>';
 				mediaClass += '<td>' + item.status + '</td>';
 				mediaClass += '<td>' + item.process + '</td>';
 					
@@ -169,66 +173,6 @@ $.ajax({
 			 $("#myTabels").tablesorter();
 			totalweight_check();
 		});
-
-
-		//consolidated bills
-		var loading = '<div id="DynamicGridLoadingp_2"> '+
-            	   ' <img src="<?=img_path() ?>loading.gif" /><span> Loading Party List... </span> '+ 
-    	    	   ' </div>';
-	   $.ajax({
-        type: "POST",
-        url: "<?php echo fuel_url('partywise_register/list_consolidated_party');?>",
-		data: "party_account_name=" + account_id,
-        dataType: "json"
-        }).done(function( msg ) {
-	      //  obj = JSON.parse(msg);
-			var mediaClass ='';
-			mediaClass += '<table id="consolidated" class="tablesorter tablesorter-blue">';
-			mediaClass +='<thead>';
-			mediaClass +='<tr>';
-			mediaClass += '  <th>Select</th>';
-			mediaClass += '  <th>Coilnumber</th>';
-			mediaClass += '  <th>Received Date</th>';
-			mediaClass += '  <th>Description</th>';
-			mediaClass += '  <th>Thickness</th>';
-			mediaClass += '  <th>Width</th>';
-			mediaClass += '  <th>Weight</th>';
-			mediaClass += '  <th>Present Weight</th>';
-			mediaClass += '  <th>Status</th>';
-			mediaClass += '  <th>Process</th>';
-			mediaClass += '  <th>Action</th>';
-			mediaClass +='</tr>';
-			mediaClass +='</thead>';
-			
-			for (var i=0;i<msg.length;i++)
-			{
-				var item = msg[i];
-				mediaClass += '<tr>';
-				
-		 	mediaClass += '<td>' + '<input type="radio" id="radio_'+item.coilnumber+'" name="list" value="'+item.coilnumber+'"   onClick=showchild("'+item.coilnumber+'") />' + '</td>';
-				mediaClass += '<td>' + item.coilnumber + '</td>';
-				mediaClass += '<td>' + item.receiveddate + '</td>';
-				mediaClass += '<td>' + item.description + '</td>';
-				mediaClass += '<td>' + item.thickness + '</td>';
-				mediaClass += '<td>' + item.width + '</td>';
-				mediaClass += '<td>' + item.weight + '</td>';
-				mediaClass += '<td>' + item.pweight + '</td>';
-				mediaClass += '<td>' + item.status + '</td>';
-				mediaClass += '<td>' + item.process + '</td>';
-					
-			mediaClass += '<td>' + '<a title="Billing Instruction" href="'+item.bi+'"><span class="badge badge-important" style="color: #FFFFFF;">Consolidated Billing</span></a>' + '</td>';
-
-				mediaClass += '</tr>';			
-				
-			}
-			mediaClass += '</table>';
-			
-			$('#DynamicGridp_3').html(mediaClass);
-			 $("#consolidated").tablesorter();
-			totalweight_check();
-		});
-
-
 });
 
 function showchild(parentid) {
@@ -263,9 +207,9 @@ function showchild(parentid) {
                             thisdata["Length in (mm)"] = item.length;
                             thisdata["BundleNumber"] = item.bundlenumber;
                             thisdata["No of sheets"] = item.bundles;
-                            thisdata["Weight in (Kgs)"] = item.weight;
-                            thisdata["Balance"] = item.balance;
-                            thisdata["Balance Weight"] = item.balanceWeight;
+                            thisdata["Weight in (Tons)"] = parseFloat(item.weight).toFixed(3);
+                            thisdata["Balance"] = parseFloat(item.balance).toFixed(3);
+                            thisdata["Balance Weight"] = parseFloat(item.balanceWeight).toFixed(3);
                             thisdata["Status"] = item.status;
 							}
 							else if(item.process=='Recoiling'){
@@ -280,7 +224,7 @@ function showchild(parentid) {
 								thisdata["Date"] = item.date;
 								thisdata["Width in(mm)"] = item.width;
 								thisdata["Length in(mm)"] = item.length;
-								thisdata["Weight in(kgs)"] = item.weight;
+								thisdata["Weight in(Tons)"] = parseFloat(item.weight).toFixed(3);
 								thisdata["Status"] = item.status;
 							}
 							else if(item.process=='NULL'){

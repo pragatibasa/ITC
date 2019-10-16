@@ -11,3 +11,4 @@ $config['modules']['reports'] = array(
 	'permission' => 'vehicle_despatch',
 	'nav_selected' => 'vehicle_despatch'
 );
+$config['nav']['itc_steel']['vehicle_despatch'] = lang('module_vehicle_despatch');

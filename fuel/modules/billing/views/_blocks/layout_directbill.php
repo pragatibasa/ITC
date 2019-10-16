@@ -89,29 +89,29 @@
 </form>
 <table cellpadding="0" cellspacing="0" border="0" style="width:100%;">
 	<tr><td>
-	<fieldset>
+	<!-- <fieldset>
 <legend>Aditional Charges:</legend> 
 	<div class="pad-10">
-	<!--	<input type="checkbox" id="additional_chk" name="additional_chk" value="" /> &nbsp; -->
-		<input type="text" id="txtadditional_type" name="txtadditional_type" value="" onfocus="if (this.value=='New Additional Charge Type') {this.value = '';}" onblur="if(this.value=='') {this.value = 'New Additional Charge Type';}" /> 
+		<input type="checkbox" id="additional_chk" name="additional_chk" value="" /> &nbsp;
+				<input type="text" id="txtadditional_type" name="txtadditional_type" value="" onfocus="if (this.value=='New Additional Charge Type') {this.value = '';}" onblur="if(this.value=='') {this.value = 'New Additional Charge Type';}" /> 
 		&nbsp; 
 		<input type="text" id="txtamount_mt" name="txtamount_mt" value="0"/> 
 
 	</div>
-	</fieldset>
+	</fieldset> -->
 	</td>
 	<td>&nbsp;</td>
 	<td>
 	<fieldset>
-<legend>Handling Charges:</legend> 
+<legend>Billing Weight:</legend> 
 	<div class="pad-10">
 	<!--	<input type="checkbox" id="additional_chk" name="additional_chk" value="" /> &nbsp; -->
-		<input type="text" id="txthandling" name="txthandling"  /> 
+		<!-- <input type="text" id="txthandling" name="txthandling"  /> 
 		&nbsp; 
 		*
-		&nbsp;
+		&nbsp; -->
 		<!--<input type="text" id="txtamount_mt" name="txtamount_mt" value="0"/> -->
-		<input id="wei" name="fQuantity" type="text" DISABLED /> Kgs
+		<input id="wei" name="fQuantity" type="text" DISABLED /> tons
 		<input class="btn btn-success" id="done"  type="button" value="For Billing" onClick="directbilling(); "/>
 	</div>
 	</fieldset>
@@ -139,7 +139,7 @@
 <tr>
 <td>
 <fieldset>
-<legend>Processing Charges:</legend>
+<legend>Other Details:</legend>
 <div class="pad-10">
 	<input type="text" id="txtoutward_num" name="txtoutward_num" placeholder="Outward Lorry Number"/> 
 	&nbsp; 
@@ -158,7 +158,9 @@
 			</div>
 		
 <div class="pad-10">
-	Total: <input type="text" id="totalweight_check" DISABLED/> &nbsp;&nbsp;&nbsp;<input type="text" id="totalrate" DISABLED/>&nbsp; <input type="text" id="totalamt"  DISABLED/>&nbsp;&nbsp;
+	Total: <input type="text" id="totalweight_check" DISABLED/> 
+	<!-- &nbsp;&nbsp;&nbsp;<input type="text" id="totalrate" DISABLED/> -->
+	<!-- &nbsp; <input type="text" id="totalamt"  DISABLED/>&nbsp;&nbsp; -->
 </div>
 </fieldset>
 </form>
@@ -181,7 +183,7 @@
 function numbertowords() {
  var junkVal=document.getElementById('txtgrandtotal').value;
  junkVal=Math.floor(junkVal);
- var obStr=new String(junkVal);
+ var obStr=String(junkVal);
  numReversed=obStr.split("");
  actnumber=numReversed.reverse();
  if(Number(junkVal) >=0){
@@ -204,7 +206,7 @@ function numbertowords() {
  var tensPlace=['dummy', ' Ten', ' Twenty', ' Thirty', ' Forty', ' Fifty', ' Sixty', ' Seventy', ' Eighty', ' Ninety' ];
  var iWordsLength=numReversed.length;
  var totalWords="";
- var inWords=new Array();
+ var inWords=[];
  var finalWord="";
  j=0;
  for(i=0; i<iWordsLength; i++){
@@ -298,8 +300,8 @@ function numbertowords() {
 //	
 //simple function to convert from numbers to words from 1 to 999
 function triConvert(num){
-    var Ones = new Array('', ' One', ' Two', ' Three', ' Four', ' Five', ' Six', ' Seven', ' Eight', ' Nine', ' Ten', ' eleven', ' twelve', ' thirteen', ' fourteen', ' fifteen', ' sixteen', ' seventeen', ' eighteen', ' nineteen');
-    var tens = new Array('', '', ' twenty', ' thirty', ' forty', ' fifty', ' sixty', ' seventy', ' eighty', ' ninety');
+    var Ones = ['', ' One', ' Two', ' Three', ' Four', ' Five', ' Six', ' Seven', ' Eight', ' Nine', ' Ten', ' eleven', ' twelve', ' thirteen', ' fourteen', ' fifteen', ' sixteen', ' seventeen', ' eighteen', ' nineteen'];
+    var tens = ['', '', ' twenty', ' thirty', ' forty', ' fifty', ' sixty', ' seventy', ' eighty', ' ninety'];
     var hundred = ' hundred';
     var output = '';
     var numString = num.toString();
@@ -329,14 +331,12 @@ function triConvert(num){
 <div align="left">
 	<!--<input class="btn btn-danger" style="cursor: pointer;" id="txtcancelbill" type="button" value="Cancel Bill" onclick="cancelbill();" />-->
 </div>
-
 <div align="left">
 	<!--<input class="btn btn-danger"  style="cursor: pointer;" id="txtcancelbill" type="button" value="Cancel Bill" onclick="cancelbill();" />-->
 	Select type of GST tax to be applied	<br>
 	<input style="margin: 10px;" type="radio" class="gstType" name="gstType" value="Within">&nbsp; Within State</br>
 	<input style="margin: 10px;" type="radio" class="gstType" name="gstType" value="Inter">&nbsp; Inter State
 </div>
-
 <div align="right">
 	<input class="btn btn-success" style="cursor: pointer;" id="txtbillpreview" type="button" value="Preview and Print Bill" onclick="functionpdfprint();" />
 	<input class="btn btn-inverse" style="cursor: pointer;" id="txtbillloadingslip" type="button" value="Loading Slip" onclick="functionpdf();" />	
@@ -387,11 +387,12 @@ function taxspec(){
 	document.getElementById("txtgrandtotal").value = grandtotal;
 }
   function functionpdfprint(){
-	subtotalvalue();
-	numbertowords();
+	// subtotalvalue();
+	// numbertowords();
 	var billid = $('#billid').val();
-	if(billid == '') {
-	    alert("Please enter the Bill Number");
+	if(billid == '')
+	{
+	alert("Please enter the Bill Number");
 	}
 	var partyid = $('#pid').val();
 	var pname = $('#pname').val();
@@ -419,7 +420,7 @@ function taxspec(){
 	var container=$('#container').val(); 
 	var gstType = $('input[name=gstType]:checked').val();
 	
-	var dataString =  'billid='+billid+'&partyid='+partyid+'&pname='+pname+'&cust_add='+cust_add+'&cust_rm='+cust_rm+'&mat_desc='+mat_desc+'&thic='+thic+'&wid='+wid+'&len='+len+'&wei='+wei+'&inv_no='+inv_no+'&totalweight_check='+totalweight_check+'&totalrate='+totalrate+'&totalamt='+totalamt+'&txthandling='+txthandling+'&txtadditional_type='+txtadditional_type+'&txtamount_mt='+txtamount_mt+'&txtoutward_num='+txtoutward_num+'&driverContact='+driverContact+'&txtscrap='+txtscrap+'&txtservicetax='+txtservicetax+'&txteductax='+txteductax+'&txtsecedutax='+txtsecedutax+'&txtgrandtotal='+txtgrandtotal+'&container='+container+'&gstType='+gstType;
+	var dataString =  'billid='+billid+'&partyid='+partyid+'&pname='+pname+'&cust_add='+cust_add+'&cust_rm='+cust_rm+'&mat_desc='+mat_desc+'&thic='+thic+'&wid='+wid+'&len='+len+'&wei='+wei+'&inv_no='+inv_no+'&totalweight_check='+totalweight_check+'&totalrate='+totalrate+'&totalamt='+totalamt+'&txthandling='+txthandling+'&txtadditional_type='+txtadditional_type+'&txtamount_mt='+txtamount_mt+'&txtoutward_num='+txtoutward_num+'&driverContact='+driverContact+'&txtscrap='+txtscrap+'&txtservicetax='+txtservicetax+'&txteductax='+txteductax+'&txtsecedutax='+txtsecedutax+'&txtgrandtotal='+txtgrandtotal+'&container='+container;
 	$.ajax({  
 		   type: "POST",  
 		   url : "<?php echo fuel_url('billing/directbillingbill');?>/",  
@@ -532,7 +533,7 @@ $.ajax({
 function totalweight_check(){
 	var partyid = $('#pid').val();
 	var wei = $('#wei').val();
-	var weight = wei/1000;
+	var weight = wei;
 	document.getElementById("totalweight_check").value = weight;
 }
 function totalamt(){
@@ -628,7 +629,7 @@ handling();
 			var selectbundle = '<input class="grand_total_check" type="checkbox" id="radio_'+item.bundlenumber+'" name="list" value="'+item.bundlenumber+'" onClick=selectbundleid('+item.bundlenumber+','+item.weight+','+item.notobebilled+') />';
 			thisdata["select"] = selectbundle;
 			thisdata["bundlenumber"] = item.bundlenumber;
-            thisdata["weight(inkgs)"] = item.weight;
+            thisdata["weight(inTons)"] = number_Format((float) (item.weight),3);
             thisdata["actualnumber"] = item.actualnumber;
             thisdata["length(in mm)"] = item.length;
             thisdata["number to be billed"] = item.notobebilled;
@@ -676,8 +677,8 @@ var cust_rm=$('#cust_rm').val();
  var txthandling=$('#txthandling').val();
 var wei=$('#wei').val();
 totalweight_check();
-totalrate();
-totalamt();
+// totalrate();
+// totalamt();
 	var loading = '<div id="DynamicGridLoading_2"> '+
             	   ' <img src="<?=img_path() ?>loading.gif" /><span> Loading Processing Details... </span> '+ 
     	    	   ' </div>';
@@ -702,8 +703,8 @@ totalamt();
             var item = msg[i];
             var thisdata = {};
             thisdata["weight(in M/T)"] = item.weight;
-            thisdata["Rate(in M/T)"] = item.rate;
-            thisdata["Amount"] = item.amount;
+            // thisdata["Rate(in M/T)"] = item.rate;
+            // thisdata["Amount"] = item.amount;
            /* var edit = '<a class="ico_coil_edit" title="Edit" href="#" onClick=functionedit('+item.bundlenumber+','+item.notobebilled+')><img src="<?php echo img_path('iconset/ico_edit.png'); ?>" /></a>';
             thisdata["action"] =  edit;*/
 			//thisdata["action"] = '';

@@ -528,7 +528,7 @@ class bill_details_model extends Base_module_model {
 			</tr>
 
 		<tr>
-			<td width="100%"  align="left"><b>Notes:</b><br/>BEING CUTTING CHARGES FOR YOUR HR COILS/BUMDELS</td>
+			<td width="100%"  align="left"><b>Notes:</b><br/>BEING CUTTING CHARGES FOR YOUR HR COILS/BUNDELS</td>
         </tr>
 			</table>
 
@@ -905,7 +905,7 @@ class bill_details_model extends Base_module_model {
 			</tr>
 
 		<tr>
-			<td width="100%"  align="left"><b>Notes:</b><br/>BEING CUTTING CHARGES FOR YOUR HR COILS/BUMDELS</td>
+			<td width="100%"  align="left"><b>Notes:</b><br/>BEING CUTTING CHARGES FOR YOUR HR COILS/BUNDELS</td>
         </tr>
 			</table>
 
@@ -1324,7 +1324,7 @@ class bill_details_model extends Base_module_model {
 			</tr>
 
 		<tr>
-			<td width="100%"  align="left"><b>Notes:</b><br/>BEING CUTTING CHARGES FOR YOUR HR COILS/BUMDELS</td>
+			<td width="100%"  align="left"><b>Notes:</b><br/>BEING CUTTING CHARGES FOR YOUR HR COILS/BUNDELS</td>
         </tr>
 			</table>
 

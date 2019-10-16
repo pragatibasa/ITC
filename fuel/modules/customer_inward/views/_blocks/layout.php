@@ -28,7 +28,7 @@
 
         $(".tabcontentpr").addClass("hidepr");
 
-        $("#"+tabeId+"-1").removeClass("hidepr")   
+        $("#"+tabeId+"-1").removeClass("hidepr");
 
         return false;	  
 
@@ -107,7 +107,7 @@
 </form>
 <div class="tab-boxpr"> 
 	<div style="width:640px;">
-    <a href="javascript:;"><div class="tabLinkpr activeLinkpr" id="contpr-1" style="float:left;"><h1>Inward Report</h1></div></a> 
+    <a href="javascript:"><div class="tabLinkpr activeLinkpr" id="contpr-1" style="float:left;"><h1>Inward Report</h1></div></a>
     </div>
 </div>
 
@@ -133,101 +133,47 @@
 </fieldset>
 
 </div>
-
 <!-- @END -->
-
-
-
 <!-- @END -->
-
 </div>
-
-
-
 <?php //echo $totalweight; ?>
-
 <input id="partnamecheck" type="hidden" value="" name="partnamecheck" />
-
-
-
-	
-
 <div align="right">
 
 <label>Total Weight</label>
-
-		<input id="totalweight_calcualation" type="text" DISABLED/>(in Kgs)  
-
+<input id="totalweight_calcualation" type="text" DISABLED/>(in Tons)
 		&nbsp; &nbsp; &nbsp;
-
 </div>
 
-
-
 <script language="javascript" type="text/javascript">
-
-
-
-
-$(document).ready(function() { 
-
+$(document).ready(function() {
 	 $("#export").hide();
-
 });
-
-
-	
 
 var section = "demos/datepicker";
 
-	$(function() {
-
-		$( "#datepicker" ).datepicker();
-
-	});
-
-
-
-
-
-
-
-
-
-
+$(function() {
+    $( "#datepicker" ).datepicker();
+});
 
 function totalweight_check(){
+    var partyname = $("#party_account_name").val();
+    var selector = $('#selector').val();
+    var selector1 = $('#selector1').val();
+    var dataString = 'partyname='+partyname+'&frmdate='+selector+'&todate='+selector1;
 
-
-		 var partyname = $("#party_account_name").val();
-		 var selector = $('#selector').val();
-		 var selector1 = $('#selector1').val();
-	var dataString = 'partyname='+partyname+'&frmdate='+selector+'&todate='+selector1;
-
-$.ajax({  
-
-	   type: "POST",  
-
-	   url : "<?php echo fuel_url('customer_inward/totalweight_check');?>/",  
-
+    $.ajax({
+	   type: "POST",
+	   url : "<?php echo fuel_url('customer_inward/totalweight_check');?>/",
 		data: dataString,
-
 		datatype : "json",
-
 		success: function(msg){
-
 		var msg3=eval(msg);
-
 		$.each(msg3, function(i, j){
-
-			 var weight = j.weight;
-
-			document.getElementById("totalweight_calcualation").value = weight;});
-
-	   }  
-
-	}); 
-
+			 var weight = (j.weight);
+			document.getElementById("totalweight_calcualation").value = parseFloat(weight).toFixed(3);});
+	   }
+	});
 }
 	function functionpdf() {
 
@@ -257,10 +203,10 @@ $.ajax({
 			mediaClass += '<table id="myTabels" class="tablesorter tablesorter-blue">';
 			mediaClass +='<thead>';
 			mediaClass +='<tr>';
-			mediaClass += '  <th>Partyname</th>';
-			mediaClass += '  <th>Coilnumber</th>';
-			mediaClass += '  <th>Received Date</th>';
-			mediaClass += '  <th>Description</th>';
+			
+			mediaClass += '  <th>Coil Number</th>';
+			mediaClass += '  <th>Inward Date</th>';
+			mediaClass += '  <th>Material Description</th>';
 			mediaClass += '  <th>Thickness</th>';
 			mediaClass += '  <th>Width</th>';
 			mediaClass += '  <th>Weight</th>';
@@ -272,13 +218,12 @@ $.ajax({
 			{
 				var item = msg[i];
 				mediaClass += '<tr>';
-				mediaClass += '<td>' + item.partyname + '</td>';
-				mediaClass += '<td>' + item.coilnumber + '</td>';
+				mediaClass += '<td align="left">' + item.coilnumber + '</td>';
 				mediaClass += '<td>' + item.receiveddate + '</td>';
 				mediaClass += '<td>' + item.description + '</td>';
 				mediaClass += '<td>' + item.thickness + '</td>';
 				mediaClass += '<td>' + item.width + '</td>';
-				mediaClass += '<td>' + item.weight + '</td>';
+				mediaClass += '<td>' + parseFloat(item.weight).toFixed(3) + '</td>';
 				mediaClass += '<td>' + item.status + '</td>';
 				mediaClass += '</tr>';			
 				
@@ -295,7 +240,6 @@ $.ajax({
 	}
 }
 
-
 function tableToExcel() {
   	var tab_text = '<html xmlns:x="urn:schemas-microsoft-com:office:excel">';
 tab_text = tab_text + '<head><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet>';
@@ -303,14 +247,24 @@ tab_text = tab_text + '<head><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWo
 tab_text = tab_text + '<x:WorksheetOptions><x:Panes></x:Panes></x:WorksheetOptions></x:ExcelWorksheet>';
 tab_text = tab_text + '</x:ExcelWorksheets></x:ExcelWorkbook></xml></head><body>';
 
-tab_text = tab_text + '<table><tr><td style="font-size:60px; font-style:italic; font-family: fantasy;"><h1>INTERNATIONAL STEEL PROCESSORS</h1></td></tr><tr><td><h4>Head Office At: NO.43,KANNIAMMANPET VILLAGE, SURVEY NO145/6C ANDRAKUPPAM POST, KADAPAKKAM, CHENNAI-600 103, <b>Email: ispchennai@gmail.com </b></h4></td></tr><<tr><td></td></tr></table>';
+tab_text = tab_text + '<table><tr><td style="font-size:60px; font-style:italic; font-family:fantasy;" colspan="7" align="center"><h1>CUSTOMERS MATERIAL INWARD REPORT</h1></td></tr>';
+
+tab_text = tab_text + '<tr></tr><tr><td><b>Party Name : </b>'+$('#party_account_name').val()+'</td><td><b>From Date : </b>'+$('#selector').val()+'</td><td><b>To Date : </b>'+$('#selector1').val()+'</td></tr><tr><td></td></tr></table>';
+
+var table = document.getElementById('myTabels'),
+    tableClone = table.cloneNode(true),
+    elementsToRemove = tableClone.querySelectorAll('.partyname');
+
+for (var i = elementsToRemove.length; i--;) {
+    elementsToRemove[i].remove();
+}
 
 
 tab_text = tab_text + "<table border='1px'>";
-tab_text = tab_text + $('#myTabels').html();
+tab_text = tab_text + tableClone.innerHTML;
 tab_text = tab_text + '</table>';
 
-tab_text = tab_text + '<table border="1px"><tr></tr><tr><td></td><td></td><td></td><td></td><td></td><td><h3>Total Weight : </td><td>'+$('#totalweight_calcualation').val()+' ( in kgs )</h3></td><td></td></tr></table></body></html>';
+tab_text = tab_text + '<table border="1px"><tr></tr><tr><td></td><td></td><td></td><td></td><td><h3>Total Weight : </td><td>'+$('#totalweight_calcualation').val()+' </h3></td><td></td></tr></table></body></html>';
 
 var data_type = 'data:application/vnd.ms-excel';
 
@@ -322,7 +276,7 @@ if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) {
         var blob = new Blob([tab_text], {
             type: "application/csv;charset=utf-8;"
         });
-        navigator.msSaveBlob(blob, $('#party_account_name').val()+'_Stock_Report.xls');
+        navigator.msSaveBlob(blob, $('#party_account_name').val()+'_Inward_Report.xls');
     }
 } else {
 	$('#export').attr('href', data_type + ', ' + encodeURIComponent(tab_text));
@@ -380,7 +334,4 @@ if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) {
 }
 
 } */
-
-
-
-</script>  
+</script>

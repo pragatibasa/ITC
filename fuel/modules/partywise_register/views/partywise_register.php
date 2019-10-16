@@ -2,7 +2,9 @@
 function pullFolders(selectedItem) {
 $.post('<?php echo fuel_url("partywise_register/list_coil"); ?>',
 	{ storage_account : selectedItem },
-	function(response) {});
+		function(response) {  
+	}
+	);
 }
 
  </script> 

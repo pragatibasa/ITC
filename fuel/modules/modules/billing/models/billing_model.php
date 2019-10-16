@@ -252,7 +252,7 @@ LEFT JOIN aspen_tblcuttinginstruction ON aspen_tblbillingstatus.vIRnumber = aspe
 	
 	function finalbillingcalculatemodel($bundleid,$partyid){
 	$sqlfb = "select 
-	round(sum(aspen_tblbillingstatus.fbilledWeight),4)as weight from aspen_tblbillingstatus
+	round(sum(aspen_tblbillingstatus.fbilledWeight),3)as weight from aspen_tblbillingstatus
 	left join aspen_tblinwardentry on aspen_tblbillingstatus.vIRnumber=aspen_tblinwardentry.vIRnumber where aspen_tblinwardentry.vIRnumber='".$partyid."' and aspen_tblbillingstatus.nSno IN( ".$bundleid.")";
 		$query = $this->db->query($sqlfb);
 		$arr='';
@@ -2056,7 +2056,7 @@ $sql66="UPDATE aspen_tblinwardentry
 		$pdf->SetAuthor('Abhilash');
 		$pdf->SetTitle('Bill');
 		$pdf->SetSubject('Bill');
-		$pdf->SetKeywords('Aspen, bill, Bill');
+		$pdf->SetKeywords('ITC, bill, Bill');
 		$pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
 		$pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
 		$pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);

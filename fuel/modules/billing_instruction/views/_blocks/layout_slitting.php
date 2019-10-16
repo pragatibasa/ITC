@@ -38,7 +38,7 @@
 				<label><?=lang('weight')?></label>
 				</td> 
 				<td>
-				<input id="wei" name="fQuantity" type="text" DISABLED />(in Kgs)
+				<input id="wei" name="fQuantity" type="text" DISABLED />(in tons)
 				</td>
 			</tr>
 			<tr>
@@ -126,7 +126,7 @@ function loadfolderlist_slit(account, accname) {
 			thisdata["serialnumber"] = item.serialnumber;
             thisdata["length"] = item.length;
             thisdata["width"] = item.width;
-            thisdata["weight"] = item.weight;
+            thisdata["weight"] = parseFloat(item.weight).toFixed(3);
             thisdata["slitting date"] = item.sdate;
             thisdata["Billing status"] = item.billingstatus;
 			thisdata["upgrade"] = ( item.vParentBundleNumber == null ) ? '<a href="<?php echo fuel_url('inward/?ppartyid='.$partyid.'&pname='.$partyname.'&bundleNumber=');?>'+item.serialnumber+'">Upgrade</a>' : 'Upgraded';
@@ -188,7 +188,7 @@ function billingbuttonslit(){
 	var dataString = 'partyid='+partyid+'&partyname='+partyname+'&slno='+slno+'&processchk='+processchk;
     $.ajax({
         type: 'POST',
-        success: function(){  alert('Preview Selected')
+        success: function(){  alert('Preview Selected');
 		setTimeout("location.href='<?= site_url('fuel/billing'); ?>/?"+ dataString+"'", 1000);
 		}
     });

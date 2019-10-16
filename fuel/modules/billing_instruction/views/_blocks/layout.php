@@ -38,7 +38,7 @@
 				<label><?=lang('weight')?></label>
 				</td> 
 				<td>
-				<input id="wei" name="fQuantity" type="text" DISABLED />(in Kgs)
+				<input id="wei" name="fQuantity" type="text" DISABLED />(in tons)
 				</td>
 			</tr>
 			<tr>
@@ -60,7 +60,7 @@
 		</table>
 		<fieldset>
 			<legend>Cutting Details</legend>
-				<?=json_decode($sdata)->fpresent?> kgs <a href="<?php echo fuel_url('billing_instruction/?partyid='.$partyid.'&partyname='.$partyname.'&status');?>">Bill Residual Weight</a> / <a href="<?php echo fuel_url('inward/?ppartyid='.$partyid.'&pname='.$partyname)?>">Snip</a>
+				<?=json_decode($sdata)->fpresent?> Tons <a href="<?php echo fuel_url('billing_instruction/?partyid='.$partyid.'&partyname='.$partyname.'&status');?>">Bill Residual Weight</a> / <a href="<?php echo fuel_url('inward/?ppartyid='.$partyid.'&pname='.$partyname)?>">Snip</a>
 			<br>
 			<br>
 				<div>Or select a bundle to bill </div>
@@ -124,7 +124,7 @@ function loadfolderlist(account, accname){
             var partydata = [];
             for (var i = 0; i < msg.length; i++) {
             var item = msg[i];
-            var thisdata = {}
+            var thisdata = {};
 			var disabled = "";
 			if(item.balance <= 0)
 				disabled = "disabled=true";
@@ -208,7 +208,7 @@ function billingbutton(){
 	var dataString = 'partyid='+partyid+'&partyname='+partyname+'&nsno='+nsno+'&processchk='+processchk;
     $.ajax({
         type: 'POST',
-        success: function(){  alert('Preview Selected')
+        success: function(){  alert('Preview Selected');
 		setTimeout("location.href='<?= site_url('fuel/billing'); ?>/?"+ dataString+"'", 1000);
 		}
     });

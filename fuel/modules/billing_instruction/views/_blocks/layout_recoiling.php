@@ -38,7 +38,7 @@
 				<label><?=lang('weight')?></label>
 				</td> 
 				<td>
-				<input id="wei" name="fQuantity" type="text" DISABLED />(in Kgs)
+				<input id="wei" name="fQuantity" type="text" DISABLED />(in tons)
 				</td>
 			</tr>
 			<tr>
@@ -112,7 +112,7 @@ function loadfolderlist_recoil(account, accname){
             var partydata = [];
             for (var i = 0; i < msg.length; i++) {
             var item = msg[i];
-            var thisdata = {}
+            var thisdata = {};
 			
 			var selectcoil = '<input type="checkbox" class="checkbundle" id="check_'+item.recoilnumber+'" name="list" value="'+item.recoilnumber+'" Onclick=updateTextArea("'+item.recoilnumber+'") />';
 			thisdata["select"] = selectcoil;
@@ -178,7 +178,7 @@ function billingbutton(){
 	var dataString = 'partyid='+partyid+'&partyname='+partyname+'&recno='+recno+'&processchk='+processchk;
     $.ajax({
         type: 'POST',
-        success: function(){  alert('Preview Selected')
+        success: function(){  alert('Preview Selected');
 		setTimeout("location.href='<?= site_url('fuel/billing'); ?>/?"+ dataString+"'", 1000);
 		}
     });

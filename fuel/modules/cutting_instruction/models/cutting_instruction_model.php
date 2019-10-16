@@ -58,75 +58,71 @@ class Cutting_instruction_model extends Base_module_model {
 		$strBundle1 = '';
 		$index = 1;
 		foreach($queryBundle->result() as $key => $row) {
-			$strBundle .= '%n'.$index.') '.$row->nLength.'mm - '.$row->nNoOfPieces.'Nos - '.$row->nBundleweight.'kgs';
-            $strBundle1 .= $index.') '.$row->nLength.'mm - '.$row->nNoOfPieces.'Nos - '.$row->nBundleweight.'kgs <br>';
-            $index++;
-        }
+			$strBundle .= '%n'.$index++.') '.$row->nLength.'mm - '.$row->nNoOfPieces.'Nos - '.$row->nBundleweight.'kgs';
+		}
 	} 
 
 	if($query->result()[0]->nProcessUpdates) {
 		sendSMS($query->result()[0]->nProcessUpdates,'Cutting instruction given for Coil no '.$_POST['pid'].'%n'.$query->result()[0]->vDescription.' '.$query->result()[0]->fThickness.'mm x '.$query->result()[0]->fWidth.'mm%nProcess:CTL'.$strBundle);
 	}
+	if($query->result()[0]->vemailaddress) {
+		$strEmailHtml = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+						   <html xmlns="http://www.w3.org/1999/xhtml">
+						   <head>
+						   <title>Cutting Instruction</title>
+						   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+						   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+						   <meta name="viewport" content="width=device-width, initial-scale=1.0 " />
+						   <style>
+						   </style>
+						   </head>';
 
-     if($query->result()[0]->vemailaddress) {
-         $strEmailHtml = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-                            <html xmlns="http://www.w3.org/1999/xhtml">
-                            <head>
-                            <title>Cutting Instruction</title>
-                            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-                            <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-                            <meta name="viewport" content="width=device-width, initial-scale=1.0 " />
-                            <style>
-                            </style>
-                            </head>';
+		$strEmailHtml .= '<h4>Dear Customer,</h4>';
+		$strEmailHtml .= '<h4>Cutting instruction has been given for coil number '.$_POST['pid'].'. The following info is for your  perusal:</h4>';
+		$strEmailHtml .= '<table style="width:80%; border-collapse: collapse;" cellpadding="5">
+						   <tr>
+							   <td style="border: 1px solid black;">Coil Number</td>
+							   <td style="border: 1px solid black;">'.$_POST['pid'].'</td>
+						   </tr>
+						   <tr>
+							   <td style="border: 1px solid black;">Material Description</td>
+							   <td style="border: 1px solid black;">'.$query->result()[0]->vDescription.'</td>
+						   </tr>
+						   <tr>
+							   <td style="border: 1px solid black;">Thickness</td>
+							   <td style="border: 1px solid black;">'.$query->result()[0]->fThickness.' mm</td>
+						   </tr>
+						   <tr>
+							   <td style="border: 1px solid black;">Width</td>
+							   <td style="border: 1px solid black;">'.$query->result()[0]->fWidth.' mm</td>
+						   </tr>
+						   <tr>
+							   <td style="border: 1px solid black;">Quantity</td>
+							   <td style="border: 1px solid black;">'.$query->result()[0]->fQuantity.' kgs</td>
+						   </tr>                            <tr>
+							   <td style="border: 1px solid black;">Received Date</td>
+							   <td style="border: 1px solid black;">'.$query->result()[0]->dReceivedDate.'</td>
+						   </tr>
+						   </tr>       
+						   <tr>
+							   <td style="border: 1px solid black;">Process</td>
+							   <td style="border: 1px solid black;">CTL</td>
+						   </tr>
+						   <tr>
+							   <td style="border: 1px solid black;">Cutting Details</td>
+							   <td style="border: 1px solid black;word-wrap: break-word;overflow-wrap: break-word;">'.$strBundle1.'</td>
+						   </tr>
+						 </table>';
 
-         $strEmailHtml .= '<h4>Dear Customer,</h4>';
-         $strEmailHtml .= '<h4>Cutting instruction has been given for coil number '.$_POST['pid'].'. The following info is for your  perusal:</h4>';
-         $strEmailHtml .= '<table style="width:80%; border-collapse: collapse;" cellpadding="5">
-                            <tr>
-                                <td style="border: 1px solid black;">Coil Number</td>
-                                <td style="border: 1px solid black;">'.$_POST['pid'].'</td>
-                            </tr>
-                            <tr>
-                                <td style="border: 1px solid black;">Material Description</td>
-                                <td style="border: 1px solid black;">'.$query->result()[0]->vDescription.'</td>
-                            </tr>
-                            <tr>
-                                <td style="border: 1px solid black;">Thickness</td>
-                                <td style="border: 1px solid black;">'.$query->result()[0]->fThickness.' mm</td>
-                            </tr>
-                            <tr>
-                                <td style="border: 1px solid black;">Width</td>
-                                <td style="border: 1px solid black;">'.$query->result()[0]->fWidth.' mm</td>
-                            </tr>
-                            <tr>
-                                <td style="border: 1px solid black;">Quantity</td>
-                                <td style="border: 1px solid black;">'.$query->result()[0]->fQuantity.' kgs</td>
-                            </tr>                            <tr>
-                                <td style="border: 1px solid black;">Received Date</td>
-                                <td style="border: 1px solid black;">'.$query->result()[0]->dReceivedDate.'</td>
-                            </tr>
-                            </tr>       
-                            <tr>
-                                <td style="border: 1px solid black;">Process</td>
-                                <td style="border: 1px solid black;">CTL</td>
-                            </tr>
-                            <tr>
-                                <td style="border: 1px solid black;">Cutting Details</td>
-                                <td style="border: 1px solid black;word-wrap: break-word;overflow-wrap: break-word;">'.$strBundle1.'</td>
-                            </tr>
-                          </table>';
+		$strEmailHtml .= '<p>For INTERNATIONAL STEEL PROCESSORS</p>
+						 <p>Please contact our unit coordinator for any clarification.</p>
+						 <p>Customer Service team<br/>
+						 9176620066/9445008881</p>';
 
-         $strEmailHtml .= '<p>For INTERNATIONAL STEEL PROCESSORS</p>
-                          <p>Please contact our unit coordinator for any clarification.</p>
-                          <p>Customer Service team<br/>
-                          9176620066/9445008881</p>';
+		$strEmailHtml .= '<p style="color:#999999;">This is a system generated mail. Please reply to aspen.bidadi@gmail.com for more details.</p>';
 
-         $strEmailHtml .= '<p style="color:#999999;">This is a system generated mail. Please reply to aspen.bidadi@gmail.com for more details.</p>';
-
-         sendEmail($query->result()[0]->vemailaddress, 'Cutting Instruction given for coil number '.$_POST['pid'], $strEmailHtml);
-     }
-
+		sendEmail($query->result()[0]->vemailaddress, 'Cutting Instruction given for coil number '.$_POST['pid'], $strEmailHtml);
+	}
  }
  
 function list_items($limit = NULL, $offset = NULL, $col = 'vIRnumber', $order = 'asc') {
@@ -142,7 +138,7 @@ function getcoildetails() {
 	
 	function totalweight_checkmodel($partyid){
 	$sqlfb = "select 
-	round(sum(nBundleweight),0)as weight from aspen_tblcuttinginstruction
+	sum(nBundleweight)as weight from aspen_tblcuttinginstruction
 	left join aspen_tblinwardentry on aspen_tblcuttinginstruction.vIRnumber=aspen_tblinwardentry.vIRnumber where aspen_tblinwardentry.vIRnumber='".$partyid."'";
 		$query = $this->db->query($sqlfb);
 		$arr='';
@@ -159,8 +155,9 @@ function getcoildetails() {
 		if(isset($pid) && isset($pname)) {
 			$partyname = $pname;
 			$partyid = $pid;
+			
 		}
-		$sql ="SELECT aspen_tblinwardentry.vIRnumber,aspen_tblinwardentry.fLength, aspen_tblinwardentry.dReceivedDate, aspen_tblmatdescription.vDescription, aspen_tblinwardentry.fThickness, aspen_tblinwardentry.fWidth, aspen_tblinwardentry.fQuantity, aspen_tblinwardentry.vStatus
+		$sql ="SELECT aspen_tblinwardentry.vIRnumber,aspen_tblinwardentry.fLength, aspen_tblinwardentry.dReceivedDate, aspen_tblmatdescription.vDescription, aspen_tblinwardentry.fThickness, aspen_tblinwardentry.fWidth, round(fQuantity,3) as fQuantity, aspen_tblinwardentry.vStatus
 		FROM aspen_tblinwardentry LEFT JOIN aspen_tblmatdescription ON aspen_tblmatdescription.nMatId = aspen_tblinwardentry.nMatId
 		LEFT JOIN aspen_tblpartydetails ON aspen_tblpartydetails.nPartyId = aspen_tblinwardentry.nPartyId ";
 		if(!empty($partyid)) {
@@ -194,7 +191,7 @@ function deleterow($deleteid)
 		
  function coillistdetails($partyid = '') 
  {
-	$sqlci = "select nSno as bundlenumber, DATE_FORMAT(dDate, '%d-%m-%Y') AS processdate, nLength as length, nNoOfPieces as noofsheets, nBundleweight as weight, vStatus as status, vIRnumber as pnumber from aspen_tblcuttinginstruction WHERE aspen_tblcuttinginstruction.vIRnumber='".$partyid."' and aspen_tblcuttinginstruction.vStatus != 'Billed' and aspen_tblcuttinginstruction.vStatus != 'Ready To Bill' and aspen_tblcuttinginstruction.vStatus != ''";
+	$sqlci = "SELECT nSno as bundlenumber, DATE_FORMAT(dDate, '%d-%m-%Y') AS processdate, nLength as length, nNoOfPieces as noofsheets, round(nBundleweight,3) as weight, vStatus as status, vIRnumber as pnumber from aspen_tblcuttinginstruction WHERE aspen_tblcuttinginstruction.vIRnumber='".$partyid."' and aspen_tblcuttinginstruction.vStatus != 'Billed' and aspen_tblcuttinginstruction.vStatus != 'Ready To Bill' and aspen_tblcuttinginstruction.vStatus != ''";
 	//echo $sqlci;
 	$query = $this->db->query($sqlci);
 		$arr='';
@@ -236,6 +233,7 @@ function deleterow($deleteid)
     }
  
  $leftweight = $parentweight - $childweight;
+ number_format((float) $leftweight,3);
  
  return  $leftweight;
   }	

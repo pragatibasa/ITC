@@ -14,7 +14,7 @@
         $(".tabLinkpr").removeClass("activeLinkpr");
         $(this).addClass("activeLinkpr");
         $(".tabcontentpr").addClass("hidepr");
-        $("#"+tabeId+"-1").removeClass("hidepr")   
+        $("#"+tabeId+"-1").removeClass("hidepr");
         return false;	  
       });
     });  
@@ -23,8 +23,8 @@
 <div id="main_content" style="overflow:hidden;"> 
 <div class="tab-boxpr"> 
 	<div style="width:640px;">
-    <a href="javascript:;"><div class="tabLinkpr activeLinkpr" id="contpr-1" style="float:left;"><h1>Main CoilDetails</h1></div></a> 
-    <a href="javascript:;"><div class="tabLinkpr " id="contpr-2" style="float:left;"><h1>ProcessedDetail</h1></div></a>
+    <a href="javascript:"><div class="tabLinkpr activeLinkpr" id="contpr-1" style="float:left;"><h1>Main CoilDetails</h1></div></a>
+    <a href="javascript:"><div class="tabLinkpr " id="contpr-2" style="float:left;"><h1>ProcessedDetail</h1></div></a>
 	</div>
 </div>
  
@@ -69,8 +69,9 @@
 <input id="partnamecheck" type="hidden" value="" name="partnamecheck" />
 	
 <div align="right">
+<?php //echo (round($totalweight,3)); ?>
 <label>Total Weight</label>
-		<input id="totalweight_calcualation" type="text" DISABLED/>(in Kgs)  
+		<input id="totalweight_calcualation" type="text" DISABLED/>(in Tons)  
 		&nbsp; &nbsp; &nbsp;
 </div>
 
@@ -92,7 +93,7 @@ $.ajax({
 		var msg3=eval(msg);
 		$.each(msg3, function(i, j){
 			 var weight = j.weight;
-			document.getElementById("totalweight_calcualation").value = weight;});
+			document.getElementById("totalweight_calcualation").value = weight.toFixed(3);});
 	   }  
 	}); 
 }
@@ -142,8 +143,8 @@ $.ajax({
 				mediaClass += '<td>' + item.description + '</td>';
 				mediaClass += '<td>' + item.thickness + '</td>';
 				mediaClass += '<td>' + item.width + '</td>';
-				mediaClass += '<td>' + item.weight + '</td>';
-				mediaClass += '<td>' + item.pweight + '</td>';
+				mediaClass += '<td>' + parseFloat(item.weight).toFixed(3) + '</td>';
+				mediaClass += '<td>' + parseFloat(item.pweight).toFixed(3) + '</td>';
 				mediaClass += '<td>' + item.status + '</td>';
 				mediaClass += '<td>' + item.process + '</td>';
 					
@@ -197,7 +198,7 @@ function showchild(parentid) {
                             thisdata["Length in (mm)"] = item.length;
                             thisdata["BundleNumber"] = item.bundlenumber;
                             thisdata["No of sheets"] = item.bundles;
-                            thisdata["Weight in (Kgs)"] = item.weight;
+                            thisdata["Weight in (Tons)"] = parseFloat(item.weight).toFixed(3);
                             thisdata["Status"] = item.status;
 							}
 							else if(item.process=='Recoiling'){

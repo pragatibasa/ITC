@@ -9,11 +9,14 @@
 
 <div class="tab-boxpr">
     <div style="width:640px;">
-        <a href="javascript:;">
+        <a href="javascript:">
             <div class="tabLinkpr activeLinkpr" id="contpr-1" style="float:left;"><h1>Workin Progress</h1></div>
         </a>
     </div>
 </div>
+<div>
+  <a style="border:none;padding:0px;position: absolute; right:0;"  href="#" id="export" onclick="tableToExcel('myTable','Workin Progress');"><input class="btn btn-success" type="button" value="Export to Excel"/> </a>&nbsp; &nbsp; &nbsp;
+  </div>
 
 <!-- MAIN Workinprogress @START -->
 <div id="main_content" style="overflow:hidden;">
@@ -35,8 +38,8 @@
                             <thead>
                             <tr>
                                 <th>Coilnumber</th>
-                                <th>Received Date</th>
-                                <th>Size Given Date</th>
+                                <th data-date-format="ddmmyyyy">Received Date</th>
+                                <th data-date-format="ddmmyyyy">Size Given Date</th>
                                 <th>Partyname</th>
                                 <th>Material Description</th>
                                 <th>Thickness</th>
@@ -56,7 +59,7 @@
                                 <td><?php echo $workinprogress_lists[$i]->materialdescription ?></td>
                                 <td><?php echo $workinprogress_lists[$i]->thickness ?></td>
                                 <td><?php echo $workinprogress_lists[$i]->width ?></td>
-                                <td><?php echo $workinprogress_lists[$i]->weight ?></td>
+                                <td><?php echo number_format((float) $workinprogress_lists[$i]->weight,3) ?></td>
                                 <td><?php echo $workinprogress_lists[$i]->process ?></td>
                                 <td><?php echo $al = '<a title="Cutting Instruction" href="' . $workinprogress_lists[$i]->al . '"><span class="badge badge-success" style="color: #FFFFFF;">Cutting</span></a>';
                                     echo $as = '<a title="Slitting Instruction" href="' . $workinprogress_lists[$i]->slit . '"><span class="badge badge-success" style="color: #FFFFFF;">Slitting</span></a>';
@@ -79,8 +82,8 @@
 </div>
 <input id="txtcoilids" type="hidden" hidden/>
 <div align="right">
-    <label>Total Weight: in (Kgs)</label>
-    <input id="txtboxweight" type="text" value="<?php echo $tweight; ?>" DISABLED/> &nbsp; &nbsp; &nbsp;
+    <label>Total Weight: in (Tons)</label>
+    <input id="totalweight_calcualation" type="text" value="<?php echo number_format($tweight,3); ?>" DISABLED/> &nbsp; &nbsp; &nbsp;
 </div>
 
 <input id="coilid" type="hidden" value="" name="coilid">
@@ -97,7 +100,7 @@
         if ($(this).parent("thead").length == 0) {
             $(e.currentTarget).children('td, th').css('background-color', '#7FFFD4');
         }
-    })
+    });
 
     function finishtask(id) {
         var coilnumber = $('#vnum' + id).val();
@@ -109,5 +112,42 @@
     function cuttinginstruction(id) {
         var coilnumber = $('#vno' + id).val();
         document.getElementById('partnamecheck').value = coilnumber;
-    }
+}
+function tableToExcel() {
+	
+    var tab_text = '<html xmlns:x="urn:schemas-microsoft-com:office:excel">';
+    
+
+
+tab_text = tab_text + '<head><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet>';
+tab_text = tab_text + '<x:WorksheetOptions><x:Panes></x:Panes></x:WorksheetOptions></x:ExcelWorksheet>';
+tab_text = tab_text + '</x:ExcelWorksheets></x:ExcelWorkbook></xml></head><body>';
+tab_text = tab_text + '<table><tr><td style="font-size:60px; font-style:italic; font-family:fantasy;" colspan="7" align="center"><h1>Workin Progress</h1></td><td></td><td></td><td></td><td></td></tr></table>';
+//tab_text = tab_text + '<tr></tr><tr><td><b>Party Name : </b>'+$('#party_account_name').val()+'</td><td><b>From Date : </b>'+$('#selector').val()+'</td><td><b>To Date : </b>'+$('#selector1').val()+'</td></tr><tr><td></td></tr></table>';
+tab_text = tab_text + "<table border='1px'>";
+
+tab_text = tab_text + $('#myTable').html();
+tab_text = tab_text + '</table>';
+
+tab_text = tab_text + '<table border="1px"><tr></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td><td><h3>Total Weight : </td><td>'+$('#totalweight_calcualation').val()+' </h3></td><td></td><td></td></tr></table></body></html>';
+
+
+var data_type = 'data:application/vnd.ms-excel';
+
+var ua = window.navigator.userAgent;
+var msie = ua.indexOf("MSIE ");
+
+if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) {
+if (window.navigator.msSaveBlob) {
+    var blob = new Blob([tab_text], {
+        type: "application/csv;charset=utf-8;"
+    });
+    navigator.msSaveBlob(blob, $('#party_account_name').val()+'_Workin_Progress.xls');
+}
+} else {
+$('#export').attr('href', data_type + ', ' + encodeURIComponent(tab_text));
+$('#export').attr('download','_Workin_Progress.xls');
+}
+}
+
 </script>

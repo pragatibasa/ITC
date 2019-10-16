@@ -10,13 +10,10 @@ class stock_report_model extends Base_module_model {
 
     function __construct()
     {
-		parent::__construct('aspen_tblowner');
-		$CI =& get_instance();
+        parent::__construct('aspen_tblowner');
+	$CI =& get_instance();
 		$this->companyData = $CI->fuel_auth->company_data();
-
-    }
-	
-
+	}
 	function getPartyDetailsCredentials() {
 		if(isset( $_POST['party'])) {
 			$uid = $_POST['party'];
@@ -94,12 +91,12 @@ class stock_report_model extends Base_module_model {
 		$html = '
 				
 				<div align="center">
-					<h1>
-					'.$this->companyData->company_name.'</h1>
-		<h3>
-		'.$this->companyData->head_address.'</h3>
-		 <h4>
-		 '.$this->companyData->branch_address.'</h4>	
+				<h1>
+				'.$this->companyData->company_name.'</h1>
+	<h3>
+	'.$this->companyData->head_address.'</h3>
+	 <h4>
+	 '.$this->companyData->branch_address.'</h4>	
 				</div>
 				&nbsp;
 				&nbsp;
@@ -179,8 +176,8 @@ class stock_report_model extends Base_module_model {
 				<td align="right">&nbsp;</td>
 			</tr>
 			<tr>
-				<td colspan="2" align="center">
-				'.$this->companyData->company_name.'</td>
+			<td colspan="2" align="center">
+			'.$this->companyData->company_name.'</td>
 			</tr>
 		</table>';
 
@@ -288,14 +285,14 @@ class stock_report_model extends Base_module_model {
 	}
 	
 	function list_partyname($partyname = '') {	
-		$sql ="SELECT DATE_FORMAT(aspen_tblinwardentry.dReceivedDate, '%d-%m-%Y') as receiveddate, aspen_tblmatdescription.vDescription as description, aspen_tblinwardentry.fThickness as thickness, aspen_tblinwardentry.fWidth as width, aspen_tblinwardentry.fQuantity as weight,aspen_tblinwardentry.fpresent as pweight, aspen_tblinwardentry.vStatus as status , aspen_tblinwardentry.vIRnumber as coilnumber,aspen_tblinwardentry.vprocess as process FROM aspen_tblinwardentry LEFT JOIN aspen_tblmatdescription ON aspen_tblmatdescription.nMatId = aspen_tblinwardentry.nMatId LEFT JOIN aspen_tblpartydetails ON aspen_tblpartydetails.nPartyId = aspen_tblinwardentry.nPartyId LEFT JOIN aspen_tblcuttinginstruction ON aspen_tblcuttinginstruction.vIRnumber = aspen_tblinwardentry.vIRnumber 
+		$sql ="SELECT DATE_FORMAT(aspen_tblinwardentry.dReceivedDate, '%d-%m-%Y') as receiveddate, aspen_tblmatdescription.vDescription as description, aspen_tblinwardentry.vGrade as grade,aspen_tblinwardentry.fThickness as thickness, aspen_tblinwardentry.fWidth as width, aspen_tblinwardentry.fQuantity as weight,aspen_tblinwardentry.fpresent as pweight, aspen_tblinwardentry.vStatus as status , aspen_tblinwardentry.vIRnumber as coilnumber,aspen_tblinwardentry.vprocess as process FROM aspen_tblinwardentry LEFT JOIN aspen_tblmatdescription ON aspen_tblmatdescription.nMatId = aspen_tblinwardentry.nMatId LEFT JOIN aspen_tblpartydetails ON aspen_tblpartydetails.nPartyId = aspen_tblinwardentry.nPartyId LEFT JOIN aspen_tblcuttinginstruction ON aspen_tblcuttinginstruction.vIRnumber = aspen_tblinwardentry.vIRnumber 
 		LEFT JOIN aspen_tblslittinginstruction ON aspen_tblslittinginstruction.vIRnumber = aspen_tblinwardentry.vIRnumber 
 		LEFT JOIN aspen_tblrecoiling ON aspen_tblrecoiling.vIRnumber = aspen_tblinwardentry.vIRnumber"; 
    		if(!empty($partyname)) { 
-		$sql .=" Where aspen_tblpartydetails.nPartyName='".$partyname."' AND aspen_tblinwardentry.fpresent >= 1";
+		$sql .=" Where aspen_tblpartydetails.nPartyName='".$partyname."' AND aspen_tblinwardentry.fpresent > 0";
 		}
 		$sql .="  group by aspen_tblinwardentry.vIRnumber order by aspen_tblinwardentry.dReceivedDate desc";
-		//echo $sql;die();
+		// echo $sql;die();
 		$query = $this->db->query($sql);
 		$arr='';
 		if ($query->num_rows() > 0)
