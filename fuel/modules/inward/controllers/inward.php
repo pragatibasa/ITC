@@ -48,7 +48,7 @@ class inward extends Fuel_base_controller {
 				$vars['bundledetails'] = $this->inward_model->getParentBundleDetails($this->ppartyid,$bundleNumber);
             }
 
-            $split = preg_split("/(,?\s+)|((?<=[a-z])(?=\d))|((?<=\d)(?=[a-z]))/i",$this->inward_model->getNextCoilNumber()->max_coil_number);
+           // $split = preg_split("/(,?\s+)|((?<=[a-z])(?=\d))|((?<=\d)(?=[a-z]))/i",$this->inward_model->getNextCoilNumber()->max_coil_number);
 
 			$vars['bundleNumber'] = $bundleNumber;
 			$vars['data']= $this->data;
@@ -57,7 +57,7 @@ class inward extends Fuel_base_controller {
 			$vars['datam'] = $this->datam;
 			$vars['fdata'] = $this->fdata;
 			$vars['pcoildetails'] = $this->pcoildetails;
-			$vars['max_coil_number'] = $split[0].''.($split[1]+1);
+			//$vars['max_coil_number'] = $split[0].''.($split[1]+1);
             $this->_render('inward', $vars);
 		} else {
 			redirect(fuel_url('#'));

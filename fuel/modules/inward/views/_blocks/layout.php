@@ -34,7 +34,7 @@
 				</td>
 				<td>
 					<!--<input id="pid" type="text"  />-->
-				<input id="pid" type="text" value="<?=$max_coil_number?>" onchange="coilexist();" />
+				<input id="pid" type="text" value="" onchange="coilexist();" />
 
 					<script>
 									function coilexist(){
