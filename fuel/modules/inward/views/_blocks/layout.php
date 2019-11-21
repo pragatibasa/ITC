@@ -227,7 +227,7 @@
 
 					<script>
 						$("#fQuantity").change(function() {
-							if(parseInt($(this).val()) < 100) { 
+							if(parseInt($(this).val()) < 100) {
 								alert("Please enter the value above 100kg.");
 								$("#fQuantity").val('');
 							}
@@ -236,22 +236,6 @@
 				</td>
 			</tr>
 			<tr>
-				<td>
-					<label>Physical Weight</label>
-				</td>
-				<td>
-					<input id="pwid"  type="text" />
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<label>Difference Weight</label>
-				</td>
-				<td>
-					<input id="did"  type="text" name="Difference" onfocus="diff();"/>
-				</td>
-			</tr>
-			<tr> 
 				<td>
 					<label>Status</label>
 				</td>
@@ -287,7 +271,7 @@
 				<td>
 					<label>Remark</label>
 				</td>
-				<td> 
+				<td>
 				<textarea name="remark" id="remark"></textarea>
 				</td>
 			</tr>
@@ -397,15 +381,6 @@ function preview()
 	var dataString = '&pname='+pname+'&pid='+pid;
     setTimeout("location.href='<?= site_url('inward/inwardbillgenerate'); ?>/?"+ dataString+"'", 3000);
 }
-function diff()
-{
-	var fQuantity = $('#fQuantity').val();
-	var pwid = $('#pwid').val();
-    var Difference = (pwid-fQuantity);
-    document.getElementById('did').value = Difference.toFixed(3);
-
-}
-
 var section = "demos/picker";
 	$(function() {
 		$( "#picker" ).picker();

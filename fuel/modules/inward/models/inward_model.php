@@ -162,14 +162,6 @@ class inward_model extends Base_module_model {
 				<td align="left">
 					<h2><b>Weight in M/T :</b> '.number_format((float) $Weight, 3).'</h2></td>
 			</tr>
-			<tr>
-			<td align="left">
-				<h2><b>Physical Weight :</b> '.number_format((float) $PhysicalWeight, 3).'</h2></td>
-		   </tr>
-			<tr>
-			<td align="left">
-				<h2><b>Difference Weight :</b> '.number_format((float) $DifferenceWeight, 3).'</h2></td>
-		   </tr>
 		   <tr>
 			<td align="left">
 				<h2><b>Status :</b> '.$status.'</h2></td>
