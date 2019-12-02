@@ -15,36 +15,36 @@
     text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
 }
 </style>
-<div id="innerpanel"> 
+<div id="innerpanel">
 <fieldset>
 <legend>Coil Details</legend>
-	<div>  
+	<div>
 		<table cellpadding="0" cellspacing="10" border="0">
 			<tr>
 				<td>
 					<label>System Date</label>
-				</td>  
+				</td>
 				<td>
 					<input type="text" id="date" value="<?php echo date("d-m-Y"); ?>" DISABLED/>
 				</td>
 				<td>
 					<label><?=lang('party_id')?></label>
-				</td>  
+				</td>
 				<td>
 					<input id="pid" name="vIRnumber" type="text" DISABLED/>
 				</td>
-				
+
 			</tr>
 			<tr>
 				<td>
 					<label><?=lang('party_name')?></label>
 				</td>
-				<td> 
+				<td>
 					<input id="pname" type="text" value="<?php echo $partyname; ?>"  DISABLED/>
-				</td>	
+				</td>
 				<td>
 					<label><?=lang('Material_description')?></label>
-				</td> 
+				</td>
 				<td colspan="3">
 					<input id="mat_desc" name="vDescription" type="text" DISABLED/>
 				</td>
@@ -52,28 +52,28 @@
 			<tr>
 				<td>
 					<label><?=lang('width_txt')?> (in mm)</label>
-				</td> 
+				</td>
 				<td>
 					<input id="wid" name="fWidth" type="text" DISABLED/>
 				</td>
 				<td>
 					<label><?=lang('thickness_txt')?> (in mm)</label>
-				</td>  
+				</td>
 				<td>
 					<input id="thic" name="fThickness" type="text" DISABLED/>
 				</td>
-			</tr>	
+			</tr>
 			<tr>
 				<td>
 					<label><?=lang('weight_txt')?> (in tons)</label>
 				</td>
-				<td> 
+				<td>
 					<input id="wei" name="fQuantity" type="text" DISABLED/>
 				</td>
 				<td>
 					<label>Inward Date</label>
 				</td>
-				<td> 
+				<td>
 					<input id="inwdate" name="dInvoiceDate" type="text" DISABLED />
 				</td>
 			</tr>
@@ -81,19 +81,19 @@
 	</div>
 </fieldset>
 <fieldset>
-<legend>Finish Instruction</legend>	
+<legend>Finish Instruction</legend>
 <table width="100%" cellpadding="0" cellspacing="0" border="0">
 <tr>
-<td width="40%" align="left" valign="top">	
+<td width="40%" align="left" valign="top">
 <form id="cisave" method="post" action="" class="cutting hide">
 	<div class="pad-10">
 			<div id="bundlenumber"> Bundle Number </div>
 			<input id= "txtbundlenumber" type="text"  name="bundlenumber" />
-		
+
 	</div>
 	<div class="pad-10">
 		<div id="actual"> Actual Numbers </div>
-		<input id= "txtactual" type="text"/> 
+		<input id= "txtactual" type="text"/>
 		<input id="coilname" type="hidden" value="" name="coilname" />
 	</div>
 	<div class="pad-10">
@@ -108,24 +108,24 @@
 	</div>
 	<div class="pad-10">
 		<div id="bundleids"> </div>
-		<input id= "txtbundleids" type="hidden" /> 
-		<input id= "txtbundlestatus" type="hidden" /> 
-		<input id= "txtbundleweight" type="hidden" /> 
+		<input id= "txtbundleids" type="hidden" />
+		<input id= "txtbundlestatus" type="hidden" />
+		<input id= "txtbundleweight" type="hidden" />
 	</div>
 </form>
 <form class="slitting hide">
 	<div class="pad-10">
 		<div id="bundlenumber"> Slit Number </div>
 		<input id= "txtbundlenumber" disabled type="text"  name="bundlenumber" />
-		
+
 	</div>
 	<div class="pad-10">
 		<div id="length"> Length </div>
-		<input id= "txtLength" type="text" DISABLED/> 
+		<input id= "txtLength" type="text" DISABLED/>
 	</div>
 	<div class="pad-10">
 		<div id="Width"> Width </div>
-		<input id= "txtWidth" type="text"/> 
+		<input id= "txtWidth" type="text"/>
 	</div>
 	<div class="pad-10">
 		<div id="weight"> Weight (in tons)</div>
@@ -137,15 +137,15 @@
 	</div>
 	<div class="pad-10">
 		<div id="bundleids"> </div>
-		<input id= "txtbundleids" type="hidden" /> 
-		<input id= "txtbundlestatus" type="hidden" /> 
-		<input id= "txtbundleweight" type="hidden" /> 
+		<input id= "txtbundleids" type="hidden" />
+		<input id= "txtbundlestatus" type="hidden" />
+		<input id= "txtbundleweight" type="hidden" />
 	</div>
 </form>
 </td>
-<td width="60%" align="left" valign="top">							
+<td width="60%" align="left" valign="top">
     <div id="contentsholder" class="flexcroll" style="width:100%; height:350px; overflow-x:hidden; overflow-y:auto;">
-		<div id="content" style="width:100%; min-height:350px; overflow:hidden;"> 
+		<div id="content" style="width:100%; min-height:350px; overflow:hidden;">
 			<div id="DynamicGrid_2">
 				No Record!
 			</div>
@@ -153,7 +153,7 @@
 	</div>
 </td>
 </tr>
-<td>	
+<td>
 </td>
 <tr>
 <td align="left" colspan="2">
@@ -194,7 +194,7 @@ $('document').ready(function() {
 	$('#txtSlittingWeight').on('keydown', function(e) {
     var key   = e.keyCode ? e.keyCode : e.which;
     if (!( [8, 9, 13, 27, 46].indexOf(key) !== -1 ||
-         (key == 65 && ( e.ctrlKey || e.metaKey  ) ) || 
+         (key == 65 && ( e.ctrlKey || e.metaKey  ) ) ||
          (key >= 35 && key <= 40) ||
          (key >= 48 && key <= 57 && !(e.shiftKey || e.altKey)) ||
          (key >= 96 && key <= 105)
@@ -205,7 +205,7 @@ $('document').ready(function() {
 function loadfolderlist(account, accname) {
 	$('#DynamicGrid_2').hide();
 	var loading = '<div id="DynamicGridLoading_2"> '+
-            	   ' <img src="<?=img_path() ?>loading.gif" /><span> Loading Party List... </span> '+ 
+            	   ' <img src="<?=img_path() ?>loading.gif" /><span> Loading Party List... </span> '+
     	    	   ' </div>';
     $("#content").empty();
 	$('#content').html(loading);
@@ -219,16 +219,16 @@ function loadfolderlist(account, accname) {
 			$('#DynamicGrid_2').hide();
 			$('#DynamicGridLoading_2').hide();
 			var loading1 = '<div id="error_msg"> '+
-                           'No Result!'+ 
+                           'No Result!'+
 						   '</div>';
-			$('#content').html(loading1);  
+			$('#content').html(loading1);
 			} else{
             var partydata = [];
             for (var i = 0; i < msg.length; i++) {
             var item = msg[i];
             var thisdata = {};
 			if(item.status=='WIP-Cutting') {
-				var selectbundle = '<input type="radio" SELECTED id="radio_'+item.bundlenumber+'" name="list" value="'+item.bundlenumber+'" onClick=selectbundleid('+item.bundlenumber+',"'+item.status+'",'+item.bundleweight+') />';
+				var selectbundle = '<input type="checkbox" SELECTED id="radio_'+item.bundlenumber+'" name="list" value="'+item.bundlenumber+'" onClick=selectbundleid('+item.bundlenumber+',"'+item.status+'",'+item.bundleweight+') />';
 				thisdata["select"] = selectbundle;
 				thisdata["bundlenumber"] = item.bundlenumber;
 	            thisdata["date"] = item.date;
@@ -239,9 +239,9 @@ function loadfolderlist(account, accname) {
 	            var edit = '<a class="ico_coil_edit" title="Edit" href="#" onClick=radioload('+item.bundlenumber+','+item.actualnumber+','+item.weight+')><img src="<?php echo img_path('iconset/ico_edit.png'); ?>" /></a>';
 	            thisdata["action"] =  edit;
 			}
-			
+
 			else if(item.status=='WIP-Recoiling'){
-			var selectcoil = '<input type="radio" SELECTED id="radio_'+item.recoilnumber+'" name="list" value="'+item.recoilnumber+'" onClick=radiorecoil('+item.recoilnumber+',"'+item.status+'",'+item.norecoil+') />';
+			var selectcoil = '<input type="checkbox" SELECTED id="radio_'+item.recoilnumber+'" name="list" value="'+item.recoilnumber+'" onClick=radiorecoil('+item.recoilnumber+',"'+item.status+'",'+item.norecoil+') />';
 			thisdata["select"] = selectcoil;
 			thisdata["recoilnumber"] = item.recoilnumber;
             thisdata["startdate"] = item.startdate;
@@ -252,7 +252,7 @@ function loadfolderlist(account, accname) {
             thisdata["action"] =  edit;
 			}
 			else if(item.status=='WIP-Slitting'){
-			var selectslit = '<input type="radio" SELECTED id="radio_'+item.slittnumber+'" name="list" value="'+item.slittnumber+'" onClick=radioslitt('+item.slittnumber+',"'+item.status+'",'+item.width+') />';
+			var selectslit = '<input type="checkbox" SELECTED id="radio_'+item.slittnumber+'" name="list" value="'+item.slittnumber+'" onClick=radioslitt('+item.slittnumber+',"'+item.status+'",'+item.width+') />';
 			thisdata["select"] = selectslit;
 			thisdata["slittnumber"] = item.slittnumber;
             thisdata["date"] = item.date;
@@ -264,7 +264,7 @@ function loadfolderlist(account, accname) {
             thisdata["action"] =  edit;
 			}
 			else if(item.status=='Ready To Bill' && item.process=='Cutting'){
-			
+
 			thisdata["select"] = '';
 			thisdata["bundlenumber"] = item.bundlenumber;
             thisdata["date"] = item.date;
@@ -274,10 +274,10 @@ function loadfolderlist(account, accname) {
             thisdata["bundleweight"] = item.bundleweight;
             thisdata["status"] = item.status;
         //    thisdata["process"] = item.process;
-			
+
 			}
 			else if(item.status=='Ready To Bill' && item.process=='Recoiling'){
-			
+
 			thisdata["select"] = '';
 			thisdata["recoilnumber"] = item.recoilnumber;
             thisdata["startdate"] = item.startdate;
@@ -287,7 +287,7 @@ function loadfolderlist(account, accname) {
         //   thisdata["process"] = item.process;
 			}
 			else if(item.status=='Ready To Bill' && item.process=='Slitting'){
-			
+
 			thisdata["select"] = '';
 			thisdata["slit number"] = item.slittnumber;
             thisdata["date"] = item.date;
@@ -304,9 +304,9 @@ function loadfolderlist(account, accname) {
 				$('#DynamicGrid_2').hide();
 				$('#DynamicGridLoading_2').hide();
 				$('#content').empty();
-				$('#content').html(CreateTableViewX(partydata, "lightPro", true)); 
-				var lcScrollbar = $('#contentsholder');	
-				fleXenv.updateScrollBars(lcScrollbar); 
+				$('#content').html(CreateTableViewX(partydata, "lightPro", true));
+				var lcScrollbar = $('#contentsholder');
+				fleXenv.updateScrollBars(lcScrollbar);
 				$(".ico_coil_delete").click(function (e) {
                 // When a delete icon is clicked, stop the href action
                 //  and do an ajax call to delete it instead
@@ -329,21 +329,21 @@ function loadfolderlist(account, accname) {
 				$('#DynamicGrid_2').hide();
 				$('#DynamicGridLoading_2').hide();
 				var loading1 = '<div id="error_msg"> '+
-							   'No Result!'+ 
+							   'No Result!'+
 							   '</div>';
-				$('#content').html(loading1); 
-				var lfScrollbar = $('#contentsholder');	 
-				fleXenv.updateScrollBars(lfScrollbar);  
+				$('#content').html(loading1);
+				var lfScrollbar = $('#contentsholder');
+				fleXenv.updateScrollBars(lfScrollbar);
                 }
 			}
     });
 }
 
 
-function selectbundleid(s,r,w){	
+function selectbundleid(s,r,w){
 
-	document.getElementById('txtbundleids').value = s;	
-	document.getElementById('txtbundlestatus').value = r;	
+	document.getElementById('txtbundleids').value = s;
+	document.getElementById('txtbundlestatus').value = r;
 	document.getElementById('txtbundleweight').value = w;
 
 	var txtbundlestatus  =	$('#txtbundlestatus').val();
@@ -368,10 +368,10 @@ document.getElementById('actual').innerHTML="Number of Recoil";
 	//document.getElementById('txtweight').value = w;
 	document.getElementById('txtbundlenumber').value = b;
 	document.getElementById('txtactual').value = a;
-	
+
 	$("#txtweight").hide();
 	$("#weight").hide();
-	
+
 }
 /*function radiorecoil(s,r,w){
 	//document.getElementById('txtweight').value = w;
@@ -381,23 +381,23 @@ document.getElementById('actual').innerHTML="Number of Recoil";
 
 
 
-function radiorecoil(s,r,w){	
-	document.getElementById('txtbundleids').value = s;	
-	document.getElementById('txtbundlestatus').value = r;	
-	document.getElementById('txtbundleweight').value = w;	
-	
+function radiorecoil(s,r,w){
+	document.getElementById('txtbundleids').value = s;
+	document.getElementById('txtbundlestatus').value = r;
+	document.getElementById('txtbundleweight').value = w;
+
 		var txtbundlestatus  =	$('#txtbundlestatus').val();
 	if(txtbundlestatus=='WIP-Recoiling'){
 	$("#finishci").hide();
 	$("#finishsi").hide();
 	$("#finishre").show();}
-	
+
 }
-function radioslitt(s,r,w){	
-	document.getElementById('txtbundleids').value = s;	
-	document.getElementById('txtbundlestatus').value = r;	
-	document.getElementById('txtbundleweight').value = w;	
-	
+function radioslitt(s,r,w){
+	document.getElementById('txtbundleids').value = s;
+	document.getElementById('txtbundlestatus').value = r;
+	document.getElementById('txtbundleweight').value = w;
+
 		var txtbundlestatus  =	$('#txtbundlestatus').val();
 	if(txtbundlestatus=='WIP-Slitting'){
 	$("#finishci").hide();
@@ -414,9 +414,9 @@ for(key in json){
 function totalweightcount(){
 	var pid  =	$('#pid').val();
 	var dataString = '&pid='+pid;
-$.ajax({  
-	   type: "POST",  
-	   url : "<?php echo fuel_url('finish_task/totalweightcountcalculate');?>/",  
+$.ajax({
+	   type: "POST",
+	   url : "<?php echo fuel_url('finish_task/totalweightcountcalculate');?>/",
 		data: dataString,
 		datatype : "json",
 		success: function(msg){
@@ -424,10 +424,10 @@ $.ajax({
 		$.each(msg2, function(i, j){
 			 var bundleweight = j.bundleweight;
 			document.getElementById("txtboxweight").value = bundleweight;});
-	   }  
-	}); 
+	   }
+	});
 }
-function functionsave(){	
+function functionsave(){
 	var pid  =	$('#pid').val();
 	var bundlenumber = $('#txtbundlenumber').val();
 	var actual = $('#txtactual').val();
@@ -439,9 +439,9 @@ function functionsave(){
 	}
 else{
 	   var dataString = 'bundlenumber='+bundlenumber+'&actual='+actual+'&weight='+weight+'&pid='+pid+'&process=Cutting';
-	   $.ajax({  
-	   type: "POST",  
-	   url : "<?php echo fuel_url('finish_task/saveweightdetails');?>/",  
+	   $.ajax({
+	   type: "POST",
+	   url : "<?php echo fuel_url('finish_task/saveweightdetails');?>/",
 	   data: dataString,
 	   success: function(msg){
 	totalweightcount();
@@ -449,8 +449,8 @@ else{
 		$('#txtactual').val('');
 		$('#txtweight').val('');
 		refresh_folderlist();
-	   }  
-	  }); 
+	   }
+	  });
 	}
 }
 
@@ -467,20 +467,20 @@ function functionSlittingSave() {
 		if( process == 'Slitting') {
 			bundlenumber = $('.slitting').find('#txtbundlenumber').val();
 		}
-		
+
 	   	var dataString = 'bundlenumber='+bundlenumber+'&actual='+width+'&weight='+weight+'&pid='+pid+'&process='+process;
-	   	$.ajax({  
-	   		type: "POST",  
-	   		url : "<?php echo fuel_url('finish_task/saveweightdetails');?>/",  
+	   	$.ajax({
+	   		type: "POST",
+	   		url : "<?php echo fuel_url('finish_task/saveweightdetails');?>/",
 	   		data: dataString,
 	   		success: function(msg){
 				totalweightcount();
 	   			$('.slitting').find('#txtbundlenumber').val('');
 				$('#txtLength,#txtWidth,#txtSlittingWeight').val('');
 				refresh_folderlist();
-	   		}  
-	  	}); 
-	}	
+	   		}
+	  	});
+	}
 }
 
 function editrecoil(b, a, w){
@@ -506,7 +506,7 @@ function editslit(b, l, a, w){
 
 function functionfinish() {
  var txtbundleids = $('#txtbundleids').val();
- var txtbundleweight = $('#txtbundleweight').val(); 
+ var txtbundleweight = $('#txtbundleweight').val();
  var txtbundlestatus = $('#txtbundlestatus').val();
  var txtboxscrap = $('#txtboxscrap').val();
  var pid  = $('#pid').val();
@@ -531,7 +531,7 @@ function functionfinish() {
         type: 'POST',
         url: "<?php echo fuel_url('finish_task/statuschange');?>",
         data: dataString,
-        success: function(){ 
+        success: function(){
 			$('#finishci').removeAttr('disabled');
   			refresh_folderlist();
   		}
@@ -544,7 +544,7 @@ function functionfinish() {
 
 function functionslit() {
  var txtbundleids = $('#txtbundleids').val();
- var txtbundleweight = $('#txtbundleweight').val(); 
+ var txtbundleweight = $('#txtbundleweight').val();
  var txtbundlestatus = $('#txtbundlestatus').val();
  var txtboxscrap = $('#txtboxscrap').val();
  var pid  = $('#pid').val();
@@ -559,8 +559,8 @@ if(!$("input[name='list']:checked").val()) {
         type: 'POST',
         url: "<?php echo fuel_url('finish_task/statuschangeslit');?>",
         data: dataString,
-        success: function(){ 
-			$('#finishsi').removeAttr('disabled');			
+        success: function(){
+			$('#finishsi').removeAttr('disabled');
 			alert("Finished Complete");
 			refresh_folderlist();
   		}
@@ -581,7 +581,7 @@ if(!$("input[name='list']:checked").val()) {
 
 function functionrecoil() {
  var txtbundleids = $('#txtbundleids').val();
- var txtbundleweight = $('#txtbundleweight').val(); 
+ var txtbundleweight = $('#txtbundleweight').val();
  var txtbundlestatus = $('#txtbundlestatus').val();
  var txtboxscrap = $('#txtboxscrap').val();
  var pid  = $('#pid').val();
@@ -598,8 +598,8 @@ function functionrecoil() {
         type: 'POST',
         url: "<?php echo fuel_url('finish_task/statuschangerecoil');?>",
         data: dataString,
-        success: function(){ 
-	
+        success: function(){
+
   alert("Finished Complete");
   refresh_folderlist();
   }

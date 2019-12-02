@@ -1,15 +1,15 @@
-<?php  
+<?php
 if (!defined('BASEPATH')) exit('No direct script access allowed');
- 
+
 class transfer_instruction_model extends Base_module_model {
-	
+
 
     function __construct()
     {
         parent::__construct('aspen_tblcuttinginstruction');
     }
-	
-	
+
+
 	function transfer_instruction()
 	{
 	return true;
@@ -23,16 +23,16 @@ class transfer_instruction_model extends Base_module_model {
 		$sql1 = "Insert into aspen_hist_tbltransferdetails  (
 		vIRnumber,nFromPartyId,nToPartyId,dDate) 
 		VALUES('". $pid. "',(SELECT aspen_tblpartydetails.nPartyId  FROM aspen_tblpartydetails where aspen_tblpartydetails.nPartyName = '". $frompartyname. "'), (SELECT aspen_tblpartydetails.nPartyId  FROM aspen_tblpartydetails where aspen_tblpartydetails.nPartyName = '". $pname. "'), '". $date3. "')";
-		$sql2 = "UPDATE  aspen_tblinwardentry SET aspen_tblinwardentry.nPartyId=
+		$sql2 = "UPDATE aspen_tblinwardentry SET vRemark = 'Coil transferred from $frompartyname to $pname', aspen_tblinwardentry.nPartyId=
 		(SELECT aspen_tblpartydetails.nPartyId  FROM aspen_tblpartydetails where aspen_tblpartydetails.nPartyName = '". $pname. "') WHERE aspen_tblinwardentry.vIRnumber='".$_POST['pid']."'";
 		$query = $this->db->query($sql);
 		$query = $this->db->query($sql1);
 		$query = $this->db->query($sql2);
-		
+
 	}
-	
-	
-	
+
+
+
  function gettransferInstruction($pid, $pname) {
 		if(isset($pid) && isset($pname)) {
 			$partyname = $pname;
@@ -45,7 +45,7 @@ class transfer_instruction_model extends Base_module_model {
 		LEFT JOIN aspen_tblpartydetails ON aspen_tblpartydetails.nPartyId = aspen_tblinwardentry.nPartyId ";
 		if(!empty($partyname) && !empty($partyid)) {
 		$sql.="WHERE aspen_tblpartydetails.nPartyName='".$partyname."' and aspen_tblinwardentry.vIRnumber='".$partyid."' ";
-		}	
+		}
 		$query = $this->db->query($sql);
 		$arr='';
 		if ($query->num_rows() > 0)
@@ -56,11 +56,11 @@ class transfer_instruction_model extends Base_module_model {
 		   }
 		}
 		return json_encode($arr[0]);
-		}	 
-  
-  
-  
-  
+		}
+
+
+
+
  function party() {
 		$sql = "select nPartyName from aspen_tblpartydetails";
 		$query = $this->db->query($sql);
@@ -71,13 +71,13 @@ class transfer_instruction_model extends Base_module_model {
 			{
 				$arr[] =$row;
 			}
-		} 
+		}
 		return $arr;
 	}
 
 }
 
 class transfer_instructionmodel extends Base_module_record {
-	
- 	
+
+
 }

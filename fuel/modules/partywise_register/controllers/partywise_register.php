@@ -8,7 +8,7 @@ class Partywise_register extends Fuel_base_controller {
 	public $view_location = 'partywise_register';
 	private $partywise_register;
 	private $gdata;
-	private $adata; 
+	private $adata;
 	private $wei ;
 	private $tweight;
 	private $chkuser;
@@ -26,9 +26,9 @@ class Partywise_register extends Fuel_base_controller {
 		    if(isset($this->data[0]))  {
 		    }
 	    }
-		
+
     }
-	
+
 	function index()
 	{
 		if(!empty($this->data) && isset($this->data)) {
@@ -42,25 +42,25 @@ class Partywise_register extends Fuel_base_controller {
 	function editCoil(){
 		echo $_GET['partyid'];
 	}
-		
-	function totalweight_check($partyname = '') {	
-		if(empty($partyname)) { 
+
+	function totalweight_check($partyname = '') {
+		if(empty($partyname)) {
 			$partyname = $_POST['party_account_name'];
 		}
 		$this->load->model('coil_details_model');
 		$wei = $this->coil_details_model->totalweight_check($partyname);
 		$weijson = json_encode($wei);
 		print $weijson;
-	
+
 	}
-	
+
 	function chk_user(){
 		$chkuser = $this->Partywise_register_model->chk_user();
 		return $chkuser;
 	}
-	
+
 	function list_party($partyname = '') {
-		if(empty($partyname)) { 
+		if(empty($partyname)) {
 			$partyname = $_POST['party_account_name'];
 		}
 		$this->load->model('coil_details_model');
@@ -74,8 +74,8 @@ class Partywise_register extends Fuel_base_controller {
 			$obj->grade = $container->grade;
 			$obj->thickness = $container->thickness;
 			$obj->width = $container->width;
-			$obj->weight = number_format((float) ($container->weight),3);
-			$obj->pweight = number_format((float) ($container->pweight),3);
+			$obj->weight = $container->weight;
+			$obj->pweight = $container->pweight;
 			$obj->status = $container->status;
 			$obj->process = $container->process;
 			$obj->ci = site_url('fuel/cutting_instruction').'/?partyid='.$container->coilnumber.'&partyname='.$partyname;
@@ -93,9 +93,9 @@ class Partywise_register extends Fuel_base_controller {
             echo json_encode($status);
 		}
 	}
-	
-	function list_individualparty($partyname = '') {	
-		if(empty($partyname)) { 
+
+	function list_individualparty($partyname = '') {
+		if(empty($partyname)) {
 			$partyname = $_POST['party_individualaccount_name'];
 		}
 		$this->load->model('coil_details_model');
@@ -127,7 +127,7 @@ class Partywise_register extends Fuel_base_controller {
             echo json_encode($status);
 		}
 	}
-	
+
 	function print_partywise(){
         $queryStr = $_SERVER['QUERY_STRING'];
         parse_str($queryStr, $args);
@@ -136,7 +136,7 @@ class Partywise_register extends Fuel_base_controller {
 		$this->load->model('coil_details_model');
 		$this->coil_details_model->print_partywisemodel($partyid,$partyname);
 	}
-	
+
 	function delete_coil(){
         $queryStr = $_SERVER['QUERY_STRING'];
         parse_str($queryStr, $args);
@@ -145,16 +145,16 @@ class Partywise_register extends Fuel_base_controller {
 		$this->coil_details_model->delete_coilnumber($coil);
 		echo $coil;
 	}
-	
-	function list_coil() {	
+
+	function list_coil() {
 		$this->load->model('coil_details_model');
 		$gdata = $this->coil_details_model->list_coilitems();
-		$gdatajson = json_encode($gdata); 
-		return $gdata;		
+		$gdatajson = json_encode($gdata);
+		return $gdata;
 	}
-	
-	function listChilds($parentid = '')  {	
-		if(empty($parentid)) { 
+
+	function listChilds($parentid = '')  {
+		if(empty($parentid)) {
 			$parentid = $_POST['partyid'];
 		}
 		$this->load->model('coil_details_model');
@@ -201,9 +201,9 @@ class Partywise_register extends Fuel_base_controller {
             echo json_encode($status);
 		}
 	}
-	
-	function listindividualChilds($parentid = '')  {	
-		if(empty($parentid)) { 
+
+	function listindividualChilds($parentid = '')  {
+		if(empty($parentid)) {
 			$parentid = $_POST['partyid'];
 		}
 		$this->load->model('coil_details_model');

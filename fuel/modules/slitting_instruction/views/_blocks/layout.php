@@ -5,7 +5,11 @@
     border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
     color: #FFFFFF;
     text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
-}</style>
+}
+div#ui-picker-div {
+    z-index: 9999 !important;
+}
+</style>
 <div id="innerpanel">
 &nbsp;
 &nbsp;
@@ -55,6 +59,24 @@
 					<input id="wei" name="fQuantity" type="text" DISABLED/> (in tons)
 				</td>
 			</tr>
+            <tr>
+                <td>
+                    <label>Slitting Date</label>
+                </td>
+                <td>
+                    <input id="slittingdate" type="text" />
+                </td>
+                <td>
+                    <label>Machine No.</label>
+                </td>
+                <td>
+                    <select name="machine" id="machine">
+                       <?php for ($i=1; $i<= 10; $i++) {?>
+                        <option value="<?=$i?>">Machine <?=$i?></option>
+                        <?php } ?>
+                    </select>
+                </td>
+            </tr>
 		</table>
 	</div>
 </fieldset>
@@ -135,6 +157,10 @@
 </div>
 
 <script type="text/javascript" language="javascript">
+
+    $(document).ready(function() {
+        $( "#slittingdate" ).picker({ dateFormat: 'dd-mm-yy' });
+    });
 function functionreset(){
 	$("#newsize").show();
 	$("#edit").hide();
@@ -410,7 +436,9 @@ function deleteItem(sn){
 
 function savechange(id) {
     var pid = $('#pid').val();
-	var dataString = 'pid='+pid;
+    var machineNo = $('#machine').val();
+    var slittingdate = $('#slittingdate').val();
+	var dataString = 'pid='+pid+'&machine='+machineNo+'&slittingdate='+slittingdate;
 
 	$.ajax({
 		type: 'POST',

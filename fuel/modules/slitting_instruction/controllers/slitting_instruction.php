@@ -10,7 +10,7 @@ class slitting_instruction extends Fuel_base_controller {
 	private $partyname;
 	private $qdata;
 	private $adata;
-	
+
 	function __construct()
 	{
 		parent::__construct();
@@ -18,15 +18,15 @@ class slitting_instruction extends Fuel_base_controller {
 		$this->load->language('slitting_instruction');
 		$this->slitting_instruction = $this->config->item('slitting_instruction');
 		$this->load->module_model(SLITTING_INSTRUCTION_FOLDER, 'slitting_instruction_model');
-		$this->data = $this->slitting_instruction_model->formdisplay();	
+		$this->data = $this->slitting_instruction_model->formdisplay();
 		if(isset($this->data)) {
 			if(isset($this->data[0]))  {
 		}
 		$this->uri->init_get_params();
 		$this->partyid = (string) $this->input->get('partyid', TRUE);
 		$this->partyname = (string) $this->input->get('partyname', TRUE);
-	}		
-}	
+	}
+}
 	function index()
 	{
 		if(!empty($this->data) && isset($this->data)) {
@@ -35,31 +35,30 @@ class slitting_instruction extends Fuel_base_controller {
 			$vars['partyid']= $this->partyid;
 			$vars['qdata']= $this->BundleName();
 			$vars['adata']= $this->slitting_instruction_party($this->partyid, $this->partyname);
-			
-			//$vars['adata']= 
+
+			//$vars['adata']=
 //			print_r($vars);exit;
 			$this->_render('slitting_instruction', $vars);
 		} else {
 			redirect(fuel_url('#'));
 		}
 	}
-	
-	function save_button()
-	{
-	if (!empty($_POST)) {
-		 $savevar = $this->slitting_instruction_model->savechangemodel($_POST['pid']);
-		return $savevar;
+
+	function save_button() {
+        if (!empty($_POST)) {
+             $savevar = $this->slitting_instruction_model->savechangemodel($_POST['pid']);
+            return $savevar;
+        }
 	}
-	}
-	
-	function listslittingdetails($partyid = '') 
+
+	function listslittingdetails($partyid = '')
 	 {
-	   if(empty($partyid)) { 
+	   if(empty($partyid)) {
 			$partyid = $_POST['partyid'];
 	   }
 	   $this->load->module_model(SLITTING_INSTRUCTION_FOLDER, 'slitting_instruction_model');
 	   $slitlists = $this->slitting_instruction_model->slitlistdetails($partyid);
-	   
+
 	   if(!empty($slitlists)){
 			$files = array();
 			foreach($slitlists as $cl) {
@@ -79,14 +78,14 @@ class slitting_instruction extends Fuel_base_controller {
             echo json_encode($status);
 		}
 	 }
-	
 
-	function BundleName() 
+
+	function BundleName()
  {
    $this->load->module_model(SLITTING_INSTRUCTION_FOLDER, 'slitting_instruction_model');
    $qdata = $this->slitting_instruction_model->BundleTable($this->partyid);
-   
-   $qdatajson = json_encode($qdata); 
+
+   $qdatajson = json_encode($qdata);
    return $qdata;
  }
 /*
@@ -105,49 +104,49 @@ class slitting_instruction extends Fuel_base_controller {
 		$twid = $this->slitting_instruction_model->totalwidthmodel($_POST['partyid']);
 		echo json_encode($twid);
 		exit;
-	
+
 	}
 
 	function delete_slit(){
 		$this->load->module_model(SLITTING_INSTRUCTION_FOLDER, 'slitting_instruction_model');
 		$this->slitting_instruction_model->delete_slitnumbermodel($_POST['Slitingnumber'], $_POST['Pid']);
 	}
-  
+
 	function editbundle() {
 		if (!empty($_POST)) {
 			$arr = $this->slitting_instruction_model->editbundlemodel($_POST['bundlenumber'], $_POST['width_v']);
 			if(empty($arr)) echo 'Success'; else echo 'Unable to save';
 		}
-		
+
 		else{
 			//redirect(fuel_uri('#'));
 		}
 	}
-	
-	
+
+
 	function savebundleslit() {
 	   if (!empty($_POST)) {
 	    $arr = $this->slitting_instruction_model->savebundleslitting($_POST['pid'],$_POST['date1'], $_POST['widths'],$_POST['length'],$_POST['thickness']);
 	    if(empty($arr)) { echo 'Success'; exit; } else { echo 'Unable to save';exit;};
-		
+
 	   } else{
 	    //redirect(fuel_uri('#'));
 	   }
 	}
 
-function deleterow() 
+function deleterow()
  {
    if (!empty($_POST)) {
     $arr = $this->slitting_instruction_model->deleteslittingmodel($_POST['number']);
     if(empty($arr)) echo 'Success'; else echo 'Unable to save';
-	
+
    }
-   
+
    else{
     //redirect(fuel_uri('#'));
    }
 }
-	
+
 	function slitting_instruction_party($pid, $pname) {
 		$adata = $this->slitting_instruction_model->getCuttingInstruction($pid);
 		return $adata;
@@ -157,14 +156,14 @@ function deleterow()
 		$pid = $_POST['pid'];
 		$adata = $this->slitting_instruction_model->getCuttingInstruction($pid);
 		echo $adata; exit;
-	}	
+	}
 
 	function getLengthWithWidthGreater() {
 		$pid = $_POST['pid'];
 		$adata = $this->slitting_instruction_model->getLengthWithWidthGreater($pid);
 		if( count($adata) > 0 ) {
-			echo implode(',', $adata);exit;			
-		} else 
+			echo implode(',', $adata);exit;
+		} else
 			echo false;exit;
 	}
 

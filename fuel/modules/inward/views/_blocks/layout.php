@@ -80,11 +80,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td><label>Jsw Coil id</label></td>
-				<td><input id="jid" type="text"/></td>
-			</tr>
-			<tr>
-				<td><label>SST Coil id</label></td>
+				<td><label>ITC Coil id</label></td>
 				<td><input id="ssid" type="text"/></td>
 			</tr>
 			<tr>
@@ -226,12 +222,6 @@
 						echo '';?>" type="text" onchange=""/>
 
 					<script>
-						$("#fQuantity").change(function() {
-							if(parseInt($(this).val()) < 100) {
-								alert("Please enter the value above 100kg.");
-								$("#fQuantity").val('');
-							}
-						});
 				 </script>
 				</td>
 			</tr>

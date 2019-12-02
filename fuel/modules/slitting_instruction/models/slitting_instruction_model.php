@@ -1,21 +1,21 @@
-<?php  
+<?php
 if (!defined('BASEPATH')) exit('No direct script access allowed');
- 
+
 class slitting_instruction_model extends Base_module_model {
-	
+
  	public $required = array('vIRnumber','nSno','dDate','nLength','nNoOfPieces','nTotalWeight');
 	protected $key_field = 'vIRnumber';
-	
+
     function __construct()
     {
         parent::__construct('aspen_tblslittinginstruction');
     }
-		
+
 	function getcoildetails() {
-		
+
 		$this->save($save);
 	}
-	
+
 	function formdisplay()
 	{
 		$fields['nPartyName']['label'] = 'Party Name';
@@ -41,17 +41,17 @@ class slitting_instruction_model extends Base_module_model {
 			{
 				$arr[] =$row;
 			}
-		}	
+		}
 
 		return $arr;
 	}
-	
+
 	function delete_slitnumbermodel($Slitingnumber='', $Pid='') {
 		$sql ="DELETE FROM aspen_tblslittinginstruction WHERE vIRnumber ='".$Pid."' and nSno = '".$Slitingnumber."'";
 		$query = $this->db->query($sql);
 	}
-	
-  
+
+
 	function editbundlemodel(){
 		if(isset( $_POST['bundlenumber']) && isset( $_POST['width_v'])) {
 			$bundlenumber = $_POST['bundlenumber'];
@@ -63,11 +63,12 @@ class slitting_instruction_model extends Base_module_model {
 
     	$query1=$this->db->query ($sql);
 	}
-	 
-	function savechangemodel (){ 
-		$sql = $this->db->query ("UPDATE aspen_tblslittinginstruction SET vStatus='WIP-Slitting' WHERE vIRnumber='".$_POST['pid']."' and nSno!=0");
-		$sql = $this->db->query ("UPDATE aspen_tblinwardentry SET vprocess='Slitting',vStatus='Work In Progress' WHERE vIRnumber='".$_POST['pid']."'");
-		
+
+	function savechangemodel (){
+
+		$sql = $this->db->query ("UPDATE aspen_tblslittinginstruction SET vStatus='WIP-Slitting', dDate = '".$_POST['slittingdate']."' WHERE vIRnumber='".$_POST['pid']."' and nSno!=0");
+		$sql = $this->db->query ("UPDATE aspen_tblinwardentry SET vprocess='Slitting',vStatus='Work In Progress', machineNo = ".$_POST['machine']." WHERE vIRnumber='".$_POST['pid']."'");
+
 		$strSql = "select ai.*,ap.*,am.* from aspen_tblinwardentry as ai 
 		left join aspen_tblmatdescription as am on ai.nMatId = am.nMatId 
 		left join aspen_tblpartydetails as ap on ap.nPartyId = ai.nPartyId
@@ -158,7 +159,7 @@ class slitting_instruction_model extends Base_module_model {
             sendEmail($query->result()[0]->vemailaddress, 'Slitting instruction given for coil number '.$_POST['pid'], $strEmailHtml);
         }
 	}
-	
+
 	function getCuttingInstruction($pid) {
 		if(isset($pid)) {
 			$partyid = $pid;
@@ -189,7 +190,7 @@ class slitting_instruction_model extends Base_module_model {
 		$queryExhaustedLength = $this->db->query($strExhaustedLength);
 
 		$floatUsedLength = 0;
-		
+
 		if($queryExhaustedLength->num_rows() > 0) {
 		   	$floatUsedLength = $queryExhaustedLength->result()[0]->usedLength;
 		}
@@ -197,13 +198,13 @@ class slitting_instruction_model extends Base_module_model {
 		$arr[0]->remaining_weight = round((($arr[0]->fQuantity/($arr[0]->fThickness*$arr[0]->fWidth*785)))*100000000)- $floatUsedLength;
 
 		return json_encode($arr[0]);
-	}	
-		
+	}
+
 function BundleTable($pid) {
  if(isset( $_POST['pid'])) {
   $pid = $_POST['pid'];
   }
-  $sql = "select nSno,dDate,nWidth from aspen_tblslittinginstruction  "; 
+  $sql = "select nSno,dDate,nWidth from aspen_tblslittinginstruction  ";
   if(isset($pid)) {
   $sql.="WHERE aspen_tblslittinginstruction.vIRnumber='".$pid."'";
   }
@@ -215,7 +216,7 @@ function BundleTable($pid) {
     {
     $arra[] =$row;
     }
-    } 
+    }
     return $arra;
   }
 
@@ -226,7 +227,7 @@ function BundleTable($pid) {
 			$sql = $this->db->query ("Insert into aspen_tblslittinginstruction(vIRnumber,dDate,nWidth,nWeight,nLength,vStatus) VALUES(  '". $pid. "','". $date. "','". $width. "','".$weight."','".$length."','WIP-Slitting')");
 		}
   	}
-		
+
 	function deleteslittingmodel($deleteid)
 	{
 		 $querycheck = $this->db->query("select * from aspen_tblslittinginstruction where nSno = '".$deleteid."'");
@@ -238,7 +239,7 @@ function BundleTable($pid) {
 		return false;
 	  }
     }
-	
+
 	function slitlistdetails($partyid = '') {
 		$sqlci = "select aspen_tblslittinginstruction.nSno as Sno,DATE_FORMAT(aspen_tblslittinginstruction.dDate, '%d-%m-%Y') AS Slittingdate,aspen_tblslittinginstruction.nWidth as width, aspen_tblslittinginstruction.vIRnumber as pnumber, aspen_tblslittinginstruction.nWeight as weight, aspen_tblslittinginstruction.nLength as length FROM aspen_tblslittinginstruction WHERE aspen_tblslittinginstruction.vIRnumber='".$partyid."' and aspen_tblslittinginstruction.vStatus in ('','WIP-Slitting')";
 		$query = $this->db->query($sqlci);
@@ -251,13 +252,13 @@ function BundleTable($pid) {
 		   }
 		}
 		return $arr;
-  	}	
-		
+  	}
+
 	function delete_coilnumber($Sno='', $partynumber='') {
 		$sql ="DELETE FROM aspen_tblslittinginstruction WHERE vIRnumber ='".$partynumber."' and nSno = '".$Sno."'";
 		$query = $this->db->query($sql);
-	}	
-		
+	}
+
 	function getBalanceLength( $partynumber, $remaining_weight ) {
 		$sql = "select COALESCE( ($remaining_weight - sum( distinct nLength ) ),$remaining_weight ) as balance from aspen_tblslittinginstruction where vIRnumber = '$partynumber'";
 		$query = $this->db->query($sql);
@@ -283,17 +284,17 @@ function BundleTable($pid) {
 		$sql = ("UPDATE aspen_tblslittinginstruction SET vStatus='RECEIVED' ");
 		$sql.="WHERE aspen_tblslittinginstruction.vIRnumber='".$_POST['pid']."'";
 		$query1=$this->db->query ($sql);
-	  
+
 		$sql1 =("UPDATE aspen_tblinwardentry SET vStatus='RECEIVED'");
 		$sql1.="WHERE vIRnumber='".$_POST['pid']."'";
 		$query1=$this->db->query ($sql1);
-	  
+
 		$sql2 ="DELETE FROM aspen_tblslittinginstruction WHERE vIRnumber='".$_POST['pid']."'";
 		$query = $this->db->query($sql2);
 	}
 }
 
 class Splittinginstructions_model extends Base_module_record {
-	
- 	
+
+
 }
