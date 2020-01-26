@@ -221,13 +221,13 @@ use Aws\Ses\Exception\SesException;
 		if ( ! file_exists($file_path))
 		{
 			$file_path = APPPATH.'config/config'.EXT;
-			
+
 			if ( ! file_exists($file_path))
 			{
 				exit('The configuration file does not exist.');
 			}
 		}
-	
+
 		require($file_path);
 
 		// Does the $config array exist in the file?
@@ -249,7 +249,7 @@ use Aws\Ses\Exception\SesException;
 		}
 
 $_config[0]=& $config;
-return $_config[0];	
+return $_config[0];
 }
 
 // ------------------------------------------------------------------------
@@ -515,9 +515,9 @@ return $_config[0];
 		$otherManufacturing = array( 'Cutting', 'Slitting', 'Recoiling' );
 		$warehousingStorage = array( 'SemiFinished','Directbilling' );
 		if(in_array($billType, $otherManufacturing)) {
-			return '(Other Manufacturing Service) : 998898'; 
+			return '(Other Manufacturing Service) : 998898';
 		} elseif (in_array($billType, $warehousingStorage)) {
-			return '(Warehousing and Storage Services) : 996729'; 
+			return '(Warehousing and Storage Services) : 996729';
 		}
 	}
 
@@ -553,32 +553,19 @@ function companyHeader($str = '') {
 
 	$strHeader = '<table width="100%"  cellspacing="0" cellpadding="5" border="0">
 		'.$str.'
-		
 		<tr>
-		<td align="left" width="50" height="50">
-		   <img src="ISP LOGO.jpg"  alt="logo">
-		</td>
-			<td align="center" width="80%" style="font-size:20px;">Subject to Chennai Jurisdiction<br>TAX INVOICE <br> Supply of Service</td>			
-		</tr>
-		
-		<tr>
-			<td width="100%"align="center" style="font-size:30px; font-style:bold; font-family: Times New Roman;"><h1>'.$companyData->company_name.' </h1></td>			
-		</tr>
-		
-
-		<tr>
-			<td align="center" width="100%" style="font-size:25px; font-style:bold;
-			font-family: Times New Roman;"><b>'.$companyData->head_address.' <br/> State Name: Tamil Nadu,Code:33</b> <br/> (Decoiling / Service Centre Steel Industry)
+			<td align="left" width="50" height="50">
+               <img src="ISP LOGO.jpg"  alt="logo">
+            </td>
+            <td width="100%"align="center" style="font-size:30px; font-style:bold; font-family: Times New Roman;"><h1>'.$companyData->company_name.' </h1><br/>
+            <b>'.$companyData->head_address.' <br/> State Name: Tamil Nadu,Code:33</b> <br/> (Decoiling / Service Centre Steel Industry)
 			<br/> 
 			Phone No:'.$companyData->contact.'&nbsp;
 			Email:'.$companyData->email.' 
 			 <br/> GST Regn. No: '.$companyData->gst_no.'
-			&nbsp; PAN No:'.$companyData->pan.'</td>
+			&nbsp; PAN No:'.$companyData->pan.'</td>			
 		</tr>
-		
 	</table>';
-	
-
 	return $strHeader;
 }
 

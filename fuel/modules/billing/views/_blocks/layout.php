@@ -87,6 +87,10 @@
 		<input id="editbundlenumber" name="nSno"  type="hidden" />
 	</td>
 </tr>
+    <tr>
+        <td>Alternate Address:</td>
+        <td><textarea id="alternate_address" name="alternate_address"></textarea></td>
+    </tr>
 </table>
 </fieldset>
 </form>
@@ -1173,8 +1177,9 @@ function savebill_details() {
 		var txtgrandtotal=$('#txtgrandtotal').val();
 		var container=$('#container').val();
 		var gstType = $('input[name=gstType]:checked').val();
+		var alternateAddress = $('#alternate_address').val();
 
-		var dataString = 'billdate='+billdate+'&billid='+billid+'&partyid='+partyid+'&txtamount='+txtamount+'&txttotalweight='+txttotalweight+'&txtscrap='+txtscrap+'&txtoutward_num='+txtoutward_num+'&driverContact='+driverContact+'&txttotalpcs='+txttotalpcs+'&mat_desc='+mat_desc+'&thic='+thic+'&actualnumberbundle='+actualnumberbundle+'&pname='+pname+'&wid='+wid+'&len='+len+'&wei='+wei+'&txttotallength='+txttotallength+'&txtweighttotal='+txtweighttotal+'&txtwidthtotal='+txtwidthtotal+'&txtadditional_type='+txtadditional_type+'&txtamount_mt='+txtamount_mt+'&txtnsubtotal='+txtnsubtotal+'&txtservicetax='+txtservicetax+'&txteductax='+txteductax+'&txtsecedutax='+txtsecedutax+'&txtRateTotal='+txtRateTotal+'&txtgrandtotal='+txtgrandtotal+'&container='+container;
+		var dataString = 'alternateaddress='+alternateAddress+'&billdate='+billdate+'&billid='+billid+'&partyid='+partyid+'&txtamount='+txtamount+'&txttotalweight='+txttotalweight+'&txtscrap='+txtscrap+'&txtoutward_num='+txtoutward_num+'&driverContact='+driverContact+'&txttotalpcs='+txttotalpcs+'&mat_desc='+mat_desc+'&thic='+thic+'&actualnumberbundle='+actualnumberbundle+'&pname='+pname+'&wid='+wid+'&len='+len+'&wei='+wei+'&txttotallength='+txttotallength+'&txtweighttotal='+txtweighttotal+'&txtwidthtotal='+txtwidthtotal+'&txtadditional_type='+txtadditional_type+'&txtamount_mt='+txtamount_mt+'&txtnsubtotal='+txtnsubtotal+'&txtservicetax='+txtservicetax+'&txteductax='+txteductax+'&txtsecedutax='+txtsecedutax+'&txtRateTotal='+txtRateTotal+'&txtgrandtotal='+txtgrandtotal+'&container='+container;
 		$.ajax({
 		   type: "POST",
 		   url : "<?php echo fuel_url('billing/savebilldetails');?>/",

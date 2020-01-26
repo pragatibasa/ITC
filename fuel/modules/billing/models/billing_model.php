@@ -12,7 +12,7 @@ class Billing_model extends Base_module_model {
         parent::__construct('aspen_tblbilldetails');// table name
 		$CI =& get_instance();
 		$this->companyData = $CI->fuel_auth->company_data();
-		
+
     }
 
 	function example(){
@@ -588,7 +588,7 @@ left join aspen_tblbillingstatus on aspen_tblinwardentry.vIRnumber=aspen_tblbill
 left join aspen_tblmatdescription on aspen_tblmatdescription.nMatId=aspen_tbl_directbill.nMatId
 left join aspen_tblinwardentry on aspen_tblinwardentry.nMatId=aspen_tblmatdescription.nMatId
 left join aspen_tblbillingstatus on aspen_tblinwardentry.vIRnumber=aspen_tblbillingstatus.vIRnumber
- where aspen_tblmatdescription.vDescription= '".$mat_desc."' and aspen_tblinwardentry.vIRnumber='".$partyid."' order by aspen_tblbillingstatus.nActualNo asc"; 
+ where aspen_tblmatdescription.vDescription= '".$mat_desc."' and aspen_tblinwardentry.vIRnumber='".$partyid."' order by aspen_tblbillingstatus.nActualNo asc";
 }
 else if($cust_rm!=0){
 	$sql = "select ('".$txthandling."'+ '".$cust_rm."') as rate,
@@ -1558,18 +1558,18 @@ function billgeneratemodelslit($coilno='',$partyname='',$description='',$lorryno
 										right join aspen_tblinwardentry on aspen_tblinwardentry.nPartyId = aspen_tblpartydetails.nPartyId
 										where  aspen_tblinwardentry.vIRnumber='$partyid'";
 
-	
+
 		$resObjServiceTaxDetails = $this->db->query($sqlServiceTaxNAddressDetails);
 		$serviceTaxPercent = $resObjServiceTaxDetails->result()[0]->nPercentage;
 		$strBillingAddress = $resObjServiceTaxDetails->result()[1]->nPercentage;
 
 		$sql = "Insert into aspen_tblbilldetails (
-		   nBillNo,dBillDate, vIRnumber, fTotalWeight, fWeightAmount, fServiceTax, fEduTax, fSHEduTax, fGrantTotal, nScrapSent, vOutLorryNo, nPartyId, vBillType, BillStatus, ntotalpcs, ntotalamount, ocwtamount, ocwidthamount, oclengthamount,vAdditionalChargeType,fAmount,nsubtotal,grandtot_words,nServiceTaxPercent,tBillingAddress,dFinalRate,vDriverContact)
+		   nBillNo,dBillDate, vIRnumber, fTotalWeight, fWeightAmount, fServiceTax, fEduTax, fSHEduTax, fGrantTotal, nScrapSent, vOutLorryNo, nPartyId, vBillType, BillStatus, ntotalpcs, ntotalamount, ocwtamount, ocwidthamount, oclengthamount,vAdditionalChargeType,fAmount,nsubtotal,grandtot_words,nServiceTaxPercent,tBillingAddress,dFinalRate,vDriverContact,alternateAddress)
 		  VALUES('". $billid. "',now(),'". $partyid. "','". $txttotalweight. "',(select DISTINCT nAmount as rate from aspen_tblpricetype1
 		left join aspen_tblmatdescription on aspen_tblmatdescription.nMatId=aspen_tblpricetype1.nMatId
 		left join aspen_tblinwardentry on aspen_tblinwardentry.nMatId=aspen_tblmatdescription.nMatId
 		left join aspen_tblbillingstatus on aspen_tblinwardentry.vIRnumber=aspen_tblbillingstatus.vIRnumber
-		where '".$thic."' between nMinThickness and nMaxThickness and aspen_tblmatdescription.vDescription= '".$mat_desc."' and aspen_tblinwardentry.vIRnumber='".$partyid."' and aspen_tblbillingstatus.nSno IN( ".$actualnumberbundle.") order by aspen_tblbillingstatus.nActualNo asc),'". $txtservicetax. "','". $txteductax. "','". $txtsecedutax. "','". $txtgrandtotal. "','". $txtscrap. "','". $txtoutward_num. "',(SELECT aspen_tblpartydetails.nPartyId  FROM aspen_tblpartydetails where aspen_tblpartydetails.nPartyName = '". $pname. "'),'Cutting','Billing','".$txttotalpcs."' ,'".$txtamount."','". $txtweighttotal. "','". $txtwidthtotal. "','". $txttotallength. "','". $txtadditional_type. "','". $txtamount_mt. "','". $txtnsubtotal. "','". $container. "',".$serviceTaxPercent.",'".$strBillingAddress."','".$txtRateTotal."','".$driverContact."')";
+		where '".$thic."' between nMinThickness and nMaxThickness and aspen_tblmatdescription.vDescription= '".$mat_desc."' and aspen_tblinwardentry.vIRnumber='".$partyid."' and aspen_tblbillingstatus.nSno IN( ".$actualnumberbundle.") order by aspen_tblbillingstatus.nActualNo asc),'". $txtservicetax. "','". $txteductax. "','". $txtsecedutax. "','". $txtgrandtotal. "','". $txtscrap. "','". $txtoutward_num. "',(SELECT aspen_tblpartydetails.nPartyId  FROM aspen_tblpartydetails where aspen_tblpartydetails.nPartyName = '". $pname. "'),'Cutting','Billing','".$txttotalpcs."' ,'".$txtamount."','". $txtweighttotal. "','". $txtwidthtotal. "','". $txttotallength. "','". $txtadditional_type. "','". $txtamount_mt. "','". $txtnsubtotal. "','". $container. "',".$serviceTaxPercent.",'".$strBillingAddress."','".$txtRateTotal."','".$driverContact."', '".$_POST['alternateaddress']."')";
 
 		$sql54 = "Insert into aspen_hist_tbl_billdetails (
 		 nBillNo,dBillDate, vIRnumber, fTotalWeight, fWeightAmount, fServiceTax, fEduTax, fSHEduTax, fGrantTotal, nScrapSent, vOutLorryNo, nPartyId, vBillType, BillStatus, ntotalpcs, ntotalamount, ocwtamount, ocwidthamount, oclengthamount,vAdditionalChargeType,fAmount,nsubtotal,grandtot_words,fStatus)
@@ -1833,7 +1833,7 @@ function billgeneratemodelslit($coilno='',$partyname='',$description='',$lorryno
 		$query88 = $this->db->query($sql88);
 		$query3 = $this->db->query($sql14);
 		$query66 = $this->db->query($sql66);
-			
+
 		$strSql = "select ai.*,ap.*,am.* from aspen_tblinwardentry as ai 
 		left join aspen_tblmatdescription as am on ai.nMatId = am.nMatId 
 		left join aspen_tblpartydetails as ap on ap.nPartyId = ai.nPartyId
@@ -2228,7 +2228,7 @@ function billgeneratemodelslit($coilno='',$partyname='',$description='',$lorryno
 		$query4 = $this->db->query($sql15);
 		$queryBundleBillingAssociationInsert = $this->db->query($sqlBundleBillingAssociationInsert);
 		$query33 = $this->db->query($sql33);
-		
+
 		$strSql = "select ai.*,ap.*,am.* from aspen_tblinwardentry as ai 
 		left join aspen_tblmatdescription as am on ai.nMatId = am.nMatId 
 		left join aspen_tblpartydetails as ap on ap.nPartyId = ai.nPartyId
@@ -2346,6 +2346,7 @@ function finalbillgeneratemodel($partyid='',$actualnumberbundle='',$cust_add='',
 	aspen_tblpartydetails.nPinId as pincode,
 	aspen_tblbilldetails.vOutLorryNo as trucknumber,
 	aspen_tblbilldetails.vBillType as billType,
+	aspen_tblbilldetails.alternateAddress as alternateAddress,
 	aspen_tblmatdescription.vDescription as materialdescription, aspen_tblbillingstatus.fWeight as wei, aspen_tblinwardentry.vInvoiceNo as invoiceno,DATE_FORMAT(aspen_tblinwardentry.dInvoiceDate, '%d/%m/%Y') as invoicedate ,aspen_tblinwardentry.fWidth as width,aspen_tblinwardentry.fThickness as thickness,aspen_tblbillingstatus.nSno as Sno,aspen_tblbillingstatus.nActualNo as Length,aspen_tblpricetype1.nAmount as rate,aspen_tblbillingstatus.nActualNo as noofpcs,
 	aspen_tblbillingstatus.fbilledWeight as weight,aspen_tblbilldetails.ntotalpcs as totalpcs,aspen_tblbilldetails.fTotalWeight as totalweight,round(aspen_tblbilldetails.fWeightAmount+ '".$cust_add."'- '".$cust_rm."' ) as weihtamount,aspen_tblbilldetails.ntotalamount as totalamount,aspen_tblbilldetails.nScrapSent as Scrapsent,round(aspen_tblbilldetails.ocwtamount) as wtamount,round(aspen_tblbilldetails.ocwidthamount) as widthamount,aspen_tblbilldetails.oclengthamount as lengthamount,round(aspen_tblbilldetails.fServiceTax) as servicetax,round(aspen_tblbilldetails.fEduTax) as edutax,aspen_tblbilldetails.fSHEduTax as shedutax,aspen_tblbilldetails.fGrantTotal as grandtotal,aspen_tblbilldetails.vAdditionalChargeType as additionalchargetype,round(aspen_tblbilldetails.fAmount) as amount,round(aspen_tblbilldetails.nsubtotal) as subtotal,aspen_tblbilldetails.grandtot_words as container from aspen_tblinwardentry LEFT JOIN aspen_tblmatdescription  ON aspen_tblmatdescription.nMatId=aspen_tblinwardentry.nMatId LEFT JOIN aspen_tblpartydetails ON aspen_tblpartydetails .nPartyId=aspen_tblinwardentry.nPartyId
 	left join aspen_tblpricetype1 on aspen_tblpricetype1.nMatId=aspen_tblmatdescription.nMatId
@@ -2396,26 +2397,7 @@ function finalbillgeneratemodel($partyid='',$actualnumberbundle='',$cust_add='',
 		$container = $querymain->row(0)->container;
 		$wei = $querymain->row(0)->wei;
 		$cgstNumber = $querymain->row(0)->cgstNumber;
-
-		if($gstType == 'Within') {
-			$gstSection	= '<tr>
-							<td width="89%">
-							<h3><b>CGST @ 9%</b></h3>
-							</td> <td><h3>'.($servicetax/2).'</h3></td>
-						</tr>
-						<tr>
-							<td width="89%">
-							<h3><b>SGST @ 9%</b></h3>
-							</td> <td><h3>'.($servicetax/2).'</h3></td>
-						</tr>';
-
-		} else if($gstType == 'Inter') {
-			$gstSection	= '<tr>
-							<td width="89%">
-							<h3><b>IGST @ 18%</b></h3>
-							</td> <td><h3>'.ceil($servicetax).'</h3></td>
-						</tr>';
-		}
+		$alternateAddress = $querymain->row(0)->alternateAddress;
 
 		$sqlitem ="select Distinct aspen_tblbillingstatus.nSno as bundlenumber,aspen_tblcuttinginstruction.nLength as length,aspen_tblbillingstatus.nActualNo as noofpcs,aspen_tblbillingstatus.fWeight as wei,aspen_tblbillingstatus.fbilledWeight as weight  from aspen_tblcuttinginstruction
 	LEFT JOIN aspen_tblbillingstatus  ON aspen_tblcuttinginstruction.vIRnumber=aspen_tblbillingstatus.vIRnumber
@@ -2444,239 +2426,100 @@ function finalbillgeneratemodel($partyid='',$actualnumberbundle='',$cust_add='',
 					<tr>
 						<td align="center" width="100%" border="0px"><hr color=#00CC33 size=5 width=100></td>
 					</tr>
-
 					<tr>
 						<td width="50%" align:"left"><b>Billed To :</b><br>To M/s., &nbsp; '.$party_name.' , '.$address_one.' &nbsp;'.$address_two.',&nbsp;'.$city.'<br><br>CGST Number:'.$cgstNumber.'
 						 </td>
 					
 						<td width="50%" align:"right"><b>Shipped To :</b><br>
 							To M/s., &nbsp; '.$party_name.' , '.$address_one.' &nbsp;'.$address_two.',&nbsp;'.$city.'
+							<br/> <br/> <b>Alternate Address: </b>'.$alternateAddress.'
 						</td>
-						</tr>
-
-						<tr>
+					</tr>
+					<tr>
 						<td align="center" width="100%"><hr color=#00CC33 size=5 width=100></td>
 					</tr>
 					<tr>
-					<td width="40%" align:"right"><h3>Invoice No: '.$invoiceno.'</h3></td>
-					<td width="30%" align:"center"><h3>Dated: '.$billdate.'</h3></td>
-					<td width="30%" align:"left"><h3>EWAYBILL No: '.$invoicedate.'</h3></td>
-						</tr>
+                        <td width="40%" align:"right"><h3>Invoice No: '.$invoiceno.'</h3></td>
+                        <td width="30%" align:"center"><h3>Dated: '.$billdate.'</h3></td>
+                        <td width="30%" align:"left"><h3>EWAYBILL No: '.$invoicedate.'</h3></td>
+					</tr>
 				</table>';
-			
+
 		$html .= '<table cellspacing="0" cellpadding="2" border="0px" width="100%">
 					<tr>
 						<td align="center" width="100%"><hr color=#00CC33 size=5 width=100></td>
 					</tr>
 					<tr>
-						
-						<th style="font-weight:bold"  width="25%"><h4>Description of goods
-						</h4></th>
-						<th style="font-weight:bold"  width="7.96%"><h4>Su DC No</h4></th>
-						<th style="font-weight:bold"  width="7.96%"><h4>Su DC Date</h4></th>
-						<th style="font-weight:bold"  width="7.96%"><h4>Coil ID</h4></th>
-						<th style="font-weight:bold"  width="7.96%"><h4>Our DC No</h4></th>
-						<th style="font-weight:bold"  width="7.96%"><h4>Our DC Date</h4></th>
-						<th style="font-weight:bold"  width="7.96%"><h4>Vehicle</h4></th>
-						<th style="font-weight:bold"  width="8.60%"><h4>Quantity</h4></th>
-						<th style="font-weight:bold"  width="8.60%"><h4>Rate</h4></th>
-						<th style="font-weight:bold"  width="10%"><h4>Amount</h4></th>
+						<th style="font-weight:bold"  width="20%"><h4>Description of goods</h4></th>
+						<th style="font-weight:bold"  width="9.96%">HSN/SAC</th>
+						<th style="font-weight:bold"  width="9.96%"><h4>Su DC No</h4></th>
+						<th style="font-weight:bold"  width="9.96%"><h4>Su DC Date</h4></th>
+						<th style="font-weight:bold"  width="9.96%"><h4>Coil ID</h4></th>
+						<th style="font-weight:bold"  width="9.96%"><h4>Our DC No</h4></th>
+						<th style="font-weight:bold"  width="9.96%"><h4>Our DC Date</h4></th>
+						<th style="font-weight:bold"  width="9.96%"><h4>Vehicle</h4></th>
+						<th style="font-weight:bold"  width="9.60%"><h4>Quantity</h4></th>
 					</tr>
 					
 					<tr>
 						<td align="center" width="100%"><hr color=#00CC33 size=5 width=100></td>
 					</tr>';
 
-					
-							$html .= '<tr>
-										<td width="25%">'.$material_descriptio.'</td>
-										<td width="7.96%">'.$rate.'</td>
-										<td width="7.96%">'.$rate.'</td>
-										<td width="7.96%">'.$rate.'</td>
-										<td width="7.96%">'.$rate.'</td>
-										<td width="7.96%">'.$rate.'</td>
-										<td width="7.96%">'.$rate.'</td>
-										<td width="8.60%">'.$rate.'</td>
-										<td width="8.60%">'.$rate.'</td>
-										<td width="10%">'.ceil($amount).'</td>
-										</tr>';
-					
+    if ($queryitem->num_rows() > 0)
+    {
+        foreach($queryitem->result() as $rowitem)
+        {
+            $html .= '
+			<tr>
+                    <td width="20%">'.$material_descriptio.'('.$thickness.'X'.$width.'X'.$rowitem->nLength.')</td>
+                    <td width="9.96%">998898</td>
+                    <td width="9.96%">'.$billnumber.'</td>
+                    <td width="9.96%">'.$billdate.'</td>
+                    <td width="9.96%">'.$partyid.'</td>
+                    <td width="9.96%">'.$rate.'</td>
+                    <td width="9.96%">'.$rate.'</td>
+                    <td width="9.96%">'.$rate.'</td>
+                    <td width="9.60%">'.$rowitem->noofpcs.'</td>
+                    </tr>';
+        }
+    }
+
 	$html .= '</table>';
 	$html .= '<table width="100%" cellspacing="0" cellpadding="2" border="0">
-			<tr>
-			<td width="25%"></td>
-			<td width="7.96%"></td>
-			<td width="7.96%"></td>
-			<td width="7.96%"></td>
-			<td width="7.96%"></td>
-			<td width="7.96%"></td>
-			<td width="7.96%"></td>
-			<td width="8.60%"></td>
-			<td width="8.60%"></td>
-			<td width="10%"></td>
-			</tr>
-
-
-			<tr>
-			<td width="25%"></td>
-			<td width="7.96%"></td>
-			<td width="7.96%"></td>
-			<td width="7.96%"></td>
-			<td width="7.96%"></td>
-			<td width="7.96%"></td>
-			<td width="7.96%"></td>
-			<td width="8.60%"></td>
-			<td width="8.60%"></td>
-			<td width="10%"></td>
-			</tr>
-
-
-			<tr>
-			<td width="25%"></td>
-			<td width="7.96%"></td>
-			<td width="7.96%"></td>
-			<td width="7.96%"></td>
-			<td width="7.96%"></td>
-			<td width="7.96%"></td>
-			<td width="7.96%"></td>
-			<td width="8.60%"></td>
-			<td width="8.60%"></td>
-			<td width="10%"></td>
-			</tr>
-
-			<tr>
-			<td width="25%"></td>
-			<td width="7.96%"></td>
-			<td width="7.96%"></td>
-			<td width="7.96%"></td>
-			<td width="7.96%"></td>
-			<td width="7.96%"></td>
-			<td width="7.96%"></td>
-			<td width="8.60%"></td>
-			<td width="8.60%"></td>
-			<td width="10%"></td>
-			</tr>
-
-			<tr>
-			<td width="25%"></td>
-			<td width="7.96%"></td>
-			<td width="7.96%"></td>
-			<td width="7.96%"></td>
-			<td width="7.96%"></td>
-			<td width="7.96%"></td>
-			<td width="7.96%"></td>
-			<td width="8.60%">'.$weihtamount.'</td>
-			<td width="8.60%"></td>
-			<td width="10%"></td>
-			</tr>
-
 			<tr>
 				<td align="center" width="100%"><hr color=#00CC33 size=5 width=100></td>
 			</tr>';
 
 			$html .= '<table width="100%" cellspacing="0" cellpadding="5" border="0">
-				
+
 			    <tr>
 				<td width="50%" align="center"><b>Bank Details:</b></td>
-				<td width="25%" align="right"><b>Sub Total:</b></td>
-				<td width="25%" align="right">'.$weihtamount.'</td>
 				</tr>
 
 				<tr>
 				<td width="50%" align="left">Bank Name  : '.$this->companyData->bank.'</td>
-				<td width="25%" align="right">CGST @ 9%</td>
-				<td width="25%" align="right">'.($servicetax/2).'</td>
 				</tr>
 
 				<tr>
 				<td width="50%" align="left">Branch Name : '.$this->companyData->branch.'</td>
-				<td width="25%" align="right">SGST @ 9%</td>
-				<td width="25%" align="right">'.($servicetax/2).'</td>
 				</tr>
 
 				<tr>
 				<td width="50%" align="left">A/C No : '.$this->companyData->account.'</td>
 				<td width="25%" align="right"></td>
-				<td width="25%" align="right">'.$weihtamount.'</td>
 				</tr>
 
 				<tr>
 				<td width="50%" align="left">IFSC Code   : '.$this->companyData->ifsc.'</td>
-				<td width="25%" align="right">Total</td>
-				<td width="25%" align="right">'.$grandtotal.'</td>
+				<td width="25%" align="right">Total Quantity</td>
+				<td width="25%" align="right">'.$totalweight.'</td>
 				</tr>
-				
+
 			</table>
 			<tr>
 				<td align="center" width="100%"><hr color=#00CC33 size=5 width=100></td>
 			</tr>';
 
-			$html .= '<table width="100%" cellspacing="0" cellpadding="5" border="0">
-
-			<tr>
-				<td width="20%"  align="left"><b>Rupees:</b></td>
-				<td width="80%"  align="right"><b>'.$container.'</b>&nbsp;</td>
-			</tr>
-			</table>';
-
-			$html .= '<table cellspacing="0" cellpadding="2" border="0px" width="100%">
-					<tr>
-						<td align="center" width="100%"><hr color=#00CC33 size=5 width=100></td>
-					</tr>
-					<tr>
-						
-						<th style="font-weight:bold"  width="40%" align="centre"><h4>HSN/SAC
-						</h4></th>
-						<th style="font-weight:bold"  width="15%" align="centre"><h4>Taxable<br/>Value</h4></th>
-						<th style="font-weight:bold"  width="15%" align="centre"><h4>Central Tax</h4></th>
-						<th style="font-weight:bold"  width="15%" align="centre"><h4>State Tax</h4></th>
-						<th style="font-weight:bold"  width="15%" align="centre"><h4>Total
-						<br/>Tax Amount
-						</h4></th>
-					</tr>	
-
-					<tr>
-						<td align="center" width="100%"><hr color=#00CC33 size=5 width=100>
-						</td>
-					</tr>';		
-
-				
-							$html .= '<tr>
-										<td width="40%" align="left">998898</td>
-										<td width="15%">'.$rate.'</td>
-										<td width="15%">'.$rate.'</td>
-										<td width="15%">'.$rate.'</td>
-										<td width="15%">'.$rate.'</td>				
-										</tr>
-
-										<tr>
-										<td width="40%" align="right">TOTAL</td>
-										<td width="15%">'.$rate.'</td>
-										<td width="15%">'.$rate.'</td>
-										<td width="15%">'.$rate.'</td>
-										<td width="15%">'.$rate.'</td>				
-										</tr>
-
-					<tr>
-						<td align="center" width="100%"><hr color=#00CC33 size=5 width=100>
-						</td>
-					</tr>';	
-					
-	$html .= '</table>';
-
-
-	$html .= '<table width="100%" cellspacing="0" cellpadding="2" border="0">
-
-			<tr>
-				<td width="20%"  align="left"><b>Rupees:</b></td>
-				<td width="80%"  align="right"><b>'.$container.'</b>&nbsp;</td>
-			</tr>
-
-			<tr>
-						<td align="center" width="100%"><hr color=#00CC33 size=5 width=100>
-						</td>
-					</tr>
-			</table>';
 
 			$html .= '<table width="100%" cellspacing="0" cellpadding="2" border="0">
 
@@ -2686,7 +2529,7 @@ function finalbillgeneratemodel($partyid='',$actualnumberbundle='',$cust_add='',
 			</tr>
 
 		<tr>
-			<td width="100%"  align="left"><b>Notes:</b><br/>BEING CUTTING CHARGES FOR YOUR HR COILS/BUNDELS</td>
+			<td width="100%"  align="left"><b>Notes:</b>BEING CUTTING CHARGES FOR YOUR HR COILS/BUNDLES</td>
         </tr>
 			</table>
 
@@ -2717,7 +2560,7 @@ function finalbillgeneratemodel($partyid='',$actualnumberbundle='',$cust_add='',
     <tr>
 		<td width="100%" align="right"><b>Authorised Signature</b></td>
 	</tr>
-		
+
 		</table>';
 
 		$pdf->writeHTML($html, true, 0, true, true);
@@ -2957,7 +2800,7 @@ function finalbillgeneratemodel($partyid='',$actualnumberbundle='',$cust_add='',
 		<tr>
 			<td width="50%" align:"left"><b>Billed To :</b><br>To M/s., &nbsp; '.$party_name.' , '.$address_one.' &nbsp;'.$address_two.',&nbsp;'.$city.'<br><br>CGST Number:'.$tin_number.'
 			 </td>
-		
+
 			<td width="50%" align:"right"><b>Shipped To :</b><br>
 				To M/s., &nbsp; '.$party_name.' , '.$address_one.' &nbsp;'.$address_two.',&nbsp;'.$city.'
 			</td>
@@ -2978,7 +2821,7 @@ $html .= '<table cellspacing="0" cellpadding="2" border="0px" width="100%">
 			<td align="center" width="100%"><hr color=#00CC33 size=5 width=100></td>
 		</tr>
 		<tr>
-			
+
 			<th style="font-weight:bold"  width="25%"><h4>Description of goods
 			</h4></th>
 			<th style="font-weight:bold"  width="7.96%"><h4>Su DC No</h4></th>
@@ -2991,12 +2834,12 @@ $html .= '<table cellspacing="0" cellpadding="2" border="0px" width="100%">
 			<th style="font-weight:bold"  width="8.60%"><h4>Rate</h4></th>
 			<th style="font-weight:bold"  width="10%"><h4>Amount</h4></th>
 		</tr>
-		
+
 		<tr>
 			<td align="center" width="100%"><hr color=#00CC33 size=5 width=100></td>
 		</tr>';
 
-		
+
 				$html .= '<tr>
 							<td width="25%">'.$material_descriptio.'</td>
 							<td width="7.96%">'.$rate.'</td>
@@ -3009,7 +2852,7 @@ $html .= '<table cellspacing="0" cellpadding="2" border="0px" width="100%">
 							<td width="8.60%">'.$rate.'</td>
 							<td width="10%">'.ceil($amount).'</td>
 							</tr>';
-		
+
 $html .= '</table>';
 $html .= '<table width="100%" cellspacing="0" cellpadding="2" border="0">
 <tr>
@@ -3084,7 +2927,7 @@ $html .= '<table width="100%" cellspacing="0" cellpadding="2" border="0">
 </tr>';
 
 $html .= '<table width="100%" cellspacing="0" cellpadding="5" border="0">
-	
+
 	<tr>
 	<td width="50%" align="center"><b>Bank Details:</b></td>
 	<td width="25%" align="right"><b>Sub Total:</b></td>
@@ -3114,7 +2957,7 @@ $html .= '<table width="100%" cellspacing="0" cellpadding="5" border="0">
 	<td width="25%" align="right">Total</td>
 	<td width="25%" align="right">'.$grandtotal.'</td>
 	</tr>
-	
+
 </table>
 <tr>
 	<td align="center" width="100%"><hr color=#00CC33 size=5 width=100></td>
@@ -3133,7 +2976,7 @@ $html .= '<table cellspacing="0" cellpadding="2" border="0px" width="100%">
 			<td align="center" width="100%"><hr color=#00CC33 size=5 width=100></td>
 		</tr>
 		<tr>
-			
+
 			<th style="font-weight:bold"  width="40%" align="centre"><h4>HSN/SAC
 			</h4></th>
 			<th style="font-weight:bold"  width="15%" align="centre"><h4>Taxable<br/>Value</h4></th>
@@ -3142,19 +2985,19 @@ $html .= '<table cellspacing="0" cellpadding="2" border="0px" width="100%">
 			<th style="font-weight:bold"  width="15%" align="centre"><h4>Total
 			<br/>Tax Amount
 			</h4></th>
-		</tr>	
+		</tr>
 
 		<tr>
 			<td align="center" width="100%"><hr color=#00CC33 size=5 width=100>
 			</td>
-		</tr>';		
+		</tr>';
 
 				$html .= '<tr>
 							<td width="40%" align="left">998898</td>
 							<td width="15%">'.$rate.'</td>
 							<td width="15%">'.$rate.'</td>
 							<td width="15%">'.$rate.'</td>
-							<td width="15%">'.$rate.'</td>				
+							<td width="15%">'.$rate.'</td>
 							</tr>
 
 							<tr>
@@ -3162,15 +3005,15 @@ $html .= '<table cellspacing="0" cellpadding="2" border="0px" width="100%">
 							<td width="15%">'.$rate.'</td>
 							<td width="15%">'.$rate.'</td>
 							<td width="15%">'.$rate.'</td>
-							<td width="15%">'.$rate.'</td>				
+							<td width="15%">'.$rate.'</td>
 							</tr>
 
 		<tr>
 			<td align="center" width="100%"><hr color=#00CC33 size=5 width=100>
 			</td>
-		</tr>';	
-		
-		
+		</tr>';
+
+
 $html .= '</table>';
 
 
@@ -3372,7 +3215,7 @@ $pdf->Output($pdfname, 'I');
 					<tr>
 						<td width="50%" align:"left"><b>Billed To :</b><br>To M/s., &nbsp; '.$party_name.' , '.$address_one.' &nbsp;'.$address_two.',&nbsp;'.$city.'<br><br>CGST Number:'.$cgstNumber.'
 						 </td>
-					
+
 						<td width="50%" align:"right"><b>Shipped To :</b><br>
 							To M/s., &nbsp; '.$party_name.' , '.$address_one.' &nbsp;'.$address_two.',&nbsp;'.$city.'
 						</td>
@@ -3387,13 +3230,13 @@ $pdf->Output($pdfname, 'I');
 					<td width="30%" align:"left"><h3>EWAYBILL No: '.$invoicedate.'</h3></td>
 						</tr>
 				</table>';
-			
+
 		$html .= '<table cellspacing="0" cellpadding="2" border="0px" width="100%">
 					<tr>
 						<td align="center" width="100%"><hr color=#00CC33 size=5 width=100></td>
 					</tr>
 					<tr>
-						
+
 						<th style="font-weight:bold"  width="25%"><h4>Description of goods
 						</h4></th>
 						<th style="font-weight:bold"  width="7.96%"><h4>Su DC No</h4></th>
@@ -3406,7 +3249,7 @@ $pdf->Output($pdfname, 'I');
 						<th style="font-weight:bold"  width="8.60%"><h4>Rate</h4></th>
 						<th style="font-weight:bold"  width="10%"><h4>Amount</h4></th>
 					</tr>
-					
+
 					<tr>
 						<td align="center" width="100%"><hr color=#00CC33 size=5 width=100></td>
 					</tr>';
@@ -3501,7 +3344,7 @@ $pdf->Output($pdfname, 'I');
 			</tr>';
 
 			$html .= '<table width="100%" cellspacing="0" cellpadding="5" border="0">
-				
+
 			    <tr>
 				<td width="50%" align="center"><b>Bank Details:</b></td>
 				<td width="25%" align="right"><b>Sub Total:</b></td>
@@ -3531,7 +3374,7 @@ $pdf->Output($pdfname, 'I');
 				<td width="25%" align="right">Total</td>
 				<td width="25%" align="right">'.$grandtotal.'</td>
 				</tr>
-				
+
 			</table>
 			<tr>
 				<td align="center" width="100%"><hr color=#00CC33 size=5 width=100></td>
@@ -3550,7 +3393,7 @@ $pdf->Output($pdfname, 'I');
 						<td align="center" width="100%"><hr color=#00CC33 size=5 width=100></td>
 					</tr>
 					<tr>
-						
+
 						<th style="font-weight:bold"  width="40%" align="centre"><h4>HSN/SAC
 						</h4></th>
 						<th style="font-weight:bold"  width="15%" align="centre"><h4>Taxable<br/>Value</h4></th>
@@ -3559,12 +3402,12 @@ $pdf->Output($pdfname, 'I');
 						<th style="font-weight:bold"  width="15%" align="centre"><h4>Total
 						<br/>Tax Amount
 						</h4></th>
-					</tr>	
+					</tr>
 
 					<tr>
 						<td align="center" width="100%"><hr color=#00CC33 size=5 width=100>
 						</td>
-					</tr>';		
+					</tr>';
 
 					if($queryBundleDetails->num_rows() > 0) {
 						foreach($queryBundleDetails->result() as $rowitem) {
@@ -3573,7 +3416,7 @@ $pdf->Output($pdfname, 'I');
 										<td width="15%">'.$rowitem->rate.'</td>
 										<td width="15%">'.$rowitem->rate.'</td>
 										<td width="15%">'.$rowitem->rate.'</td>
-										<td width="15%">'.$rowitem->rate.'</td>				
+										<td width="15%">'.$rowitem->rate.'</td>
 										</tr>
 
 										<tr>
@@ -3581,13 +3424,13 @@ $pdf->Output($pdfname, 'I');
 										<td width="15%">'.$rowitem->rate.'</td>
 										<td width="15%">'.$rowitem->rate.'</td>
 										<td width="15%">'.$rowitem->rate.'</td>
-										<td width="15%">'.$rowitem->rate.'</td>				
+										<td width="15%">'.$rowitem->rate.'</td>
 										</tr>
 
 					<tr>
 						<td align="center" width="100%"><hr color=#00CC33 size=5 width=100>
 						</td>
-					</tr>';	
+					</tr>';
 						}
 					}
 	$html .= '</table>';
@@ -3645,7 +3488,7 @@ $pdf->Output($pdfname, 'I');
     <tr>
 		<td width="100%" align="right"><b>Authorised Signature</b></td>
 	</tr>
-		
+
 		</table>';
 
 		$pdf->writeHTML($html, true, 0, true, true);
@@ -3786,7 +3629,7 @@ $pdf->Output($pdfname, 'I');
 		<tr>
 			<td width="50%" align:"left"><b>Billed To :</b><br>To M/s., &nbsp; '.$pname.' , '.$add1.' &nbsp;'.$add2.',&nbsp;'.$city.'<br><br>CGST Number:'.$cgstNumber.'
 			 </td>
-		
+
 			<td width="50%" align:"right"><b>Shipped To :</b><br>
 				To M/s., &nbsp; '.$pname.' , '.$add1.' &nbsp;'.$add2.',&nbsp;'.$city.'
 			</td>
@@ -3807,7 +3650,7 @@ $html .= '<table cellspacing="0" cellpadding="2" border="0px" width="100%">
 			<td align="center" width="100%"><hr color=#00CC33 size=5 width=100></td>
 		</tr>
 		<tr>
-			
+
 			<th style="font-weight:bold"  width="25%"><h4>Description of goods
 			</h4></th>
 			<th style="font-weight:bold"  width="7.96%"><h4>Su DC No</h4></th>
@@ -3820,13 +3663,13 @@ $html .= '<table cellspacing="0" cellpadding="2" border="0px" width="100%">
 			<th style="font-weight:bold"  width="8.60%"><h4>Rate</h4></th>
 			<th style="font-weight:bold"  width="10%"><h4>Amount</h4></th>
 		</tr>
-		
+
 		<tr>
 			<td align="center" width="100%"><hr color=#00CC33 size=5 width=100></td>
 			</tr>';
 
-			
-				
+
+
 					$html .= '<tr>
 								<td width="25%">'.$mat_desc.'</td>
 								<td width="7.96%">'.$txtgrandtotal.'</td>
@@ -3839,9 +3682,9 @@ $html .= '<table cellspacing="0" cellpadding="2" border="0px" width="100%">
 								<td width="8.60%">'.$totalweight_check.'</td>
 								<td width="10%">'.ceil($totalweight_check).'</td>
 								</tr>';
-			
-			
-					
+
+
+
 $html .= '</table>';
 $html .= '<table width="100%" cellspacing="0" cellpadding="2" border="0">
 	<tr>
@@ -3916,7 +3759,7 @@ $html .= '<table width="100%" cellspacing="0" cellpadding="2" border="0">
 	</tr>';
 
 	$html .= '<table width="100%" cellspacing="0" cellpadding="5" border="0">
-		
+
 		<tr>
 		<td width="50%" align="center"><b>Bank Details:</b></td>
 		<td width="25%" align="right"><b>Sub Total:</b></td>
@@ -3946,7 +3789,7 @@ $html .= '<table width="100%" cellspacing="0" cellpadding="2" border="0">
 		<td width="25%" align="right">Total</td>
 		<td width="25%" align="right">'.$txtgrandtotal.'</td>
 		</tr>
-		
+
 	</table>
 	<tr>
 		<td align="center" width="100%"><hr color=#00CC33 size=5 width=100></td>
@@ -3965,7 +3808,7 @@ $html .= '<table width="100%" cellspacing="0" cellpadding="2" border="0">
 				<td align="center" width="100%"><hr color=#00CC33 size=5 width=100></td>
 			</tr>
 			<tr>
-				
+
 				<th style="font-weight:bold"  width="40%" align="centre"><h4>HSN/SAC
 				</h4></th>
 				<th style="font-weight:bold"  width="15%" align="centre"><h4>Taxable<br/>Value</h4></th>
@@ -3974,20 +3817,20 @@ $html .= '<table width="100%" cellspacing="0" cellpadding="2" border="0">
 				<th style="font-weight:bold"  width="15%" align="centre"><h4>Total
 				<br/>Tax Amount
 				</h4></th>
-			</tr>	
+			</tr>
 
 			<tr>
 				<td align="center" width="100%"><hr color=#00CC33 size=5 width=100>
 				</td>
-			</tr>';		
+			</tr>';
 
-		
+
 					$html .= '<tr>
 								<td width="40%" align="left">998898</td>
 								<td width="15%">'.$totalweight_check.'</td>
 								<td width="15%">'.$totalweight_check.'</td>
 								<td width="15%">'.$totalweight_check.'</td>
-								<td width="15%">'.$totalweight_check.'</td>				
+								<td width="15%">'.$totalweight_check.'</td>
 								</tr>
 
 								<tr>
@@ -3995,14 +3838,14 @@ $html .= '<table width="100%" cellspacing="0" cellpadding="2" border="0">
 								<td width="15%">'.$totalweight_check.'</td>
 								<td width="15%">'.$totalweight_check.'</td>
 								<td width="15%">'.$totalweight_check.'</td>
-								<td width="15%">'.$totalweight_check.'</td>				
+								<td width="15%">'.$totalweight_check.'</td>
 								</tr>
 
 			<tr>
 				<td align="center" width="100%"><hr color=#00CC33 size=5 width=100>
 				</td>
-			</tr>';	
-		
+			</tr>';
+
 $html .= '</table>';
 
 
@@ -4404,7 +4247,7 @@ if($returnPdf) {
 		<tr>
 			<td width="50%" align:"left"><b>Billed To :</b><br> &nbsp; '.$pname.' , '.$add1.' &nbsp;'.$add2.',&nbsp;'.$city.'<br><br>CGST Number:'.$cgstNumber.'
 			 </td>
-		
+
 			<td width="50%" align:"right"><b>Shipped To :</b><br>
 				 &nbsp; '.$pname.' , '.$add1.' &nbsp;'.$add2.',&nbsp;'.$city.'
 			</td>
@@ -4425,7 +4268,7 @@ $html .= '<table cellspacing="0" cellpadding="2" border="0px" width="100%">
 			<td align="center" width="100%"><hr color=#00CC33 size=5 width=100></td>
 		</tr>
 		<tr>
-			
+
 			<th style="font-weight:bold"  width="25%"><h4>Description of goods
 			</h4></th>
 			<th style="font-weight:bold"  width="7.96%"><h4>Su DC No</h4></th>
@@ -4438,12 +4281,12 @@ $html .= '<table cellspacing="0" cellpadding="2" border="0px" width="100%">
 			<th style="font-weight:bold"  width="8.60%"><h4>Rate</h4></th>
 			<th style="font-weight:bold"  width="10%"><h4>Amount</h4></th>
 		</tr>
-		
+
 		<tr>
 			<td align="center" width="100%"><hr color=#00CC33 size=5 width=100></td>
 		</tr>';
 
-		
+
 				$html .= '<tr>
 							<td width="25%">'.$mat_desc.'</td>
 							<td width="7.96%">'.$totalrate.'</td>
@@ -4456,7 +4299,7 @@ $html .= '<table cellspacing="0" cellpadding="2" border="0px" width="100%">
 							<td width="8.60%">'.$totalrate.'</td>
 							<td width="10%">'.ceil($txtamount_mt).'</td>
 							</tr>';
-		
+
 $html .= '</table>';
 $html .= '<table width="100%" cellspacing="0" cellpadding="2" border="0">
 <tr>
@@ -4531,7 +4374,7 @@ $html .= '<table width="100%" cellspacing="0" cellpadding="2" border="0">
 </tr>';
 
 $html .= '<table width="100%" cellspacing="0" cellpadding="5" border="0">
-	
+
 	<tr>
 	<td width="50%" align="center"><b>Bank Details:</b></td>
 	<td width="25%" align="right"><b>Sub Total:</b></td>
@@ -4561,7 +4404,7 @@ $html .= '<table width="100%" cellspacing="0" cellpadding="5" border="0">
 	<td width="25%" align="right">Total</td>
 	<td width="25%" align="right">'.$txtgrandtotal.'</td>
 	</tr>
-	
+
 </table>
 <tr>
 	<td align="center" width="100%"><hr color=#00CC33 size=5 width=100></td>
@@ -4580,7 +4423,7 @@ $html .= '<table cellspacing="0" cellpadding="2" border="0px" width="100%">
 			<td align="center" width="100%"><hr color=#00CC33 size=5 width=100></td>
 		</tr>
 		<tr>
-			
+
 			<th style="font-weight:bold"  width="40%" align="centre"><h4>HSN/SAC
 			</h4></th>
 			<th style="font-weight:bold"  width="15%" align="centre"><h4>Taxable<br/>Value</h4></th>
@@ -4589,12 +4432,12 @@ $html .= '<table cellspacing="0" cellpadding="2" border="0px" width="100%">
 			<th style="font-weight:bold"  width="15%" align="centre"><h4>Total
 			<br/>Tax Amount
 			</h4></th>
-		</tr>	
+		</tr>
 
 		<tr>
 			<td align="center" width="100%"><hr color=#00CC33 size=5 width=100>
 			</td>
-		</tr>';		
+		</tr>';
 
 
 				$html .= '<tr>
@@ -4602,7 +4445,7 @@ $html .= '<table cellspacing="0" cellpadding="2" border="0px" width="100%">
 							<td width="15%">'.$totalrate.'</td>
 							<td width="15%">'.$totalrate.'</td>
 							<td width="15%">'.$totalrate.'</td>
-							<td width="15%">'.$totalrate.'</td>				
+							<td width="15%">'.$totalrate.'</td>
 							</tr>
 
 							<tr>
@@ -4610,14 +4453,14 @@ $html .= '<table cellspacing="0" cellpadding="2" border="0px" width="100%">
 							<td width="15%">'.$totalrate.'</td>
 							<td width="15%">'.$totalrate.'</td>
 							<td width="15%">'.$totalrate.'</td>
-							<td width="15%">'.$totalrate.'</td>				
+							<td width="15%">'.$totalrate.'</td>
 							</tr>
 
 		<tr>
 			<td align="center" width="100%"><hr color=#00CC33 size=5 width=100>
 			</td>
-		</tr>';	
-		
+		</tr>';
+
 $html .= '</table>';
 
 
