@@ -61,7 +61,7 @@ class inward_model extends Base_module_model {
 	}
 
 	function inwardbillgeneratemodel($pname='',$pid='') {
-	$sqlinward = "select aspen_tblpartydetails.nPartyName as partyname ,aspen_tblinwardentry.vIRnumber as coilnumber, DATE_FORMAT(dReceivedDate, '%d-%m-%Y')  as receiveddate ,aspen_tblinwardentry.jid as jid,aspen_tblinwardentry.ssid as ssid,aspen_tblinwardentry.fLength  as length,aspen_tblinwardentry.vStatus as status,aspen_tblinwardentry.vGrade as grade,aspen_tblinwardentry.vHeatnumber as heatnumber,aspen_tblmatdescription.vDescription as matdescription, aspen_tblinwardentry.fThickness as thickness, aspen_tblinwardentry.fWidth as width,aspen_tblinwardentry.fQuantity as Weight,aspen_tblinwardentry.vPhysicalWeight as PhysicalWeight,aspen_tblinwardentry.vDifferenceweight as DifferenceWeight, aspen_tblinwardentry.vLorryNo AS Lorryno,aspen_tblinwardentry.vInvoiceNo as invoiceno, DATE_FORMAT(dInvoiceDate, '%d-%m-%Y') as invoicedate,aspen_tblinwardentry.vStatus as status,aspen_tblinwardentry.vRemark as remark from aspen_tblinwardentry left join aspen_tblpartydetails on aspen_tblpartydetails.nPartyId = aspen_tblinwardentry.nPartyId left join aspen_tblmatdescription on aspen_tblmatdescription.nMatId = aspen_tblinwardentry.nMatId  where aspen_tblinwardentry.vIRnumber ='".$pid."'";
+	$sqlinward = "select aspen_tblpartydetails.nPartyName as partyname ,aspen_tblinwardentry.vIRnumber as coilnumber, DATE_FORMAT(dReceivedDate, '%d-%m-%Y')  as receiveddate ,aspen_tblinwardentry.jid as jid,aspen_tblinwardentry.ssid as ssid,aspen_tblinwardentry.fLength  as length,aspen_tblinwardentry.vStatus as status,aspen_tblinwardentry.vGrade as grade,aspen_tblinwardentry.vHeatnumber as heatnumber,aspen_tblmatdescription.vDescription as matdescription, aspen_tblinwardentry.fThickness as thickness, aspen_tblinwardentry.fWidth as width,aspen_tblinwardentry.fQuantity as Weight,aspen_tblinwardentry.vPhysicalWeight as PhysicalWeight, aspen_tblinwardentry.vLorryNo AS Lorryno,aspen_tblinwardentry.vInvoiceNo as invoiceno, DATE_FORMAT(dInvoiceDate, '%d-%m-%Y') as invoicedate,aspen_tblinwardentry.vStatus as status,aspen_tblinwardentry.vRemark as remark from aspen_tblinwardentry left join aspen_tblpartydetails on aspen_tblpartydetails.nPartyId = aspen_tblinwardentry.nPartyId left join aspen_tblmatdescription on aspen_tblmatdescription.nMatId = aspen_tblinwardentry.nMatId  where aspen_tblinwardentry.vIRnumber ='".$pid."'";
 		$querymain = $this->db->query($sqlinward);
 
 		//$invoice = 'CoilNumber_'.$pid;
@@ -76,7 +76,6 @@ class inward_model extends Base_module_model {
 		$width = $querymain->row(0)->width;
 		$Weight = $querymain->row(0)->Weight;
 		$PhysicalWeight = $querymain->row(0)->PhysicalWeight;
-		$DifferenceWeight = $querymain->row(0)->DifferenceWeight;
 		$status = $querymain->row(0)->status;
 		$grade = $querymain->row(0)->grade;
 		$heatnumber = $querymain->row(0)->heatnumber;
