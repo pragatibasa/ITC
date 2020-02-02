@@ -2471,7 +2471,7 @@ function finalbillgeneratemodel($partyid='',$actualnumberbundle='',$cust_add='',
         {
             $html .= '
 			<tr>
-                    <td width="20%">'.$material_descriptio.'('.$thickness.'X'.$width.'X'.$rowitem->nLength.')</td>
+                    <td width="20%">'.$material_descriptio.'('.$thickness.'X'.$width.'X'.$rowitem->length.')</td>
                     <td width="9.96%">998898</td>
                     <td width="9.96%">'.$billnumber.'</td>
                     <td width="9.96%">'.$billdate.'</td>
