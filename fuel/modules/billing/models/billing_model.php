@@ -2399,9 +2399,16 @@ function finalbillgeneratemodel($partyid='',$actualnumberbundle='',$cust_add='',
 		$cgstNumber = $querymain->row(0)->cgstNumber;
 		$alternateAddress = $querymain->row(0)->alternateAddress;
 
-		$sqlitem ="select Distinct aspen_tblbillingstatus.nSno as bundlenumber,aspen_tblcuttinginstruction.nLength as length,aspen_tblbillingstatus.nActualNo as noofpcs,aspen_tblbillingstatus.fWeight as wei,aspen_tblbillingstatus.fbilledWeight as weight  from aspen_tblcuttinginstruction
-	LEFT JOIN aspen_tblbillingstatus  ON aspen_tblcuttinginstruction.vIRnumber=aspen_tblbillingstatus.vIRnumber
-	WHERE aspen_tblcuttinginstruction.nSno = aspen_tblbillingstatus.nSno and  aspen_tblbillingstatus.vIRnumber='".$partyid."'  and aspen_tblbillingstatus.nSno IN( ".$actualnumberbundle.") order by aspen_tblbillingstatus.nSno asc";
+		$sqlitem ="select Distinct aspen_tblbillingstatus.nSno as bundlenumber,
+aspen_tblcuttinginstruction.nLength as length,
+aspen_tblbillingstatus.nActualNo as noofpcs,
+aspen_tblbillingstatus.fWeight as wei,
+aspen_tblbillingstatus.fbilledWeight as weight,
+aspen_tblinwardentry.vLorryNo as vehicleNumber   
+  from aspen_tblcuttinginstruction
+	LEFT JOIN aspen_tblbillingstatus ON aspen_tblcuttinginstruction.vIRnumber=aspen_tblbillingstatus.vIRnumber
+	left join aspen_tblinwardentry on aspen_tblinwardentry.vIRnumber = aspen_tblcuttinginstruction.vIRnumber
+	WHERE aspen_tblcuttinginstruction.nSno = aspen_tblbillingstatus.nSno and aspen_tblbillingstatus.vIRnumber='".$partyid."'  and aspen_tblbillingstatus.nSno IN( ".$actualnumberbundle.") order by aspen_tblbillingstatus.nSno asc";
 
 		$queryitem = $this->db->query($sqlitem);
 		$pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
@@ -2478,8 +2485,8 @@ function finalbillgeneratemodel($partyid='',$actualnumberbundle='',$cust_add='',
                     <td width="9.96%">'.$partyid.'</td>
                     <td width="9.96%">'.$rate.'</td>
                     <td width="9.96%">'.$rate.'</td>
-                    <td width="9.96%">'.$rate.'</td>
-                    <td width="9.60%">'.$rowitem->noofpcs.'</td>
+                    <td width="9.96%">'.$rowitem->vehicleNumber.'</td>
+                    <td width="9.60%" align="center">'.$rowitem->noofpcs.'</td>
                     </tr>';
         }
     }
