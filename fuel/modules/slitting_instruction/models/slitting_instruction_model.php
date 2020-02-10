@@ -66,7 +66,7 @@ class slitting_instruction_model extends Base_module_model {
 
 	function savechangemodel (){
 
-		$sql = $this->db->query ("UPDATE aspen_tblslittinginstruction SET vStatus='WIP-Slitting', dDate = '".$_POST['slittingdate']."' WHERE vIRnumber='".$_POST['pid']."' and nSno!=0");
+		$sql = $this->db->query ("UPDATE aspen_tblslittinginstruction SET vStatus='WIP-Slitting', dDate = '".date("Y-m-d", strtotime($_POST['slittingdate']))."' WHERE vIRnumber='".$_POST['pid']."' and nSno!=0");
 		$sql = $this->db->query ("UPDATE aspen_tblinwardentry SET vprocess='Slitting',vStatus='Work In Progress', machineNo = ".$_POST['machine']." WHERE vIRnumber='".$_POST['pid']."'");
 
 		$strSql = "select ai.*,ap.*,am.* from aspen_tblinwardentry as ai 

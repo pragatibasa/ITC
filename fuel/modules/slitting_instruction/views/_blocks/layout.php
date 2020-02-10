@@ -160,6 +160,8 @@ div#ui-picker-div {
 
     $(document).ready(function() {
         $( "#slittingdate" ).picker({ dateFormat: 'dd-mm-yy' });
+        $('#slittingdate').picker('setDate', 'today');
+
     });
 function functionreset(){
 	$("#newsize").show();
@@ -572,7 +574,7 @@ function addDate(){
 	var day = date.getDate();
 	var year = date.getFullYear();
 	if (document.getElementById('date1').value == ''){
-	document.getElementById('date1').value = day + '-' + '0' +month + '-' + '0'+ year;
+	    document.getElementById('date1').value = day + '-' + '0' +month + '-' + '0'+ year;
 	}
 }
 
