@@ -3188,7 +3188,8 @@ $pdf->Output($pdfname, 'I');
 						round((aspen_tblslittinginstruction.nWeight/1000),3) as weight,
 						aspen_tblslittinginstruction.nWidth as width,
 						$weihtamount as rate,
-						round(( $weihtamount * (aspen_tblslittinginstruction.nWeight/1000) ),2) as amount
+						round(( $weihtamount * (aspen_tblslittinginstruction.nWeight/1000) ),2) as amount,
+						aspen_tblinwardentry.vLorryNo as vehicleNumber
 						from aspen_tblinwardentry
 						left join aspen_tblslittinginstruction on  aspen_tblslittinginstruction.vIRnumber = aspen_tblinwardentry.vIRnumber
 						left join aspen_tblBillBundleAssociation on aspen_tblslittinginstruction.nSno = aspen_tblBillBundleAssociation.nBundleNumber
@@ -3247,14 +3248,12 @@ $pdf->Output($pdfname, 'I');
 						<th style="font-weight:bold"  width="25%"><h4>Description of goods
 						</h4></th>
 						<th style="font-weight:bold"  width="7.96%"><h4>Su DC No</h4></th>
-						<th style="font-weight:bold"  width="7.96%"><h4>Su DC Date</h4></th>
-						<th style="font-weight:bold"  width="7.96%"><h4>Coil ID</h4></th>
+						<th style="font-weight:bold"  width="10.96%"><h4>Su DC Date</h4></th>
+						<th style="font-weight:bold"  width="9.96%"><h4>Coil ID</h4></th>
 						<th style="font-weight:bold"  width="7.96%"><h4>Our DC No</h4></th>
 						<th style="font-weight:bold"  width="7.96%"><h4>Our DC Date</h4></th>
-						<th style="font-weight:bold"  width="7.96%"><h4>Vehicle</h4></th>
-						<th style="font-weight:bold"  width="8.60%"><h4>Quantity</h4></th>
-						<th style="font-weight:bold"  width="8.60%"><h4>Rate</h4></th>
-						<th style="font-weight:bold"  width="10%"><h4>Amount</h4></th>
+						<th style="font-weight:bold"  width="11.96%"><h4>Vehicle</h4></th>
+						<th style="font-weight:bold"  width="10%"><h4>Quantity</h4></th>
 					</tr>
 
 					<tr>
@@ -3265,15 +3264,13 @@ $pdf->Output($pdfname, 'I');
 						foreach($queryBundleDetails->result() as $rowitem) {
 							$html .= '<tr>
 										<td width="25%">'.$rowitem->description.'</td>
-										<td width="7.96%">'.$rowitem->rate.'</td>
-										<td width="7.96%">'.$rowitem->rate.'</td>
-										<td width="7.96%">'.$rowitem->rate.'</td>
-										<td width="7.96%">'.$rowitem->rate.'</td>
-										<td width="7.96%">'.$rowitem->rate.'</td>
-										<td width="7.96%">'.$rowitem->rate.'</td>
-										<td width="8.60%">'.$rowitem->rate.'</td>
-										<td width="8.60%">'.$rowitem->rate.'</td>
-										<td width="10%">'.ceil($rowitem->amount).'</td>
+										<td width="7.96%">'.$billnumber.'</td>
+										<td width="10.96%">'.$billdate.'</td>
+										<td width="9.96%">'.$partyid.'</td>
+										<td width="7.96%">-</td>
+										<td width="7.96%">-</td>
+										<td width="11.96%">'.$rowitem->vehicleNumber.'</td>
+										<td align="right" width="10%">'.$rowitem->weight.'</td>
 										</tr>';
 						}
 					}
@@ -3292,60 +3289,6 @@ $pdf->Output($pdfname, 'I');
 			<td width="10%"></td>
 			</tr>
 
-
-			<tr>
-			<td width="25%"></td>
-			<td width="7.96%"></td>
-			<td width="7.96%"></td>
-			<td width="7.96%"></td>
-			<td width="7.96%"></td>
-			<td width="7.96%"></td>
-			<td width="7.96%"></td>
-			<td width="8.60%"></td>
-			<td width="8.60%"></td>
-			<td width="10%"></td>
-			</tr>
-
-
-			<tr>
-			<td width="25%"></td>
-			<td width="7.96%"></td>
-			<td width="7.96%"></td>
-			<td width="7.96%"></td>
-			<td width="7.96%"></td>
-			<td width="7.96%"></td>
-			<td width="7.96%"></td>
-			<td width="8.60%"></td>
-			<td width="8.60%"></td>
-			<td width="10%"></td>
-			</tr>
-
-			<tr>
-			<td width="25%"></td>
-			<td width="7.96%"></td>
-			<td width="7.96%"></td>
-			<td width="7.96%"></td>
-			<td width="7.96%"></td>
-			<td width="7.96%"></td>
-			<td width="7.96%"></td>
-			<td width="8.60%"></td>
-			<td width="8.60%"></td>
-			<td width="10%"></td>
-			</tr>
-
-			<tr>
-			<td width="25%"></td>
-			<td width="7.96%"></td>
-			<td width="7.96%"></td>
-			<td width="7.96%"></td>
-			<td width="7.96%"></td>
-			<td width="7.96%"></td>
-			<td width="7.96%"></td>
-			<td width="8.60%">'.$weihtamount.'</td>
-			<td width="8.60%"></td>
-			<td width="10%"></td>
-			</tr>
-
 			<tr>
 				<td align="center" width="100%"><hr color=#00CC33 size=5 width=100></td>
 			</tr>';
@@ -3354,107 +3297,30 @@ $pdf->Output($pdfname, 'I');
 
 			    <tr>
 				<td width="50%" align="center"><b>Bank Details:</b></td>
-				<td width="25%" align="right"><b>Sub Total:</b></td>
-				<td width="25%" align="right">'.$weihtamount.'</td>
 				</tr>
 
 				<tr>
 				<td width="50%" align="left">Bank Name  :'.$this->companyData->bank.' </td>
-				<td width="25%" align="right">CGST @ 9%</td>
-				<td width="25%" align="right">'.($servicetax/2).'</td>
 				</tr>
 
 				<tr>
 				<td width="50%" align="left">Branch Name :'.$this->companyData->branch.'</td>
-				<td width="25%" align="right">SGST @ 9%</td>
-				<td width="25%" align="right">'.($servicetax/2).'</td>
 				</tr>
 
 				<tr>
 				<td width="50%" align="left">A/C No:'.$this->companyData->account.'</td>
-				<td width="25%" align="right"></td>
-				<td width="25%" align="right">'.$weihtamount.'</td>
 				</tr>
 
 				<tr>
 				<td width="50%" align="left">IFSC Code:'.$this->companyData->ifsc.'</td>
 				<td width="25%" align="right">Total</td>
-				<td width="25%" align="right">'.$grandtotal.'</td>
+				<td width="25%" align="right">'.$totalweight.'</td>
 				</tr>
 
 			</table>
 			<tr>
 				<td align="center" width="100%"><hr color=#00CC33 size=5 width=100></td>
 			</tr>';
-
-			$html .= '<table width="100%" cellspacing="0" cellpadding="5" border="0">
-
-			<tr>
-				<td width="20%"  align="left"><b>Rupees:</b></td>
-				<td width="80%"  align="right"><b>'.$container.'</b>&nbsp;</td>
-			</tr>
-			</table>';
-
-			$html .= '<table cellspacing="0" cellpadding="2" border="0px" width="100%">
-					<tr>
-						<td align="center" width="100%"><hr color=#00CC33 size=5 width=100></td>
-					</tr>
-					<tr>
-
-						<th style="font-weight:bold"  width="40%" align="centre"><h4>HSN/SAC
-						</h4></th>
-						<th style="font-weight:bold"  width="15%" align="centre"><h4>Taxable<br/>Value</h4></th>
-						<th style="font-weight:bold"  width="15%" align="centre"><h4>Central Tax</h4></th>
-						<th style="font-weight:bold"  width="15%" align="centre"><h4>State Tax</h4></th>
-						<th style="font-weight:bold"  width="15%" align="centre"><h4>Total
-						<br/>Tax Amount
-						</h4></th>
-					</tr>
-
-					<tr>
-						<td align="center" width="100%"><hr color=#00CC33 size=5 width=100>
-						</td>
-					</tr>';
-
-					if($queryBundleDetails->num_rows() > 0) {
-						foreach($queryBundleDetails->result() as $rowitem) {
-							$html .= '<tr>
-										<td width="40%" align="left">998898</td>
-										<td width="15%">'.$rowitem->rate.'</td>
-										<td width="15%">'.$rowitem->rate.'</td>
-										<td width="15%">'.$rowitem->rate.'</td>
-										<td width="15%">'.$rowitem->rate.'</td>
-										</tr>
-
-										<tr>
-										<td width="40%" align="right">TOTAL</td>
-										<td width="15%">'.$rowitem->rate.'</td>
-										<td width="15%">'.$rowitem->rate.'</td>
-										<td width="15%">'.$rowitem->rate.'</td>
-										<td width="15%">'.$rowitem->rate.'</td>
-										</tr>
-
-					<tr>
-						<td align="center" width="100%"><hr color=#00CC33 size=5 width=100>
-						</td>
-					</tr>';
-						}
-					}
-	$html .= '</table>';
-
-
-	$html .= '<table width="100%" cellspacing="0" cellpadding="2" border="0">
-
-			<tr>
-				<td width="20%"  align="left"><b>Rupees:</b></td>
-				<td width="80%"  align="right"><b>'.$container.'</b>&nbsp;</td>
-			</tr>
-
-			<tr>
-						<td align="center" width="100%"><hr color=#00CC33 size=5 width=100>
-						</td>
-					</tr>
-			</table>';
 
 			$html .= '<table width="100%" cellspacing="0" cellpadding="2" border="0">
 
@@ -3464,7 +3330,7 @@ $pdf->Output($pdfname, 'I');
 			</tr>
 
 		<tr>
-			<td width="100%"  align="left"><b>Notes:</b><br/>BEING CUTTING CHARGES FOR YOUR HR COILS/BUNDELS</td>
+			<td width="100%"  align="left"><b>Notes:</b> BEING SLITTING CHARGES FOR YOUR '.$queryBundleDetails->result()[0]->description.'</td>
         </tr>
 			</table>
 
