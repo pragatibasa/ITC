@@ -125,7 +125,7 @@ class inward_model extends Base_module_model {
 			</tr>
 			<tr>
 				<td align="left">
-				<h2><b>SST Coil id: </b> '.$ssid.'</h2></td>
+				<h2><b>ITC Coil id: </b> '.$ssid.'</h2></td>
 			</tr>
 			<tr>
 				<td align="left">

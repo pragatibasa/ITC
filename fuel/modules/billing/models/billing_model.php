@@ -2434,12 +2434,12 @@ aspen_tblinwardentry.vLorryNo as vehicleNumber
 						<td align="center" width="100%" border="0px"><hr color=#00CC33 size=5 width=100></td>
 					</tr>
 					<tr>
-						<td width="50%" align:"left"><b>Billed To :</b><br>To M/s., &nbsp; '.$party_name.' , '.$address_one.' &nbsp;'.$address_two.',&nbsp;'.$city.'<br><br>CGST Number:'.$cgstNumber.'
+						<td width="50%" align:"left"><b>Billed To :</b><br>To M/s., &nbsp; '.$party_name.' , '.$address_one.' &nbsp;'.$address_two.',&nbsp;'.$city.'<br><br><b>CGST Number:</b>'.$cgstNumber.'
 						 </td>
 					
 						<td width="50%" align:"right"><b>Shipped To :</b><br>
 							To M/s., &nbsp; '.$party_name.' , '.$address_one.' &nbsp;'.$address_two.',&nbsp;'.$city.'
-							<br/> <br/> <b>Alternate Address: </b>'.$alternateAddress.'
+							<br/> <br/>
 						</td>
 					</tr>
 					<tr>
@@ -2486,7 +2486,7 @@ aspen_tblinwardentry.vLorryNo as vehicleNumber
                     <td width="9.96%">'.$rate.'</td>
                     <td width="9.96%">'.$rate.'</td>
                     <td width="9.96%">'.$rowitem->vehicleNumber.'</td>
-                    <td width="9.60%" align="center">'.$rowitem->noofpcs.'</td>
+                    <td width="9.60%" align="center">'.$rowitem->wei.'</td>
                     </tr>';
         }
     }

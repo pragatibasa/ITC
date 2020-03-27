@@ -539,9 +539,6 @@ function functionfinish() {
  }
 }
 
-
-
-
 function functionslit() {
  var txtbundleids = $('#txtbundleids').val();
  var txtbundleweight = $('#txtbundleweight').val();
@@ -567,17 +564,6 @@ if(!$("input[name='list']:checked").val()) {
     });
  }
 }
-
-
-
-
-
-
-
-
-
-
-
 
 function functionrecoil() {
  var txtbundleids = $('#txtbundleids').val();
